@@ -4,7 +4,6 @@
 #include <list>
 
 void simulate(int, std::vector<std::list<int>>&);
-void print(const std::vector<int>&);
 
 int main()
 {
@@ -24,14 +23,12 @@ void simulate(int N, std::vector<std::list<int>>& pl)
     std::vector<int> seats(N, -1); /* 最終的な座席表 */
     
     std::set<int> next;
+    std::set<int> vacant_seats; /* 空席の集合 */
+    
     for (int i = 0; i < N; i++) {
         if (pl[i].size() > 0) {
             next.insert(i);
         }
-    }
-        
-    std::set<int> vacant_seats; /* 空席の集合 */
-    for (int i = 0; i < N; i++) {
         vacant_seats.insert(i);
     }
     
@@ -53,11 +50,7 @@ void simulate(int N, std::vector<std::list<int>>& pl)
             next.insert(*it);
         }
     }
-    print(seats);
-}
 
-void print(const std::vector<int>& seats)
-{
     for (int num : seats) {
         printf("%d\n", num);
     }
