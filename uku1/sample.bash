@@ -27,14 +27,14 @@ fi
 
 for i in `seq $s $t`; do
     echo "test$i"
-    if [ ! -e "tests/in$i" ]; then
+    if [ ! -e "samples/in$i" ]; then
 	echo "generate"
 	g++ -std=c++11 generator.cpp
-	./a.out > "tests/in$i"
+	./a.out > "samples/in$i"
     fi
     g++ -std=c++11 bruteforce.cpp
-    ./a.out < "tests/in$i" > "tests/cmp$i"
+    ./a.out < "samples/in$i" > "samples/cmp$i"
     g++ -std=c++11 $filename
-    ./a.out < "tests/in$i" > "tests/out$i"
-    diff "tests/cmp$i" "tests/out$i"
+    ./a.out < "samples/in$i" > "samples/out$i"
+    diff "samples/cmp$i" "samples/out$i"
 done
