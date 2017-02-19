@@ -97,11 +97,11 @@ signed main()
   int idx = 0;
   mnT = 1e9, mnW = 1;
   solve(idx, vec);
-  rep(i, ans.size()) cout << ans[i] << endl;
+  //rep(i, ans.size()) cout << ans[i] << endl;
   if(mnT == 1e9) {
-    cout << 0.0 << " " << 0.0 << endl << -1.0 << endl;
+    cout << 0.0 << endl;
   } else {
-    cout << mnT << " " << mnW << endl;
+    //cout << mnT << " " << mnW << endl;
     cout << mnT/mnW << endl;
   }
 

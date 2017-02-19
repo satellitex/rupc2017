@@ -36,9 +36,9 @@ struct UnionFind {
 
 struct edge {
   int u, v;
-  double w, t;
+  double c, t;
   edge(){}
-  edge(int u, int v, double w, double t):u(u), v(v), w(w), t(t){}
+  edge(int u, int v, double c, double t):u(u), v(v), c(c), t(t){}
 };
 
 #define MAX_M 10010
@@ -48,12 +48,12 @@ vector<edge> roads;
 
 UnionFind uf;
 bool used[MAX_M];
-double T, W;
+
 double Kruskal(double t)
 {
   pair<double, int> key[MAX_M];
   for(int i = 0; i < m; i++) {
-    key[i].first = roads[i].t - t*roads[i].w;
+    key[i].first = roads[i].t - t*roads[i].c;
     key[i].second = i;
   }
   sort(key, key + m, greater< pair<double, int> >());
@@ -82,12 +82,9 @@ double BinarySearch()
     else lb = mb;
   }
 
-  for(int i = 0; i < m; i++)
-    if(!used[i]) cout << i << endl;
+  //for(int i = 0; i < m; i++)
+  //if(!used[i]) cout << i << endl;
 
-  //cout << T << " " << W << endl;
-  //return (W ? T/W : 0);
-  cout << lb << endl;
   return ub;
 }
 
@@ -100,9 +97,9 @@ signed main()
   cin >> n >> m;
   for(int i = 0; i < m; i++) {
     int a, b;
-    double w, t;
-    cin >> a >> b >> w >> t;
-    roads.emplace_back(a, b, w, t);
+    double c, t;
+    cin >> a >> b >> c >> t;
+    roads.emplace_back(a, b, c, t);
   }
 
   cout << BinarySearch() << endl;
