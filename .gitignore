@@ -36,3 +36,4 @@ rime.py
 setup.*
 bin
 rime-out
+.DS_Store

@@ -29,9 +29,9 @@ struct SegmentTree {
   inline void lazy_evaluate(int k, int l, int r)
   {
     if(lazy[k]) {
-      vector<int> temp[3];
-      rep(i, 3) temp[i] = sum[i];
-      rep(i, 3) sum[(i+lazy[k])%3][k] = temp[i][k];
+      int temp[3];
+      rep(i, 3) temp[i] = sum[i][k];
+      rep(i, 3) sum[(i+lazy[k])%3][k] = temp[i];
       if(r - l > 1) {
 	(lazy[2*k+1] += lazy[k]) %= 3;
 	(lazy[2*k+2] += lazy[k]) %= 3;
