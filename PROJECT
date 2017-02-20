@@ -1,2 +1,4 @@
-use_plugin('merged_test')
+# -*- coding: utf-8; mode: python -*-
 
+## You can load plugins here.
+#use_plugin('pack_mjudge')
