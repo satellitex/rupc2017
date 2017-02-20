@@ -29,8 +29,9 @@ void input() {
     x[i] = inf.readLong(MIN_xy,MAX_xy,"x");
     inf.readSpace();
     y[i] = inf.readLong(MIN_xy,MAX_xy,"y");
+    inf.readEoln();
   }
-  inf.readEoln();
+  inf.readEof();
 }
 
 int main() {

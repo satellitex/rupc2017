@@ -13,10 +13,11 @@ int main(int argc, char *argv[])
   registerGen(argc, argv, 1);
   for (int t = 0; t < 20; t++) {
     ofstream of(format("02_random_%02d.in", t+1).c_str());
-    int N;
-    ll S;
-    N = rnd.next(1, MAX_N);
-    S = rnd.next(1LL, MAX_S);
+    int N = rnd.next(1, MAX_N);
+    ll S = rnd.next(1LL, MAX_S);
+    N = MAX_N;
+    S = MAX_S;
+
     of<<N<<" "<<S<<endl;
     for(int i=0;i<N;i++){
       int t = rnd.next(1,MAX_t);
