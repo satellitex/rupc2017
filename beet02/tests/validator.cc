@@ -7,21 +7,14 @@ const int N_MIN = 2;
 const int N_MAX = 100000;
 
 int n;
-string s[N_MAX];
+string s;
 void input() {
-  n = inf.readInt(N_MIN, N_MAX, "n");
-  inf.readEoln();
-  for(int i=0;i<n;i++) {
-    s[i] = inf.readString();
-  }
+  s = inf.readString();
   inf.readEof();
 }
 
 void check() {
-  for (int i=0;i<n;i++){
-    ensuref(0.0<=stof(s[i])&&stof(s[i])<=4.0,"out of range");
-    ensuref(s[i].size()==5,"format invalid");
-  }
+  ensuref(s.size()<=100,"format invalid");
 }
 
 int main() {
