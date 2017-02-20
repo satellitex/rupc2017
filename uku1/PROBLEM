@@ -8,5 +8,5 @@
 problem(title = "well-traveled_roads",
         id = "X",
         time_limit = 2.0,
-        reference_solution='uku_2'
+        reference_solution='uku_1'
 )

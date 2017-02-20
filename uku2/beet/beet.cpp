@@ -7,8 +7,8 @@ void init(int n_){
   n=1;
   while(n<n_) n*=2;
   for(int i=0;i<2*n-1;i++) dat[0][i]=dat[1][i]=dat[2][i]=laz[i]=0;
-  for(int i=n;i<=n+n_;i++) dat[0][i]=1;
-  for(int i=n-1;i>=0;i--) dat[0][i]=dat[0][i*2+1]+dat[0][i*2+2];
+  for(int i=n-1;i<=n+n_;i++) dat[0][i]=1;
+  for(int i=n-2;i>=0;i--) dat[0][i]=dat[0][i*2+1]+dat[0][i*2+2];
 }
 void eval(int len,int k){
   laz[k]%=3;
