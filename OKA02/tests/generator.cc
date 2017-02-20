@@ -15,14 +15,12 @@ int main(int argc, char *argv[])
     ofstream of(format("02_random_%02d.in", t+1).c_str());
     int N = rnd.next(1, MAX_N);
     ll S = rnd.next(1LL, MAX_S);
-    N = MAX_N;
-    S = MAX_S;
 
     of<<N<<" "<<S<<endl;
     for(int i=0;i<N;i++){
       int t = rnd.next(1,MAX_t);
-      ll x = rnd.next(-MAX_xy,MAX_xy);
-      ll y = rnd.next(-MAX_xy,MAX_xy);
+      ll x = rnd.next(-MAX_xy,MAX_xy)%1000;
+      ll y = rnd.next(-MAX_xy,MAX_xy)%1000;
       of<<t<<" "<<x<<" "<<y<<endl;
     }
   }

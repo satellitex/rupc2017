@@ -18,7 +18,8 @@ public:
     }
   }
   
-  ll query(ll a,ll b,ll y,int k=0,int l=0,int r=N){
+  ll query(ll a,ll b,ll y,int k=0,int l=0,int r=0){
+    if(k==0) r = n;
     if(r<=a||b<=l)return 0;
     if(a<=l&&r<=b)return dat[k].lower_bound(y)!=dat[k].end();
     if(query(a,b,k*2+1,l,(l+r)/2))return 1;
@@ -52,17 +53,16 @@ int main(){
       used.insert(A[0][i].first+A[1][j].first);
 
 
-  for(int i=0;i<A[2].size();i++)
+  /*  for(int i=0;i<A[2].size();i++)
     for(int j=i;j<A[3].size();j++)
       for(int k=j;k<A[4].size();k++) 
 	used.insert(A[2][i].first+A[3][j].first+A[4][k].first);
-  
+  */
   
   vector<ll> X;
   set<ll>::iterator it;
   for(it=used.begin();it!=used.end();it++) X.push_back(*it);
   
-
   //木の構築
   xyTree T(X.size());
   for(int i=0;i<A[0].size();i++)
@@ -78,8 +78,8 @@ int main(){
   for(int i=0;i<A[2].size();i++)
     for(int j=0;j<A[3].size();j++)
       for(int k=0;k<A[4].size();k++){
-	ll x=A[2][i].first+A[3][j].first+A[4][k].first;
-	ll y=A[2][i].second+A[2][j].second+A[4][k].second;
+	ll x=S-A[2][i].first+A[3][j].first+A[4][k].first;
+	ll y=S-A[2][i].second+A[3][j].second+A[4][k].second;
 	x = lower_bound(X.begin(),X.end(),x)-X.begin();
 	if(T.query(x,N,y)){cout<<"Yes"<<endl;exit(0);}
       }
