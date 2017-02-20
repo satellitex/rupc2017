@@ -42,7 +42,7 @@ bool search(int x,int depth,vector<ll> &L,vector<ll> &R){
   return f;
 }
 
-bool com(vector<ll> A,vector<ll> B){
+bool com(vector<vector<ll> > &A,vector<vector<ll> > &B){
   return A.size()<B.size();
 }
 
