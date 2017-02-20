@@ -59,25 +59,26 @@ int main(){
   }
   sort(in,in+5,com);
   swap(in[0],in[4]);
-  for(int i=0;i<in[2].size();i++)
-    for(int j=i;j<in[3].size();j++)
-      for(int k=j;k<in[4].size();k++){
-	vector<ll> temp(K);
-	for(int l=0;l<K;l++)
-	  temp[l]=in[2][i][l]+in[3][j][l]+in[4][k][l];
-	P.push_back(temp);
-      }
-
+  for(int i=0;i<in[3].size();i++)
+    for(int j=i;j<in[4].size();j++){
+      vector<ll> temp(K);
+      for(int k=0;k<K;k++)
+	temp[k]=in[3][i][k]+in[4][j][k];
+      P.push_back(temp);
+    }
+  
   make_tree(0,0,P.size()-1);
   bool ans=false;
   for(int i=0;i<in[0].size();i++)
     for(int j=i;j<in[1].size();j++){
-      vector<ll> L(K),R(K);
-      for(int k=0;k<K;k++){
-	L[k]=s-(in[0][i][k]+in[1][j][k]);
-	R[k]=(1e17);
+      for(int k=j;k<in[2].size();k++){
+	vector<ll> L(K),R(K);
+	for(int l=0;l<K;l++){
+	  L[l]=s-(in[0][i][l]+in[1][j][l]+in[2][k][l]);
+	  R[l]=(1e17);
+	}
+	ans|=search(0,0,L,R);
       }
-      ans|=search(0,0,L,R);
     }
   if(ans)cout<<"Yes"<<endl;
   else cout<<"No"<<endl;
