@@ -1,0 +1,2 @@
+script_generator(src='generator.cc')
+script_validator(src='validator.cc')
