@@ -42,6 +42,10 @@ bool search(int x,int depth,vector<ll> &L,vector<ll> &R){
   return f;
 }
 
+bool com(vector<ll> A,vector<ll> B){
+  return A.size()<B.size();
+}
+
 ll a,s,t;
 vector<vector<ll> > in[5];
 int main(){
@@ -53,10 +57,11 @@ int main(){
       cin>>v[j];
     in[t].push_back(v);
   }
+  sort(in,in+5,com);
   swap(in[0],in[4]);
   for(int i=0;i<in[2].size();i++)
-    for(int j=0;j<in[3].size();j++)
-      for(int k=0;k<in[4].size();k++){
+    for(int j=i;j<in[3].size();j++)
+      for(int k=j;k<in[4].size();k++){
 	vector<ll> temp(K);
 	for(int l=0;l<K;l++)
 	  temp[l]=in[2][i][l]+in[3][j][l]+in[4][k][l];
@@ -64,13 +69,13 @@ int main(){
       }
 
   make_tree(0,0,P.size()-1);
-  bool ans;
+  bool ans=false;
   for(int i=0;i<in[0].size();i++)
-    for(int j=0;j<in[1].size();j++){
+    for(int j=i;j<in[1].size();j++){
       vector<ll> L(K),R(K);
       for(int k=0;k<K;k++){
 	L[k]=s-(in[0][i][k]+in[1][j][k]);
-	R[k]=(1e12);
+	R[k]=(1e17);
       }
       ans|=search(0,0,L,R);
     }
