@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -10,9 +11,9 @@ int main()
     constexpr int MAX = 4010;
     vector<int> a(N), s(MAX);
     for (int i = 0; i < N; i++) {
-        double in;
+        string in;
         cin >> in;
-        a[i] = in * 1000;
+        a[i] = (stoi(in.substr(0, 1)) + stoi(in.substr(2))) * 1000;
         s[a[i]] += 1;
     }
     
