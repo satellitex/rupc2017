@@ -102,6 +102,7 @@ signed main()
     roads.emplace_back(a, b, c, t);
   }
 
+  if(m == n-1) cout << 0 << endl;
   cout << BinarySearch() << endl;
 
   return 0;
