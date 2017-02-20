@@ -14,6 +14,6 @@
 
 ## Output judges.
 #c_judge(src='judge.c')
-#cxx_judge(src='judge.cc')
+cxx_judge(src='judge.cc')
 #java_judge(src='Judge.java', encoding='UTF-8', mainclass='Judge')
 #script_judge(src='judge.py')
