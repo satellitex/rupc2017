@@ -8,7 +8,6 @@ public:
   ll n;
   vector<set<ll> >dat;
   xyTree(){dat.resize(N*2-1);n=N;}
-  xyTree(int n){dat.resize(n*2-1),this->n=n;}
   void update(ll x,ll y){
     x+=n-1;
     dat[x].insert(y);
@@ -18,13 +17,17 @@ public:
     }
   }
   
-  ll query(ll a,ll b,ll y,int k=0,int l=0,int r=0){
-    if(k==0) r = n;
-    if(r<=a||b<=l)return 0;
-    if(a<=l&&r<=b)return dat[k].lower_bound(y)!=dat[k].end();
-    if(query(a,b,k*2+1,l,(l+r)/2))return 1;
-    if(query(a,b,k*2+2,(l+r)/2,r))return 1;
-    return 0;
+  ll query(ll a,ll b,ll y,int k=0,int l=0,int r=-1){
+    if(r==-1) r = n;
+    if(r<=a||b<=l)return 1LL<<55;
+    if(a<=l&&r<=b){
+      set<ll>::iterator it = dat[k].lower_bound(y);
+      return it!=dat[k].end()? *it:(1LL<<55);
+    }
+
+    ll vl = query(a,b,y,k*2+1,l,(l+r)/2);
+    ll vr = query(a,b,y,k*2+2,(l+r)/2,r);
+    return min(vl,vr);
   }
 };
 
@@ -32,8 +35,8 @@ public:
 typedef pair<ll,ll> P;
 bool compare(const vector<P> &a,const vector<P> &b){return a.size()>b.size();}
 int main(){
-  ll n,S;
-  cin>>n>>S;
+  ll n,L,R;
+  cin>>n>>L>>R;
   
   //入力
   vector<P>A[5];
@@ -43,7 +46,6 @@ int main(){
     cin>>t>>x>>y;
     A[t-1].push_back(P(x,y));
   }
-
   sort(A,A+5,compare);
 
   //座標圧縮
@@ -51,20 +53,13 @@ int main(){
   for(int i=0;i<A[0].size();i++)
     for(int j=i;j<A[1].size();j++)
       used.insert(A[0][i].first+A[1][j].first);
-
-
-  /*  for(int i=0;i<A[2].size();i++)
-    for(int j=i;j<A[3].size();j++)
-      for(int k=j;k<A[4].size();k++) 
-	used.insert(A[2][i].first+A[3][j].first+A[4][k].first);
-  */
   
   vector<ll> X;
   set<ll>::iterator it;
   for(it=used.begin();it!=used.end();it++) X.push_back(*it);
   
   //木の構築
-  xyTree T(X.size());
+  xyTree T;
   for(int i=0;i<A[0].size();i++)
     for(int j=i;j<A[1].size();j++){
       ll x = A[0][i].first+A[1][j].first;
@@ -75,15 +70,19 @@ int main(){
   
   
   //探索
+  
   for(int i=0;i<A[2].size();i++)
     for(int j=0;j<A[3].size();j++)
       for(int k=0;k<A[4].size();k++){
-	ll x=S-A[2][i].first+A[3][j].first+A[4][k].first;
-	ll y=S-A[2][i].second+A[3][j].second+A[4][k].second;
-	x = lower_bound(X.begin(),X.end(),x)-X.begin();
-	if(T.query(x,N,y)){cout<<"Yes"<<endl;exit(0);}
+	ll x=A[2][i].first+A[3][j].first+A[4][k].first;
+	ll y=A[2][i].second+A[3][j].second+A[4][k].second;
+	ll l = lower_bound(X.begin(),X.end(),L-x)-X.begin();
+	ll r = upper_bound(X.begin(),X.end(),R-x)-X.begin();
+	ll Y = y + T.query(l,r,L-y);
+	if(x+X[l]>R||Y>R)continue;
+	cout<<"Yes"<<endl;
+	return 0;
       }
-
   cout<<"No"<<endl;
   return 0;
 }
