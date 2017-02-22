@@ -1,7 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <cstdio>
-#include <stack>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -46,7 +43,7 @@ int main()
     }
 
     for (int num : res) {
-        cout << num + 1 << endl;
+        printf("%d\n", num + 1);
     }    
     return 0;
 }
