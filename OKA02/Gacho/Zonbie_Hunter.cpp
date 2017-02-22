@@ -46,10 +46,10 @@ bool com(vector<vector<ll> > &A,vector<vector<ll> > &B){
   return A.size()<B.size();
 }
 
-ll a,s,t;
+ll a,t,A,B;
 vector<vector<ll> > in[5];
 int main(){
-  cin>>a>>s;
+  cin>>a>>A>>B;
   for(int i=0;i<a;i++){
     cin>>t; t--;
     vector<ll> v(2);
@@ -74,8 +74,8 @@ int main(){
       for(int k=j;k<in[2].size();k++){
 	vector<ll> L(K),R(K);
 	for(int l=0;l<K;l++){
-	  L[l]=s-(in[0][i][l]+in[1][j][l]+in[2][k][l]);
-	  R[l]=(1e17);
+	  L[l]=A-(in[0][i][l]+in[1][j][l]+in[2][k][l]);
+	  R[l]=B-(in[0][i][l]+in[1][j][l]+in[2][k][l]);
 	}
 	ans|=search(0,0,L,R);
       }
