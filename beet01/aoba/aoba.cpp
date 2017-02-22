@@ -6,6 +6,9 @@ using namespace std;
 
 int main()
 {
+    cin.tie(0);
+    ios::sync_with_stdio(false);
+    
     int N;
     cin >> N;
     constexpr int MAX = 4010;
@@ -13,7 +16,7 @@ int main()
     for (int i = 0; i < N; i++) {
         string in;
         cin >> in;
-        a[i] = (stoi(in.substr(0, 1)) + stoi(in.substr(2))) * 1000;
+        a[i] = (stoi(in.substr(0, 1)) * 1000 + stoi(in.substr(2)));
         s[a[i]] += 1;
     }
     
