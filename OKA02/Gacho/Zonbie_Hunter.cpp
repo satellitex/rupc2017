@@ -60,7 +60,7 @@ int main(){
   sort(in,in+5,com);
   swap(in[0],in[4]);
   for(int i=0;i<in[3].size();i++)
-    for(int j=i;j<in[4].size();j++){
+    for(int j=0;j<in[4].size();j++){
       vector<ll> temp(K);
       for(int k=0;k<K;k++)
 	temp[k]=in[3][i][k]+in[4][j][k];
@@ -70,8 +70,8 @@ int main(){
   make_tree(0,0,P.size()-1);
   bool ans=false;
   for(int i=0;i<in[0].size();i++)
-    for(int j=i;j<in[1].size();j++){
-      for(int k=j;k<in[2].size();k++){
+    for(int j=0;j<in[1].size();j++){
+      for(int k=0;k<in[2].size();k++){
 	vector<ll> L(K),R(K);
 	for(int l=0;l<K;l++){
 	  L[l]=A-(in[0][i][l]+in[1][j][l]+in[2][k][l]);
