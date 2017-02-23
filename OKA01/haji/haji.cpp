@@ -1,26 +1,46 @@
 #include <bits/stdc++.h>
+#define INF 1e9
+#define N 101
 using namespace std;
-int n;
-int x[101],y[101];
+int n,P;
+int x[N],y[N];
+void Min(int &a,int b){a=min(a,b);}
 
-int mem[101][10001][2],used[101][10001][2];
-int dfs(int pos,int P,int f){
+int calc(int idx,int cnt){
+  if(idx-cnt<0) return INF;
+  int sum=0,t=0;
+  for(int i=idx-cnt;i<=idx;i++)t=(y[i]-x[i])+sum, sum+=t;
+   if(t<0) return 0;
+   return sum;
+ }
 
-  if(pos==n) return 0;
-  if(used[pos][P][f]++) return mem[pos][P][f];
-
-  int a = x[pos],b = y[pos];
-  if(f) a=max(0,a-(y[pos-1]-x[pos-1]));
-  if(a>=b) return 1+dfs(pos+1,P,0);
-  int &res = mem[pos][P][f] = dfs(pos+1,P,0);
-  if(b-a<=P) res=max(res,1+dfs(pos+1,P-(b-a),1));
+ int dp[N][N][N];
+ int DP(){
+   for(int i=0;i<N;i++)
+     for(int j=0;j<N;j++)
+       for(int k=0;k<N;k++) dp[i][j][k] = INF;
+   dp[0][0][0] = 0;
+   
+   for(int i=0;i<n;i++)
+     for(int j=0;j<n;j++)
+       for(int k=0;k<n;k++){
+	 int a = dp[i][j][k],c = calc(i,j);
+	 Min(dp[i+1][0][k],a);
+	 if(a==INF) continue;
+	 if(c)Min(dp[i+1][j+1][k+1],a+c);
+	 else Min(dp[i+1][0][k+1],a);
+      }
+  
+  
+  int res=0;
+  for(int i=0;i<n;i++)
+    for(int j=0;j<n;j++) if(dp[n][i][j]<=P) res=max(res,j);
   return res;
 }
 
 int main(){
-  int P;
   cin>>n>>P;
   for(int i=0;i<n;i++)cin>>x[i]>>y[i];
-  cout<< dfs(0,P,0)<<endl;
+  cout<<DP()<<endl;
   return 0;
 }
