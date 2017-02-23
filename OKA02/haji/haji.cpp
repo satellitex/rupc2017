@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
-const int N = 1<<20;
+const int N = 1<<18;
 
 class xyTree{
 public:
@@ -51,7 +51,7 @@ int main(){
   //座標圧縮
   set<ll> used;
   for(int i=0;i<A[0].size();i++)
-    for(int j=i;j<A[1].size();j++)
+    for(int j=0;j<A[1].size();j++)
       used.insert(A[0][i].first+A[1][j].first);
   
   vector<ll> X;
@@ -61,7 +61,7 @@ int main(){
   //木の構築
   xyTree T;
   for(int i=0;i<A[0].size();i++)
-    for(int j=i;j<A[1].size();j++){
+    for(int j=0;j<A[1].size();j++){
       ll x = A[0][i].first+A[1][j].first;
       ll y = A[0][i].second+A[1][j].second;
       x = lower_bound(X.begin(),X.end(),x)-X.begin();
@@ -70,7 +70,6 @@ int main(){
   
   
   //探索
-  
   for(int i=0;i<A[2].size();i++)
     for(int j=0;j<A[3].size();j++)
       for(int k=0;k<A[4].size();k++){
