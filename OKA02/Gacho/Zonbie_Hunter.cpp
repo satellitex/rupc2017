@@ -57,6 +57,12 @@ int main(){
       cin>>v[j];
     in[t].push_back(v);
   }
+  for(int i=0;i<5;i++){
+    vector<ll> v(2);
+    for(int j=0;j<K;j++)
+      v[j]=0;
+    in[i].push_back(v);
+  }
   sort(in,in+5,com);
   swap(in[0],in[4]);
   for(int i=0;i<in[3].size();i++)
@@ -66,7 +72,6 @@ int main(){
 	temp[k]=in[3][i][k]+in[4][j][k];
       P.push_back(temp);
     }
-  
   make_tree(0,0,P.size()-1);
   bool ans=false;
   for(int i=0;i<in[0].size();i++)
