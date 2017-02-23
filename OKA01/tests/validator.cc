@@ -2,14 +2,14 @@
 
 using namespace std;
 
-const int N_MIN =     1;
-const int N_MAX =   100;
-const int P_MIN =     0;
-const int P_MAX = 10000;
-const int X_MIN =     0;
-const int X_MAX = 10000;
-const int Y_MIN =     0;
-const int Y_MAX = 10000;
+const int N_MIN =      1;
+const int N_MAX =    100;
+const int P_MIN =      0;
+const int P_MAX = 100000;
+const int X_MIN =      0;
+const int X_MAX = 100000;
+const int Y_MIN =      0;
+const int Y_MAX = 100000;
 
 int N,P;
 int X[N_MAX], Y[N_MAX];
