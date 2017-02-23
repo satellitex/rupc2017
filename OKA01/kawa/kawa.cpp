@@ -1,9 +1,9 @@
 #include<bits/stdc++.h>
 using namespace std;
-int dp[101][101][101],c[101][101];
+int n,p,x[100],y[100];
+int dp[101][101][101],c[101][101],ans;
 
 int main(){
-  int n,p,x[100],y[100],ans=0;
   cin>>n>>p;
   for(int i=0;i<n;i++)cin>>x[i]>>y[i];
 
