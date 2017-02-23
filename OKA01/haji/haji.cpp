@@ -8,10 +8,9 @@ void Min(int &a,int b){a=min(a,b);}
 
 int calc(int idx,int cnt){
   if(idx-cnt<0) return INF;
-  int sum=0,t=0;
-  for(int i=idx-cnt;i<=idx;i++)t=(y[i]-x[i])+sum, sum+=t;
-   if(t<0) return 0;
-   return sum;
+  int res=0;
+  for(int i=idx-cnt;i<=idx;i++)res=(y[i]-max(0,x[i]-res));
+  return res;
  }
 
  int dp[N][N][N];
@@ -26,15 +25,13 @@ int calc(int idx,int cnt){
        for(int k=0;k<n;k++){
 	 int a = dp[i][j][k],c = calc(i,j);
 	 Min(dp[i+1][0][k],a);
-	 if(a==INF) continue;
-	 if(c)Min(dp[i+1][j+1][k+1],a+c);
+	 if(0<c)Min(dp[i+1][j+1][k+1],a+c);
 	 else Min(dp[i+1][0][k+1],a);
       }
   
-  
   int res=0;
-  for(int i=0;i<n;i++)
-    for(int j=0;j<n;j++) if(dp[n][i][j]<=P) res=max(res,j);
+  for(int i=0;i<=n;i++)
+    for(int j=0;j<=n;j++) if(dp[n][i][j]<=P) res=max(res,j);
   return res;
 }
 
