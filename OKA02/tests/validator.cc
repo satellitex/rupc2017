@@ -36,8 +36,13 @@ void input() {
   inf.readEof();
 }
 
+void check(){
+  ensuref(A<=B,"A>B(A=%lld,B=%lld)",A,B);
+}
+
 int main() {
   registerValidation();
   input();
+  check();
   return 0;
 }
