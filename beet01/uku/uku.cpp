@@ -19,9 +19,12 @@ signed main()
   double a[N];
   vector<double> A;
   rep(i, N) cin >> a[i], A.push_back(a[i]);
-  sort(all(A)); A.erase(unique(all(A)), end(A));
-  int cnt[A.size()] = {0};
-  rep(i, N) a[i] = find(all(A), a[i])-begin(A), cnt[(int)a[i]]++;
-  rep(i, N) cout << (int)(a[i]*3 + (cnt[(int)a[i]]-1)) << endl;
+  sort(all(A));
+  rep(i, N) {
+    int up = upper_bound(all(A), a[i]) - begin(A);
+    int lw = lower_bound(all(A), a[i]) - begin(A);
+    cout << up-lw-1 + lw*3 << endl;
+  }
+
   return 0;
 }
