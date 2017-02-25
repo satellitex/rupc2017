@@ -78,7 +78,7 @@ double Dinkelbach()
 {
   double t = 0;
   for(t = 0; ; t = fcost / gcost)
-    if(fabs(Kruskal(t)) < 1e-8) break;
+    if(fabs(Kruskal(t)) < 1e-5) break;
 
   //for(int i = 0; i < m; i++)
   //if(!used[i]) cout << i << endl;
