@@ -1,2 +1,3 @@
-script_generator(src='generator.cc')
-script_validator(src='validator.cc')
+cxx_generator(src='generator.cc')
+cxx_validator(src='validator.cc')
+cxx_judge(src='judge.cc');
