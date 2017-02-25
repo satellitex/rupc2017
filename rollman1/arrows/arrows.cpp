@@ -16,17 +16,16 @@ double ang(double rad)
 
 int main()
 {
-    double th[2];
+    double th, x = 0, y = 0;
     for (int i = 0; i < 2; i++) {
-        cin >> th[i];
+        cin >> th;
+        x += cos(rad(th));
+        y += sin(rad(th));
     }
-
-    double x = 0, y = 0;
-    for (int i = 0; i < 2; i++) {
-        x += sin(rad(th[i]));
-        y += cos(rad(th[i]));
-    }
-    
-    printf("%.10f\n", ang(atan(x / y) + (1e-12)));
+    printf("%.10f\n", ang(atan2(y, x) + (1e-12)));
     return 0;
 }
+
+/*
+  atan と atan2 の違いを知らなかったのでダメ
+ */
