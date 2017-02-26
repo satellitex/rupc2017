@@ -16,7 +16,7 @@ int main()
         scanf("%d %d", &X[i], &Y[i]);        
     }
     
-    vector<vector<int>> p(N, vector<int>(N, -1));
+    vector<vector<int>> p(N, vector<int>(N));
     for (int i = 0; i < N; i++) {
         for (int j = i; j < N; j++) {                        
             int np = 0, pp = 0;
@@ -54,10 +54,10 @@ int main()
     for (int i = 0; i <= N; i++) {
         for (int j = 0; j < 2; j++) {
             if (dp[N][i][j] >= 0) {
-                res = max(res, i);
+                update(res, i);
             }
         }
     }
-    cout << res << endl;
+    printf("%d\n", res);
     return 0;
 }
