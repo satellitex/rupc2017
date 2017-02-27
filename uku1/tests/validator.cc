@@ -33,15 +33,23 @@ void input() {
 }
 
 void check() {
-  // self loop
+
   bool self_loop = 0;
+  bool multi_edge = 0;
+  set< pair<int, int> > st;
   for(int i = 0; i < m; i++) {
     if(a[i] == b[i]) {
       self_loop = 1;
       break;
     }
+    if(st.count(make_pair(a[i], b[i]))) {
+      multi_edge = 1;
+      break;
+    }
+    st.insert(make_pair(a[i], b[i]));
   }
   ensuref(!self_loop, "Exist self loop");
+  ensuref(!multi_edge, "Exist multiple edge");
 }
 
 int main() {

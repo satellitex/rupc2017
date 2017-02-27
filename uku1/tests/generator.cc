@@ -13,21 +13,23 @@ void start(int id) {
   int n = rnd.next(2, N);
   int m = rnd.next(n-1, min(n*(n-1)/2, M));
   ofs << n << " " << m << endl;
+  set< pair<int, int> > st;
   for(int b = 1; b < n; b++) {
     int a = rnd.next(0, b-1);
+    st.insert(make_pair(a, b));
     int c = rnd.next(1, C);
     int t = rnd.next(0, T);
     ofs << a << " " << b << " " << c << " " << t << endl;
     m--;
   }
 
-  set< pair<int, int> > st;
   for(int i = 0; i < m; i++) {
   RE:
     int a = rnd.next(0, n-1);
     int b = rnd.next(0, n-1);
     if(a > b) swap(a, b);
     if(a == b || st.count(make_pair(a, b))) goto RE;
+    st.insert(make_pair(a, b));
     int c = rnd.next(1, C);
     int t = rnd.next(0, T);
     ofs << a << " " << b << " " << c << " " << t << endl;
