@@ -6,12 +6,12 @@ int main(int argc, char* argv[])
 {
     registerGen(argc, argv, 1);
 
-    constexpr int N_MIN = 30000;
-    constexpr int N_MAX = 50000;
+    constexpr int N_MIN = 100000;
+    constexpr int N_MAX = 100000;
     
     int N;
     for (int t = 0; t < 5; t++) {
-        std::ofstream of(format("04_largesame_%02d.in", t + 1).c_str());
+        std::ofstream of(format("06_maxsame_%02d.in", t + 1).c_str());
         N = rnd.next(N_MIN, N_MAX);        
         of << N << std::endl;
 

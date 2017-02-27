@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8; mode: python -*-
 
 ## Input generators.
@@ -6,6 +7,8 @@
 cxx_generator(src='gen_small.cc')
 cxx_generator(src='gen_large.cc')
 cxx_generator(src='gen_largesame.cc')
+cxx_generator(src='gen_max.cc')
+cxx_generator(src='gen_allsame.cc')
 #java_generator(src='Generator.java', encoding='UTF-8', mainclass='Generator')
 #script_generator(src='generator.py')
 
