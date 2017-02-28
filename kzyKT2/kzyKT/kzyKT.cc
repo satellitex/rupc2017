@@ -13,11 +13,12 @@ void dfs(int x){
   u[x]=1;
   for(int i=0;i<G[x].size();i++)if(!u[G[x][i]])dfs(G[x][i]);
   g.push_back(x);
-} 
+}
 void rdfs(int x,int k){
   u[x]=1,cmp[x]=k;
   for(int i=0;i<rG[x].size();i++)if(!u[rG[x][i]])rdfs(rG[x][i],k);
 }
+
 int scc(){
   memset(u,0,sizeof(u));g.clear();
   for(int i=0;i<n;i++)if(!u[i])dfs(i);
@@ -85,6 +86,7 @@ void calc() {
   }
   for(int i=0; i<n; i++) if(h[cmp[i]]) z[cmp[i]][1]=z[cmp[i]][0];
 }
+
 void make(){
   for(int i=0;i<n;i++)for(int j=0;j<G[i].size();j++)if(cmp[i]!=cmp[G[i][j]])v[cmp[i]].push_back(P(G[i][j],o[find(i)]));
   for(int i=0;i<n;i++){
@@ -93,6 +95,7 @@ void make(){
     for(int j=0;j<v[i].size();j++)c[cmp[v[i][j].F]]++;
   }
 }
+
 void erase() {
   queue<int> que;
   for(int i=0; i<n; i++) if(i!=cmp[0]&&!c[i]) que.push(i);
