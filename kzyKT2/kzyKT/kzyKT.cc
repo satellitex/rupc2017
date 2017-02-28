@@ -85,6 +85,7 @@ void calc() {
       que.push(PP(y,P(t^1,x)));
     }
   }
+  for(int i=0; i<n; i++) if(h[cmp[i]]) z[cmp[i]][1]=z[cmp[i]][0];
 }
 void make(){
   for(int i=0;i<n;i++)for(int j=0;j<G[i].size();j++)if(cmp[i]!=cmp[G[i][j]])v[cmp[i]].push_back(P(G[i][j],o[find(i)]));
