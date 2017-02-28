@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
                 theta[i] = rnd.next(MINTHETA, MAXTHETA);
             }
 
-            if( abs(theta[0] - theta[1]) == 180){
+            if( abs(theta[0] - theta[1]) == 180 || theta[0] + theta[1] == 360 ){
             }else{
                 break;
             }
