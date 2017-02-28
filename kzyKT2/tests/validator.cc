@@ -10,15 +10,20 @@ int main() {
   inf.readSpace();
   ll m=inf.readInt(0LL, min(n*(n-1),N), "m");
   inf.readEoln();
+  for(int i=0; i<n; i++) {
+    if(i) inf.readSpace();
+    inf.readInt(0, 1000, "c");
+  }
+  inf.readEoln();
   set<P> s;
   for(int i=0; i<m; i++) {
-    int x=inf.readInt(0, n, "x");
+    int a=inf.readInt(0, n-1, "a");
     inf.readSpace();
-    int y= inf.readInt(0, n, "y");
+    int b=inf.readInt(0, n-1, "b");
     inf.readEoln();
-    ensuref(!s.count(P(x,y)),"x,y is exist");
-    ensuref(x!=y,"x==y");
-    s.insert(P(x,y));
+    ensuref(!s.count(P(a,b)),"a,b is exist");
+    ensuref(a!=b,"a==b");
+    s.insert(P(a,b));
   }
   inf.readEof();
   return 0;
