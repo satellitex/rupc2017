@@ -3,7 +3,6 @@ using namespace std;
 #define F first
 #define S second
 typedef pair<int,int> P;
-typedef pair<int,P> PP;
 #define N 100001
 vector<int> G[N],rG[N],g;
 vector<P> v[N];
@@ -40,24 +39,22 @@ void unite(int x,int y) {
 bool same(int x,int y){return find(x)==find(y);}
 
 int o[N],h[N];
+bool uu[N][2];
+void dfs(int x,int t,int q) {
+  for(int i=0;i<G[x].size();i++) {
+    int y=G[x][i];
+    if(uu[y][t^1]) continue;
+    if(q>=0&&cmp[y]==cmp[q]) unite(y,q);
+    uu[y][t^1]=1;
+    dfs(y,t^1,x);
+  }
+}
+
 void calc() {
   init();
-  bool uu[N][2];
   memset(uu,0,sizeof(uu));
-  queue<PP> que;
-  que.push(PP(0,P(0,-1)));
   uu[0][0]=1;
-  while(!que.empty()) {
-    PP p=que.front();que.pop();
-    int x=p.F,t=p.S.F,q=p.S.S;
-    for(int i=0;i<G[x].size();i++) {
-      int y=G[x][i];
-      if(uu[y][t^1]) continue;
-      if(q>=0&&cmp[y]==cmp[q]) unite(y,q);
-      uu[y][t^1]=1;
-      que.push(PP(y,P(t^1,x)));
-    }
-  }
+  dfs(0,0,-1);
   memset(o,-1,sizeof(o));
   fill(h,h+N,1);
   set<int> s;
@@ -70,19 +67,20 @@ void calc() {
     s.insert(cmp[i]);
   }
   for(int i=0; i<n; i++)if(ma[cmp[i]]==1)h[cmp[i]]=0;
-  que.push(PP(0,P(0,-1)));
+  queue<P> que;
+  que.push(P(0,0));
   memset(uu,0,sizeof(uu));
   uu[0][0]=1;
   z[cmp[0]][o[find(0)]]+=a[0];
   while(!que.empty()) {
-    PP p=que.front();que.pop();
-    int x=p.F,t=p.S.F,q=p.S.S;
+    P p=que.front();que.pop();
+    int x=p.F,t=p.S;
     for(int i=0;i<G[x].size();i++) {
       int y=G[x][i];
       if(uu[y][t^1]) continue;
       uu[y][t^1]=1;
       if(t) z[cmp[y]][o[find(y)]]+=a[y];
-      que.push(PP(y,P(t^1,x)));
+      que.push(P(y,t^1));
     }
   }
   for(int i=0; i<n; i++) if(h[cmp[i]]) z[cmp[i]][1]=z[cmp[i]][0];
