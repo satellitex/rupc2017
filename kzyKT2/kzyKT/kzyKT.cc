@@ -6,21 +6,18 @@ typedef pair<int,int> P;
 #define N 100001
 vector<int> G[N],rG[N],g;
 vector<P> v[N];
-int n,cmp[N],u[N],c[N],a[N],d[N][2],z[N][2],o[N],h[N],uu[N][2];
+int n,m,ans,cmp[N],u[N],c[N],a[N],d[N][2],z[N][2],o[N],h[N],uu[N][2];
   
 void add_edge(int x,int y){G[x].push_back(y);rG[y].push_back(x);}
-
 void dfs(int x){
   u[x]=1;
   for(int i=0;i<G[x].size();i++)if(!u[G[x][i]])dfs(G[x][i]);
   g.push_back(x);
 }
-
 void rdfs(int x,int k){
   u[x]=1,cmp[x]=k;
   for(int i=0;i<rG[x].size();i++)if(!u[rG[x][i]])rdfs(rG[x][i],k);
 }
-
 int scc(){
   memset(u,0,sizeof(u));g.clear();
   for(int i=0;i<n;i++)if(!u[i])dfs(i);
@@ -122,7 +119,6 @@ void solve() {
 }
 
 int main() {
-  int m;
   cin >> n >> m;
   for(int i=0; i<n; i++) cin >> a[i];
   for(int i=0,x,y; i<m; i++) {
@@ -133,7 +129,6 @@ int main() {
   calc();
   make();
   solve();
-  int ans=0;
   for(int i=0;i<n;i++)for(int j=0;j<2;j++) ans=max(ans,d[cmp[i]][j]);
   cout << ans << endl;
   return 0;
