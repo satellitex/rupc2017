@@ -116,6 +116,7 @@ void solve() {
       if(!c[cmp[y]]) que.push(cmp[y]);
     }
   }
+  for(int i=0;i<n;i++)for(int j=0;j<2;j++) ans=max(ans,d[cmp[i]][j]);
 }
 
 int main() {
@@ -129,7 +130,6 @@ int main() {
   calc();
   make();
   solve();
-  for(int i=0;i<n;i++)for(int j=0;j<2;j++) ans=max(ans,d[cmp[i]][j]);
   cout << ans << endl;
   return 0;
 }
