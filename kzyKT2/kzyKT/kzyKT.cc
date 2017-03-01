@@ -2,12 +2,12 @@
 using namespace std;
 #define F first
 #define S second
-typedef pair<int,int> P;
 #define N 100001
+typedef pair<int,int> P;
 vector<int> G[N],rG[N],g;
 vector<P> v[N];
-int n,m,ans,cmp[N],u[N],c[N],a[N],d[N][2],z[N][2],o[N],h[N],uu[N][2];
-  
+int n,m,cmp[N],u[N],c[N],a[N],d[N][2],z[N][2],o[N],h[N],uu[N][2],q[N],r[N];
+
 void add_edge(int x,int y){G[x].push_back(y);rG[y].push_back(x);}
 void dfs(int x){
   u[x]=1;
@@ -23,11 +23,10 @@ int scc(){
   for(int i=0;i<n;i++)if(!u[i])dfs(i);
   memset(u,0,sizeof(u));
   int k=0;
-  for(int i=g.size()-1; i>=0; i--)if(!u[g[i]])rdfs(g[i],k++);
+  for(int i=g.size()-1;i>=0;i--)if(!u[g[i]])rdfs(g[i],k++);
   return k;
 }
 
-int q[N],r[N];
 void init(){for(int i=0;i<N;i++)q[i]=i,r[i]=0;}
 int find(int x){return (q[x]==x)?x:(q[x]=find(q[x]));}
 void unite(int x,int y) {
@@ -63,7 +62,7 @@ void calc() {
     o[find(i)]=s.count(cmp[i]);
     s.insert(cmp[i]);
   }
-  for(int i=0; i<n; i++)if(ma[cmp[i]]==1)h[cmp[i]]=0;
+  for(int i=0;i<n;i++)if(ma[cmp[i]]==1)h[cmp[i]]=0;
   queue<P> que;
   que.push(P(0,0));
   memset(uu,0,sizeof(uu));
@@ -80,7 +79,7 @@ void calc() {
       que.push(P(y,t^1));
     }
   }
-  for(int i=0; i<n; i++) if(h[cmp[i]]) z[cmp[i]][1]=z[cmp[i]][0];
+  for(int i=0;i<n;i++)if(h[cmp[i]])z[cmp[i]][1]=z[cmp[i]][0];
 }
 
 void make(){
@@ -96,11 +95,11 @@ void make(){
   }
 }
 
-void solve() {
+int solve() {
   for(int i=0;i<n;i++)d[i][0]=d[i][1]=-1<<29;
   d[cmp[0]][o[find(0)]]=z[cmp[0]][o[find(0)]];
   queue<int> que;
-  for(int i=0; i<n; i++) if(!c[i]) que.push(i);
+  for(int i=0;i<n;i++)if(!c[i])que.push(i);
   while(!que.empty()) {
     int x=que.front();que.pop();
     for(int i=0; i<v[x].size(); i++) {
@@ -116,7 +115,9 @@ void solve() {
       if(!c[cmp[y]]) que.push(cmp[y]);
     }
   }
+  int ans=0;
   for(int i=0;i<n;i++)for(int j=0;j<2;j++) ans=max(ans,d[cmp[i]][j]);
+  return ans;
 }
 
 int main() {
@@ -129,7 +130,6 @@ int main() {
   scc();
   calc();
   make();
-  solve();
-  cout << ans << endl;
+  cout << solve() << endl;
   return 0;
 }
