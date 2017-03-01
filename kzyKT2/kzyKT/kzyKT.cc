@@ -99,35 +99,11 @@ void make(){
   }
 }
 
-void erase() {
-  queue<int> que;
-  for(int i=0; i<n; i++) if(i!=cmp[0]&&!c[i]) que.push(i);
-  while(!que.empty()) {
-    int x=que.front();que.pop();
-    for(int i=0; i<v[x].size(); i++) {
-      int y=v[x][i].F;
-      c[cmp[y]]--;
-      if(!c[y]) que.push(y);
-    }
-  }
-}
-
-int main() {
-  int m;
-  cin >> n >> m;
-  for(int i=0; i<n; i++) cin >> a[i];
-  for(int i=0,x,y; i<m; i++) {
-    cin >> x >> y;
-    add_edge(x,y);
-  }
-  scc();
-  calc();
-  make();
-  erase();
+void solve() {
   for(int i=0;i<n;i++)d[i][0]=d[i][1]=-1<<29;
   d[cmp[0]][o[find(0)]]=z[cmp[0]][o[find(0)]];
   queue<int> que;
-  que.push(cmp[0]);
+  for(int i=0; i<n; i++) if(!c[i]) que.push(i);
   while(!que.empty()) {
     int x=que.front();que.pop();
     for(int i=0; i<v[x].size(); i++) {
@@ -143,6 +119,20 @@ int main() {
       if(!c[cmp[y]]) que.push(cmp[y]);
     }
   }
+}
+
+int main() {
+  int m;
+  cin >> n >> m;
+  for(int i=0; i<n; i++) cin >> a[i];
+  for(int i=0,x,y; i<m; i++) {
+    cin >> x >> y;
+    add_edge(x,y);
+  }
+  scc();
+  calc();
+  make();
+  solve();
   int ans=0;
   for(int i=0;i<n;i++)for(int j=0;j<2;j++) ans=max(ans,d[cmp[i]][j]);
   cout << ans << endl;
