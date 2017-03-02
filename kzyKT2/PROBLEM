@@ -7,5 +7,5 @@
 ##   time_limit: The time limit of this problem in seconds.
 problem(title = "Donuts",
         id = "K",
-        time_limit = 5.0,
+        time_limit = 3.0,
         )
