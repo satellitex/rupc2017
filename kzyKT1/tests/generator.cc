@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     s.insert(P(-1,-1));
     for(int i=0; i<k; i++) {
       int x=-1,y=-1;
-      while(s.count(P(x,y))) x=rnd.next(0LL,n-1),y=rnd.next(0LL,m-1);
+      while(P(x,y)==P(0,0)||P(x,y)==P(n-1,m-1)||s.count(P(x,y))) x=rnd.next(0LL,n-1),y=rnd.next(0LL,m-1);
       ofs << x << " " << y << endl;
       s.insert(P(x,y));
     }
