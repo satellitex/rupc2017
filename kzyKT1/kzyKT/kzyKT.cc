@@ -27,8 +27,8 @@ void C(int &x,int &y){
 int main() {
   init();
   cin >> n >> m >> k;
-  ma[p1]=k;
-  ma[p2]=k+1;
+  ma[p1]=0;
+  ma[p2]=1;
   for(int i=0,x,y; i<k; i++) {
     cin >> x >> y;
     a[i]=P(x,y);
@@ -40,12 +40,13 @@ int main() {
       if(ma.count(P(xx,yy))) unite(z,ma[P(xx,yy)]);
     }
   }
-  int ans=same(ma[P(-1,-1)],ma[P(-2,-2)])?0:2;
+  int ans=same(ma[p1],ma[p2])?0:2;
   for(int i=0; ans>1&&i<k; i++) {
     for(int j=0; j<16; j++) {
       int x=a[i].first+dx2[j],y=a[i].second+dy2[j];
       if(!check(x,y,1)) continue;
       C(x,y);
+      if(!ma.count(P(x,y))) continue;
       if(same(ma[p1],ma[a[i]])&&same(ma[p2],ma[P(x,y)])) ans=1;
       if(same(ma[p2],ma[a[i]])&&same(ma[p1],ma[P(x,y)])) ans=1;
     }
