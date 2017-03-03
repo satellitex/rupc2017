@@ -50,19 +50,9 @@ bool in_field(int x, int y, int W, int H)
     return 0 <= x && x < W && 0 <= y && y < H;
 }
 
-namespace std {
-    template <>
-    class hash<pair<int, int>> {
-      public:
-        size_t operator () (const pair<int, int>& x) const {
-            return hash<int>() (x.first) ^ hash<int>() (x.second);
-        }
-    };
-}
-
 int main()
 {    
-    unordered_map<pair<int, int>, int> f;
+    map<pair<int, int>, int> f;
     
     int N, M, K;
     scanf("%d %d %d", &N, &M, &K);
