@@ -9,14 +9,14 @@ vector<edge> G[MAX_V];
 bool used[MAX_V];
   
 void add_edge(int from, int to, int cap){
-  G[from].push_back((edge){to, cap, G[to].size()});
-  G[to].push_back((edge){from, 0, G[from].size()-1});
+  G[from].push_back((edge){to, cap, (int)G[to].size()});
+  G[to].push_back((edge){from, 0, (int)G[from].size()-1});
 }
   
 int dfs(int v, int t, int f){
   if(v == t)return f;
   used[v] = true;
-  for(int i = 0 ; i < G[v].size() ; i++){
+  for(int i = 0 ; i < (int)G[v].size() ; i++){
     edge &e = G[v][i];
     if(!used[e.to] && e.cap > 0){
       int d = dfs(e.to,t,min(f,e.cap));
@@ -45,30 +45,42 @@ int N,M;
 int D[111][111];
 int l,r;
 int s,t,S,T,V;
-void make_graph(int t){
-  for(int i=0;i<MAX_V;i++) G[i].clear();
+void make_graph(int h){
+  for(int i=0;i<V;i++) G[i].clear();
 
   for(int i=0;i<N;i++) {
-    add_edge( S, i, l );
-    add_edge( i, T, l );
-    
     add_edge( s, i, r-l );
+    add_edge( s, T, l );
+    add_edge( S, i, l );
   
     for(int j=0;j<M;j++)
-      if( D[i][j] <= t ) {
-	add_edge( i, N+j, 1 );
-	add_edge( N+j, t, 1 );
-      }
+      if( D[i][j] <= h ) 
+        add_edge( i, N+j, 1 );      
+  }
+  for(int i=0;i<M;i++)
+    add_edge( N+i, t, 1 );
+}
+
+void view(){
+  cout << "View" << endl;
+  for(int i=0;i<V;i++){
+    cout << "vertex : " << i << endl;
+    for( edge e : G[i] )
+      cout << " -> " << e.to << " " << e.cap << endl;
   }
 }
 
-bool isok(int t){
-  make_graph( t );
+bool isok(int h){
+  make_graph( h );
   int res = 0;
-  res += max_flow( S, T );
-  res += max_flow( S, t );
-  res += max_flow( s, T );
-  res += max_flow( s, t );
+  max_flow( S, T );
+  max_flow( s, T );
+  max_flow( S, t );
+  max_flow( s, t );
+  for( edge e : G[t] ){
+    if( e.to == T ) continue;
+    res += e.cap;
+  }
   return res == M;
 }
 
@@ -89,9 +101,9 @@ int main(){
     int h = (st+ed)/2;
     if( isok( h ) ){
       res = h;
-      st = h+1;
-    } else {
       ed = h-1;
+    } else {
+      st = h+1;
     }
   }
   cout << r-l << endl;
