@@ -27,20 +27,20 @@ void random_gen( string name,int n = MAX_N, int m = MAX_M,int max_h = MAX_H ){
 
 int main(int argc, char *argv[])
 {
-    registerGen(argc, argv, 1);
+  registerGen(argc, argv, 1);
 
-    for(int t = 0; t < NUM_OF_RANDOM_CASE; t++ ){
-        random_gen( format("50_random_%02d.in", t+1),
-                    rnd.next( MIN_N, MAX_N ), rnd.next( MIN_M, MAX_M ), rnd.next(MIN_H,MAX_H) );
-    }
-    for(int t = 0; t < NUM_OF_RANDOM_CASE; t++ ){
-        random_gen( format("60_random_%02d.in", t+1),
-                    MAX_N, rnd.next( MIN_M, MAX_M ) );
-    }
-    for(int t = 0; t < NUM_OF_RANDOM_CASE; t++ ){
-        random_gen( format("70_random_%02d.in", t+1),
-                    MAX_N, rnd.next( MIN_M, MAX_M ), 30 );
-    }
+  for(int t = 0; t < NUM_OF_RANDOM_CASE; t++ ){
+    random_gen( format("50_random_%02d.in", t+1),
+                rnd.next( MIN_N, MAX_N ), rnd.next( MIN_M, MAX_M ), rnd.next(MIN_H,MAX_H) );
+  }
+  for(int t = 0; t < NUM_OF_RANDOM_CASE; t++ ){
+    random_gen( format("60_random_%02d.in", t+1),
+                MAX_N, rnd.next( MIN_M, MAX_M ) );
+  }
+  for(int t = 0; t < NUM_OF_RANDOM_CASE; t++ ){
+    random_gen( format("70_random_%02d.in", t+1),
+                MAX_N, rnd.next( MIN_M, MAX_M ), 30 );
+  }
    
-    return 0;
+  return 0;
 }

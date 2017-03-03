@@ -3746,7 +3746,7 @@ void registerValidation()
     inf.strict = true;
 }
  
-void registerValidation( const std::string& name ){
+void registerValidation( const std::string& name )
 {
     __testlib_ensuresPreconditions();
 
