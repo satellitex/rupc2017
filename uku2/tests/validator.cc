@@ -58,25 +58,12 @@ void input() {
 }
 
 void check() {
-  bool self_loop = 0;
-  bool multi_edge = 0;
-  set< pair<int, int> > st;
   UnionFind uf(n);
   for(int i = 0; i < n-1; i++) {
     int a, b;
     tie(a, b) = minmax(u[i], v[i]);
-    if(a == b) {
-      self_loop = 1;
-      break;
-    }
-    if(st.count(make_pair(a, b))) {
-      multi_edge = 1;
-      break;
-    }
     uf.unite(a, b);
   }
-  ensuref(!self_loop, "Exist self loop");
-  ensuref(!multi_edge, "Exist multiple edge");
   ensuref(uf.size(0) == n, "Disconnected graph");
 }
 
