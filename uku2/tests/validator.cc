@@ -8,9 +8,28 @@ const int N_MAX = 100000;
 const int Q_MIN = 1;
 const int Q_MAX = 100000;
 
+struct UnionFind
+{
+  vector<int> data;
+  UnionFind(){}
+  UnionFind(int sz):data(sz, -1){};
+  int size(int x) { return -data[find(x)]; }
+  int find(int x) { return data[x] < 0 ? x : data[x] = find(data[x]); }
+  bool same(int x, int y) { return find(x) == find(y); }
+  int unite(int x, int y)
+  {
+    x = find(x), y = find(y);
+    if(x != y) {
+      if(data[x] < data[y]) swap(x, y);
+      data[x] += data[y]; data[y] = x;
+    }
+    return -data[x];
+  }
+};
+
 int n, q;
 int u[N_MAX], v[N_MAX];
-int t[Q_MAX], r[Q_MAX], c[Q_MAX];
+int t[Q_MAX], r[Q_MAX], s[Q_MAX];
 
 void input() {
   n = inf.readInt(N_MIN, N_MAX, "n");
@@ -18,20 +37,20 @@ void input() {
   q = inf.readInt(Q_MIN, Q_MAX, "q");
   inf.readEoln();
   for(int i = 0; i < n-1; i++) {
-    u[i] = inf.readInt(0, n-1, format("u[%d]", i));
+    u[i] = inf.readInt(0, n-1, format("u[%d]", i+1));
     inf.readSpace();
-    v[i] = inf.readInt(0, n-1, format("v[%d]", i));
+    v[i] = inf.readInt(0, n-1, format("v[%d]", i+1));
     inf.readEoln();
   }
   for(int i = 0; i < q; i++) {
-    t[i] = inf.readInt(1, 2, format("t[%d]", i));
+    t[i] = inf.readInt(1, 2, format("t[%d]", i+1));
+    inf.readSpace();
+    r[i] = inf.readInt(0, n-1, format("r[%d]", i+1));
     inf.readSpace();
     if(t[i] == 1) {
-      r[i] = inf.readInt(0, n-1, format("r[%d]", i));
+      s[i] = inf.readInt(-10, 10, format("s[%d]", i+1));
     } else if(t[i] == 2) {
-      r[i] = inf.readInt(0, n-1, format("r[%d]", i));
-      inf.readSpace();
-      c[i] = inf.readInt(0, 2, format("c[%d]", i));
+      s[i] = inf.readInt(0, 9, format("s[%d]", i+1));
     }
     inf.readEoln();
   }
@@ -39,15 +58,26 @@ void input() {
 }
 
 void check() {
-  // self loop
   bool self_loop = 0;
+  bool multi_edge = 0;
+  set< pair<int, int> > st;
+  UnionFind uf(n);
   for(int i = 0; i < n-1; i++) {
-    if(u[i] == v[i]) {
+    int a, b;
+    tie(a, b) = minmax(u[i], v[i]);
+    if(a == b) {
       self_loop = 1;
       break;
     }
+    if(st.count(make_pair(a, b))) {
+      multi_edge = 1;
+      break;
+    }
+    uf.unite(a, b);
   }
   ensuref(!self_loop, "Exist self loop");
+  ensuref(!multi_edge, "Exist multiple edge");
+  ensuref(uf.size(0) == n, "Disconnected graph");
 }
 
 int main() {

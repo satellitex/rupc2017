@@ -45,12 +45,12 @@ int main(int argc, char* argv[]) {
 
     for(int i = 0; i < q; i++) {
       int t = rnd.next(1, 2);
+      int v = rnd.next(0, n-1);
       if(t == 1) {
-	int v = rnd.next(0, n-1);
-	of << t << " " << v << endl;
+	int x = rnd.next(-10, 10);
+	of << t << " " << v << " " << x << endl;
       } else {
-	int v = rnd.next(0, n-1);
-	int c = rnd.next(0, 2);
+	int c = rnd.next(0, 9);
 	of << t << " " << v << " " << c << endl;
       }
     }

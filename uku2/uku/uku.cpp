@@ -13,13 +13,13 @@ const int inf = 1LL << 55;
 const int mod = 1e9 + 7;
 
 struct SegmentTree {
-  vector<int> sum[3], lazy;
+  vector<int> sum[10], lazy;
   int sz;
   void init(int n)
   {
     sz = 1;
     while(sz <= n) sz <<= 1;
-    rep(i, 3) sum[i].resize(2*sz-1, 0);
+    rep(i, 10) sum[i].resize(2*sz-1, 0);
     lazy.resize(2*sz-1, 0);
     rep(i, n) sum[0][i+sz-1] = 1;
     for(int k = sz-2; k >= 0; k--) {
@@ -29,32 +29,32 @@ struct SegmentTree {
   inline void lazy_evaluate(int k, int l, int r)
   {
     if(lazy[k]) {
-      int temp[3];
-      rep(i, 3) temp[i] = sum[i][k];
-      rep(i, 3) sum[(i+lazy[k])%3][k] = temp[i];
+      int temp[10];
+      rep(i, 10) temp[i] = sum[i][k];
+      rep(i, 10) sum[(i+lazy[k])%10][k] = temp[i];
       if(r - l > 1) {
-	(lazy[2*k+1] += lazy[k]) %= 3;
-	(lazy[2*k+2] += lazy[k]) %= 3;
+	lazy[2*k+1] += lazy[k]+10;
+	lazy[2*k+2] += lazy[k]+10;
       }
       lazy[k] = 0;
     }
   }
-  void update(int a, int b, int k, int l, int r)
+  void update(int a, int b, int x, int k, int l, int r)
   {
     lazy_evaluate(k, l, r);
     if(r <= a || b <= l) return;
     if(a <= l && r <= b) {
-      (lazy[k] += 1) %= 3;
+      lazy[k] += x+10;
       lazy_evaluate(k, l, r);
       return;
     }
-    update(a, b, 2*k+1, l, (l+r)/2);
-    update(a, b, 2*k+2, (l+r)/2, r);
-    rep(i, 3) sum[i][k] = sum[i][2*k+1] + sum[i][2*k+2];
+    update(a, b, x, 2*k+1, l, (l+r)/2);
+    update(a, b, x, 2*k+2, (l+r)/2, r);
+    rep(i, 10) sum[i][k] = sum[i][2*k+1] + sum[i][2*k+2];
   }
-  void update(int a, int b)
+  void update(int a, int b, int x)
   {
-    update(a, b, 0, 0, sz);
+    update(a, b, x, 0, 0, sz);
   }
   int query(int a, int b, int c, int k, int l, int r)
   {
@@ -112,14 +112,12 @@ signed main()
     //rep(k, seg.sum[j].size()) cout << seg.sum[j][k] << " ";
     //cout << endl;
     //}
-    int t, r;
-    cin >> t >> r;
+    int t, r, s;
+    cin >> t >> r >> s;
     if(t == 1) {
-      seg.update(be[r], en[r]);
+      seg.update(be[r], en[r], s);
     } else if(t == 2) {
-      int c;
-      cin >> c;
-      cout << seg.query(be[r], en[r], c) << endl;
+      cout << seg.query(be[r], en[r], s) << endl;
     }
   }
 

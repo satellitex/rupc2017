@@ -20,12 +20,12 @@ int main(int argc, char* argv[]) {
     }
     for(int i = 0; i < q; i++) {
       int t = rnd.next(1, 2);
+      int r = rnd.next(0, n-1);
       if(t == 1) {
-	int r = rnd.next(0, n-1);
-	of << t << " " << r << endl;
+	int x = rnd.next(-10, 10);
+	of << t << " " << r << " " << x << endl;
       } else if(t == 2) {
-	int r = rnd.next(0, n-1);
-	int c = rnd.next(0, 2);
+	int c = rnd.next(0, 9);
 	of << t << " " << r << " " << c << endl;
       }
     }
