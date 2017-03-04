@@ -2,9 +2,9 @@
 #include <iostream>
 
 constexpr int N_MIN = 1;
-constexpr int N_MAX = 300000;
+constexpr int N_MAX = 100000;
 constexpr int p_MIN = 1;
-constexpr int p_MAX = 300000;
+constexpr int p_MAX = 100000;
 
 int N;
 int p[N_MAX];
