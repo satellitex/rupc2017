@@ -10,6 +10,7 @@ public class Main {
 	    x += Math.cos(Math.toRadians(th));
 	    y += Math.sin(Math.toRadians(th));
 	}
-	System.out.println(Math.toDegrees(Math.atan2(y, x)));
+	double res = Math.toDegrees(Math.atan2(y, x));
+	System.out.println(res < 0 ? res + 360 : res);
     }
 }

@@ -22,10 +22,7 @@ int main()
         x += cos(rad(th));
         y += sin(rad(th));
     }
-    printf("%.10f\n", ang(atan2(y, x) + (1e-12)));
+    auto res = ang(atan2(y, x));    
+    printf("%.15f\n", (res < 0 ? res + 360 : res));    
     return 0;
 }
-
-/*
-  atan と atan2 の違いを知らなかったのでダメ
- */
