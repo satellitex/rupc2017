@@ -5,7 +5,7 @@ typedef pair<int,int> P;
 
 int main() {
   vector<P> v;
-  for(int i=0; i<100000; i++) v.push_back(P(99999,i));
+  for(int i=0; i<100000; i++) v.push_back(P(99999-i,i));
   for(int t=3; t<8; t++) {
     ofstream ofs(format("02_large_%02d.in",t).c_str());
     ofs << 100000 << " " << 100000 << " ";
