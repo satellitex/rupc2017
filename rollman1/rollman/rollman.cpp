@@ -13,6 +13,10 @@ int main(void){
 	// Not absolutely required.
 	x = x / N; y = y / N;
 
-	cout << atan2(y, x) * 360.0 / (2.0*M_PI) << endl;
+    double ans = atan2(y, x) * 360.0 / (2.0*M_PI);
+    if(ans < 0){
+        ans = 360.0 + ans;
+    }
+    cout << setprecision(10) << ans << endl;
 	return 0;
 }
