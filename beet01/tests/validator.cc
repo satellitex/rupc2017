@@ -21,6 +21,7 @@ void check() {
   for (int i=0;i<n;i++){
     ensuref(0.0<=stof(s[i])&&stof(s[i])<=4.0,"out of range");
     ensuref(s[i].size()==5,"format invalid");
+    ensuref(s[i][1]=='.',"format invalid");
   }
 }
 
