@@ -16,6 +16,7 @@ void input(int theta[2]){
 
 void check(int theta[2]){
     ensuref(!(abs(theta[0] - theta[1]) == 180), "|theta1 - theta2| must not be 180 degree.");
+    ensuref(!(theta[0] + theta[1] == 360), "Anser must not 0 deg.");
 }
 
 int main() {
