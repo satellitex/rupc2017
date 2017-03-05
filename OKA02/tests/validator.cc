@@ -3,7 +3,7 @@
 using namespace std;
 typedef long long ll;
 // 制約
-const int MAX_N = 1000;
+const int MAX_N = 500;
 const int MIN_N = 1;
 const ll MAX_AB = 1e12; 
 const ll MIN_AB = 1;

@@ -8,7 +8,7 @@ public:
   ll n;
   vector<set<ll> >dat;
   xyTree(){dat.resize(N*2-1);n=N;}
-
+  
   void update(ll x,ll y){
     x+=n-1;
     dat[x].insert(y);
@@ -42,6 +42,7 @@ int main(){
   //入力
   vector<P>A[5];
   for(int i=0;i<5;i++) A[i].push_back(P(0,0));
+
   for(int i=0;i<n;i++){
     ll t,x,y;
     cin>>t>>x>>y;
@@ -49,7 +50,6 @@ int main(){
   }
   sort(A,A+5,compare);
   
-
   //座標圧縮
   set<ll> used;
   for(int i=0;i<A[0].size();i++)
