@@ -9,8 +9,8 @@ int main() {
   for(int i=0; i<n; i++) {
     string s=inf.readToken(format("[0-9.]{5}","ai"));
     for(int j=0; j<5; j++) {
-      if(i==1) ensuref(s[i]=='.',"ai");
-      else ensuref(isdigit(s[i]),"ai");
+      if(j==1) ensuref(s[j]=='.',"ai");
+      else ensuref(isdigit(s[j]),"ai");
     }
     double d;
     stringstream ss;
