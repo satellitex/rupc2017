@@ -8,7 +8,7 @@ int main() {
   string s;
   cin >> s;
   vector<P> v;
-  vector<int> t;
+  vector<int> t,z;
   t.push_back(1);
   for(int i=0; i<s.size(); i++) {
     if(s[i]=='+'||s[i]=='-') {
@@ -27,12 +27,10 @@ int main() {
       if(isdigit(s[i])) {
         x*=10;
         x+=s[i]-'0';
-      } else {
-        if(p.F==-1) {
-          if(!x) x=1;
-          p.F=x;
-          x=0;
-        } else continue;
+      } else if(p.F==-1) {
+        if(!x) x=1;
+        p.F=x;
+        x=0;
       }
     }
     if(p.F==-1) {
@@ -45,7 +43,6 @@ int main() {
     p.F*=t[k++];
     v.push_back(p);
   }
-  vector<int> z;
   for(int x=-2000; x<=2000; x++) {
     int sum=0;
     for(int i=0; i<v.size(); i++) sum+=v[i].F*pow(x,v[i].S);
