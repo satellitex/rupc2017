@@ -3,6 +3,11 @@ using namespace std;
 #define int long long
 typedef pair<int,int> P;
 #define MAX 1111
+int mystoi(string s){
+  if(s=="+") return 1;
+  if(s=="-") return -1;
+  return stoi(s);
+}
 signed main(){
   string s;
   cin>>s;
@@ -23,15 +28,12 @@ signed main(){
     //cout<<vs[i]<<endl;
     int x=vs[i].find("x"),y=vs[i][vs[i].size()-1]-'0';
     if(x==-1){
-      vp.push_back(P(stoi(vs[i]),0));
+      vp.push_back(P(mystoi(vs[i]),0));
       continue;
     }
-    if((int)vs[i].find("^")==-1){
-      vp.push_back(P(stoi(vs[i].substr(0,x)),1));
-      continue;
-    }
+    if((int)vs[i].find("^")==-1) y=1;
     if(x==0) vp.push_back(P(1,y));
-    else vp.push_back(P(stoi(vs[i].substr(0,x)),y));
+    else vp.push_back(P(mystoi(vs[i].substr(0,x)),y));
   }
   /*/
   for(int j=0;j<(int)vp.size();j++)
