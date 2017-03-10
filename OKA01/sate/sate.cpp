@@ -13,12 +13,12 @@ int solve(){
   dp[0][0][0] = 0;
   int res = 0;
   for(int i=0;i<=N;i++){
-    for(int j=0;j<=N;j++){
+    for(int j=0;j<=i;j++){
       for(int k=0;k<=i;k++){
 	if( dp[i][j][k] == INF ) continue;
 	if( dp[i][j][k] <= P ) res = max( res, j );
 	if( i==N ) continue;
-	int x = X[i]-H[i-k][i];
+	int x = max( 0, X[i]-H[i-k][i] );
 	if( x >= Y[i] ) {
 	  update( dp[i+1][j+1][0], dp[i][j][k] );
 	} else {
