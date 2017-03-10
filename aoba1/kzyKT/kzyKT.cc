@@ -1,10 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 stack<int> st[111111],s;
-int a[111111];
+int a[111111],n;
 
 int main() {
-  int n;
   cin >> n;
   for(int i=0,x; i<n; i++) {
     cin >> x;
