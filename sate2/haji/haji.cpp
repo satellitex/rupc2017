@@ -6,47 +6,53 @@ using namespace std;
 typedef long long ll;
 typedef pair<ll,ll> P;
 struct edge{ll to, cap,cost,rev;};
-int V;                         //頂点数
-vector<edge> G[MAX_V];         //グラフの隣接リスト表現
-ll dist[MAX_V];               //最短距離
-int prevv[MAX_V],preve[MAX_V]; //直前の頂点と辺
 
-// fromからtoへ向かう容量cap、コストcostの辺をグラフに追加する。
-void add_edge(int from,int to,int cap,int cost){
-  G[from].push_back((edge){to,cap,cost,G[to].size()});
-  G[to].push_back((edge){from,0,-cost,G[from].size()-1});
+int V;                          //頂点数
+vector<edge> G[MAX_V];          //グラフの隣接リスト表現
+ll h[MAX_V];                   //ポテンシャル
+ll dist[MAX_V];                //最短距離
+int prevv[MAX_V], preve[MAX_V]; //直前の頂点と辺
+
+//fromからtoへ向かう容量cap、コストcostの辺をグラフに追加する。
+void add_edge(int from, int to, int cap, int cost){
+  G[from].push_back((edge){to, cap, cost, G[to].size()});
+  G[to].push_back((edge){from, 0 ,-cost, G[from].size()-1});
 }
 
-//sからtへの流量fの最小費用流を求める
-//流せない場合-1を返す
-ll min_cost_flow(int s,int t,int f){
-  ll res=0;
-  while(f>0){
-    //ベルマンフォード法により,s-t間最短路を求める
+//sからtへの流量fの最小費用流を求める。
+int min_cost_flow(int s, int t, int f){
+  int res = 0;
+  fill(h, h+V, 0); //hを初期化
+  while(f > 0){
+    //ダイクストラ法を用いてhを更新する。
+    priority_queue <P, vector<P>, greater<P> > que;
     fill(dist,dist+V,INF);
-    dist[s]=0;
-    bool update = true;
-    while(update){
-      update = false;
-      for(int v=0; v<V ;v++){
-	if(dist[v]==INF) continue;
-	for(int i=0; i<G[v].size(); i++){
-	  edge &e = G[v][i];
-	  if(e.cap > 0 && dist[e.to] > dist[v]+e.cost) {
-	    dist[e.to] = dist[v] + e.cost;
-	    prevv[e.to] = v;
-	    preve[e.to] = i;
-	    update = true;
-	  }
+    dist[s] = 0;
+    que.push(P(0,s));
+    while(!que.empty()){
+      P p = que.top(); que.pop();
+      int v= p.second;
+      if(dist[v] < p.first) continue;
+      for(int i=0; i<G[v].size() ;i++){
+	edge &e = G[v][i];
+	if(e.cap > 0 && dist[e.to] > dist[v] + e.cost + h[v] - h[e.to]){
+	  dist[e.to] = dist[v] + e.cost + h[v] - h[e.to];
+	  prevv[e.to] = v;
+	  preve[e.to] = i;
+	  que.push(P(dist[e.to],e.to));
 	}
       }
     }
-    if(dist[t]==INF) return 0;
-    //s−t間短路に沿って目一杯流す
+    if(dist[t]==INF) return 0; //これ以上流せない
+    for(int v=0; v<V ;v++) h[v] += dist[v];
+    
+    //s−t間最短路に沿って目一杯流す。
     ll d = f;
-    for(int v=t; v!=s; v=prevv[v])d=min(d,G[prevv[v]][preve[v]].cap);
+    for(int v=t; v!=s ;v=prevv[v]) 
+      d= min(d, G[prevv[v]][preve[v]].cap);
+    
     f -= d;
-    res += d*dist[t];
+    res += d * h[t];
     for(int v=t; v!=s; v=prevv[v]){
       edge &e = G[prevv[v]][preve[v]];
       e.cap -= d;
@@ -55,6 +61,7 @@ ll min_cost_flow(int s,int t,int f){
   }
   return 1;
 }
+
 
 int n,m;
 ll g[N][N];
@@ -85,9 +92,8 @@ int search(){
 
 int main(){
   cin>>n>>m;
-  set<int> A;
   for(int i=0;i<n;i++)
-    for(int j=0;j<m;j++)scanf("%lld",&g[i][j]),A.insert(g[i][j]);
+    for(int j=0;j<m;j++)scanf("%lld",&g[i][j]);
   
   cout<<(m%n!=0)<<endl;
   cout<<search()<<endl;
