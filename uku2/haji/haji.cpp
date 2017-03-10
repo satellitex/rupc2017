@@ -6,7 +6,8 @@ typedef vector<int> V;
 
 class BT{
 public:
-  int n,td[2*MAX_N-1];
+  int n;
+  char td[2*MAX_N-1];
   vector<V> dat;
   void init(int k=0,int l=0,int r=-1){
     if(r==-1) r = n;
@@ -26,24 +27,27 @@ public:
     V tmp=v;
     for(int i=0;i<10;i++) v[(i+x)%10] = tmp[i];
   }
-
-  int add(int a,int b,int x,int y=0,int k=0,int l=0,int r=-1){
+  
+  int add(int a,int b,int x,int y=0,int k=0,int l=0,int r=-1,int tx=0){
     if(r==-1)r=n;
-    if(r<=a||b<=l) return 0; //区間の外
+    if(r<=a||b<=l){
+      shift(dat[k],tx);
+      td[k] =(td[k]+tx)%10;
+      return 0;
+    }
     if(a<=l&&r<=b){ //区間に完全に含まれる。
-      shift(dat[k],x);
-      td[k]+=x;
+      shift(dat[k],tx+x);
+      td[k]=(td[k]+x+tx)%10;
       return dat[k][y];
     }
     
-    int kl=k*2+1,kr=k*2+2;
-    shift(dat[kl],td[k]), shift(dat[kr],td[k]);
-    td[kl]+=td[k], td[kr]+=td[k];
+    int kl= k*2+1,kr=k*2+2;
+    tx=(tx+td[k])%10;
     td[k]=0;
-    
-    int vl=add(a,b,x,y,kl,l,(l+r)/2);
-    int vr=add(a,b,x,y,kr,(l+r)/2,r);
-    for(int i=0;i<10;i++)dat[k][i] = dat[kl][i]+dat[kr][i];
+    int vl=add(a,b,x,y,kl,l,(l+r)/2,tx);
+    int vr=add(a,b,x,y,kr,(l+r)/2,r,tx);
+
+    for(int i=0;i<10;i++)dat[k][i] = dat[kl][i]+dat[kr][i]; 
     return vl+vr;
   }
   int sum(int a,int b,int y){return add(a,b,0,y);}
