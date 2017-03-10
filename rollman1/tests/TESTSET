@@ -1,3 +1,4 @@
 cxx_generator(src='generator.cc')
 cxx_validator(src='validator.cc')
+cxx_validator(src='validator_by_sate.cpp')
 cxx_judge(src='judge.cc');
