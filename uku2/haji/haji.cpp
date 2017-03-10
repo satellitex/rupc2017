@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #define N 100001
 using namespace std;
-typedef long long ll;
 const int MAX_N = 1<<17;
 typedef vector<int> V;
 
@@ -15,6 +14,7 @@ public:
     if(r-l==1) return;
     init(k*2+1,l,(l+r)/2);init(k*2+2,(l+r)/2,r);
   }
+
   BT(){
     n = MAX_N;
     memset(td,0,sizeof(td));
@@ -22,12 +22,12 @@ public:
     init();
   }
 
-  V shift(V v,int x){
-    V res=V(10);
-    for(int i=0;i<10;i++) res[(i+x)%10] = v[i];
-    return res;
+  void shift(V &v,int x){
+    V tmp=v;
+    for(int i=0;i<10;i++) v[(i+x)%10] = tmp[i];
   }
-  V compare(V a,V b){
+
+  V compare(V &a,V &b){
     V res=V(10);
     for(int i=0;i<10;i++) res[i] = b[i]-a[i];
     return res;
@@ -38,16 +38,16 @@ public:
     if(r<=a||b<=l) return V(10); //区間の外
     if(a<=l&&r<=b){ //区間に完全に含まれる。
       V tmp = dat[k];
-      dat[k] = shift(dat[k],x);
+      shift(dat[k],x);
       td[k]+=x;
       return compare(tmp,dat[k]);
     }
 
-    ll kl=k*2+1,kr=k*2+2;
-    dat[kl]=shift(dat[kl],td[k]), dat[kr]=shift(dat[kr],td[k]);
+    int kl=k*2+1,kr=k*2+2;
+    shift(dat[kl],td[k]), shift(dat[kr],td[k]);
     td[kl]+=td[k], td[kr]+=td[k];
     td[k]=0;
-    
+
     V vl = add(a,b,x,kl,l,(l+r)/2);
     V vr = add(a,b,x,kr,(l+r)/2,r);
     V res(10);
@@ -59,27 +59,33 @@ public:
     if(r==-1)r=n,add(a,b,0);
     if(r<=a||b<=l) return 0; //区間の外
     if(a<=l&&r<=b)return dat[k][y];//区間に完全に含まれる。
-    ll vl = sum(a,b,y,k*2+1,l,(l+r)/2);
-    ll vr = sum(a,b,y,k*2+2,(l+r)/2,r);
+    int vl = sum(a,b,y,k*2+1,l,(l+r)/2);
+    int vr = sum(a,b,y,k*2+2,(l+r)/2,r);
     return vl+vr;
   }
 };
 
 V G[N];
 vector<int> ord;
-void dfs(int pos){
+void dfs(int pos,int pre){
   ord.push_back(pos);
-  for(int i=0;i<G[pos].size();i++)dfs(G[pos][i]);
+  for(int i=0;i<G[pos].size();i++)
+    if(G[pos][i]!=pre)dfs(G[pos][i],pos);
   ord.push_back(pos);
 }
 
 BT T;
 int main(){
   int n,q;
-  cin>>n>>q;
-  for(int i=0,a,b;i<n-1;i++)cin>>a>>b,G[a].push_back(b);
-  dfs(0);
-  vector<int>L(N,1e9),R(N,0);
+  scanf("%d%d",&n,&q);
+  for(int i=0,a,b;i<n-1;i++){
+    scanf("%d%d",&a,&b);
+    G[a].push_back(b);
+    G[b].push_back(a);
+  }
+  
+  dfs(0,-1);
+  vector<int>L(n,1e9),R(n,0);
   set<int> S;
   for(int i=0;i<ord.size();i++){
     int cnt = S.size();
@@ -90,7 +96,7 @@ int main(){
   
   while(q--){
     int t,r,x;
-    cin>>t>>r>>x;
+    scanf("%d%d%d",&t,&r,&x);
     x = (x+10)%10;
     if(t==1)T.add(L[r],R[r],x);
     else printf("%d\n",T.sum(L[r],R[r],x));
