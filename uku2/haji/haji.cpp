@@ -27,42 +27,26 @@ public:
     for(int i=0;i<10;i++) v[(i+x)%10] = tmp[i];
   }
 
-  V compare(V &a,V &b){
-    V res=V(10);
-    for(int i=0;i<10;i++) res[i] = b[i]-a[i];
-    return res;
-  }
-
-  V add(int a,int b,int x,int k=0,int l=0,int r=-1){
+  int add(int a,int b,int x,int y=0,int k=0,int l=0,int r=-1){
     if(r==-1)r=n;
-    if(r<=a||b<=l) return V(10); //区間の外
+    if(r<=a||b<=l) return 0; //区間の外
     if(a<=l&&r<=b){ //区間に完全に含まれる。
-      V tmp = dat[k];
       shift(dat[k],x);
       td[k]+=x;
-      return compare(tmp,dat[k]);
+      return dat[k][y];
     }
-
+    
     int kl=k*2+1,kr=k*2+2;
     shift(dat[kl],td[k]), shift(dat[kr],td[k]);
     td[kl]+=td[k], td[kr]+=td[k];
     td[k]=0;
-
-    V vl = add(a,b,x,kl,l,(l+r)/2);
-    V vr = add(a,b,x,kr,(l+r)/2,r);
-    V res(10);
-    for(int i=0;i<10;i++)res[i]=vl[i]+vr[i],dat[k][i]+=res[i];
-    return res;
-  }
-
-  int sum(int a,int b,int y,int k=0,int l=0,int r=-1){
-    if(r==-1)r=n,add(a,b,0);
-    if(r<=a||b<=l) return 0; //区間の外
-    if(a<=l&&r<=b)return dat[k][y];//区間に完全に含まれる。
-    int vl = sum(a,b,y,k*2+1,l,(l+r)/2);
-    int vr = sum(a,b,y,k*2+2,(l+r)/2,r);
+    
+    int vl=add(a,b,x,y,kl,l,(l+r)/2);
+    int vr=add(a,b,x,y,kr,(l+r)/2,r);
+    for(int i=0;i<10;i++)dat[k][i] = dat[kl][i]+dat[kr][i];
     return vl+vr;
   }
+  int sum(int a,int b,int y){return add(a,b,0,y);}
 };
 
 V G[N];
