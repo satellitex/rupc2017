@@ -4,7 +4,7 @@ const int N=23,Z=(1<<N)-1;
 int f[1<<N],d[1<<N],n,ans;
 set<int> s[1<<N];
 void zeta(){
-	for(int i=0; i<N; i++) {
+  for(int i=0; i<N; i++) {
     for(int j=0; j<(1<<N); j++) {
       if(j&1<<i) continue;
       f[j]&=f[j|(1<<i)];
