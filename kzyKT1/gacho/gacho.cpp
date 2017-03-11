@@ -21,7 +21,7 @@ void bfs(P p){
     for(int i=0;i<3;i++){
       for(int j=0;j<3;j++){
 	int ny=X.first+dy[i],nx=X.second+dx[j];
-	if(!i&&!j)continue;
+	if(i==1&&j==1)continue;
 	if(G.count(P(ny,nx)))q.push(P(ny,nx));
       }
     }
@@ -54,7 +54,7 @@ void bfs2(P p){
     for(int i=0;i<3;i++){
       for(int j=0;j<3;j++){
 	int ny=X.first+dy[i],nx=X.second+dx[j];
-	if(!i&&!j)continue;
+	if(i==1&&j==1)continue;
 	if(G.count(P(ny,nx)))q.push(P(ny,nx));
       }
     }
