@@ -55,6 +55,7 @@ int main() {
     ll x,y; cin >> t >> x >> y;
     v[t-1].emplace_back( x, y );
   }
+  for(int i=0;i<5;i++) v[i].emplace_back( 0,0 );
   
   vector<P> base_p;
   for(int i=0;i<v[0].size();i++) 
