@@ -31,6 +31,9 @@
 # ~ file
 *~
 
+# CMakeList.txt
+CMakeLists.txt
+
 rime
 rime.py
 setup.*
