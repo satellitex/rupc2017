@@ -1,4 +1,8 @@
-#include<bits/stdc++.h>
+//#include<bits/stdc++.h>
+#include<iostream>
+#include<map>
+#include<vector>
+#include<queue>
 using namespace std;
 #define P pair<int,int>
 #define mk make_pair
@@ -23,7 +27,7 @@ int main(){
     if(s.find(mk(w-2,h-1))!=s.end())c[2]=1;
     if(s.find(mk(0,1))!=s.end())c[1]=1;
     if(s.find(mk(1,0))!=s.end())c[0]=1;
-    if(c[0]&&c[1]||c[2]&&c[3])goto L0;
+    if((c[0]&&c[1])||(c[2]&&c[3]))goto L0;
     for(vector<P>::iterator it=v1.begin();it!=v1.end();it++){
         int x=(*it).first,y=(*it).second;
         if(s[mk(x,y)]==0){
@@ -73,6 +77,30 @@ int main(){
         }
     }
     for(int i=0;i<4;i++)if(c[i])goto L1;
+    for(int i=0;i<w;i++)
+      for(int j=0;j<8;j++){
+	int x=i+dx[j],y=dy[j];
+	if(s.find(mk(x,y))!=s.end())
+	  if(s[mk(x,y)]==1)goto L1;
+	  }
+ for(int i=0;i<h;i++)
+      for(int j=0;j<8;j++){
+	int x=w-1+dx[j],y=i+dy[j];
+	if(s.find(mk(x,y))!=s.end())
+	  if(s[mk(x,y)]==1)goto L1;
+	  }
+ for(int i=0;i<w;i++)
+      for(int j=0;j<8;j++){
+	int x=i+dx[j],y=h-1+dy[j];
+	if(s.find(mk(x,y))!=s.end())
+	  if(s[mk(x,y)]==2)goto L1;
+	  }
+ for(int i=0;i<h;i++)
+      for(int j=0;j<8;j++){
+	int x=0+dx[j],y=i+dy[j];
+	if(s.find(mk(x,y))!=s.end())
+	  if(s[mk(x,y)]==2)goto L1;
+	  }
     goto L2;
     if(0)L0:cout<<0<<endl;
     if(0)L1:cout<<1<<endl;
