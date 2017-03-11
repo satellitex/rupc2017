@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#define P 100005
+#define P 1000005
 #define N 105
 using namespace std;
 int n,p,x[N],y[N],A[N][N],dp[2][N][P],ans;
