@@ -34,8 +34,9 @@ struct mergeSegTree {
 
     if( r<=a || b<=l ) return false;
     if( a<=l && r<=b ){
-        if( y >= *lower_bound( data[k].begin(), data[k].end(), x ) )
-        return true;
+        auto it = lower_bound( data[k].begin(), data[k].end(), x );
+        if( it != data[k].end() )
+            if( y >= *it ) return true;
       return false;
     } 
     return query( a, b, x, y, 2*k+1, l, (l+r)/2 ) || query( a, b, x, y, 2*k+2, (l+r)/2, r );    
@@ -69,7 +70,9 @@ int main() {
     for(int j=0;j<v[4].size();j++) 
       find_p.emplace_back( v[3][i].first + v[4][j].first,
 			   v[3][i].second + v[4][j].second );
-  
+
+
+
   sort( find_p.begin(), find_p.end() );
   vector<ll> find_a, find_b;
   for(int i=0;i<find_p.size();i++){
