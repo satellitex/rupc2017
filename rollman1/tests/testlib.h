@@ -3939,13 +3939,11 @@ __attribute__ ((error("Don't use rand(), use rnd.next() instead")))
 #ifdef _MSC_VER
 #   pragma warning( disable : 4273 )
 #endif
-/*
 int rand() RAND_THROW_STATEMENT
 {
     quitf(_fail, "Don't use rand(), use rnd.next() instead");
     
 }
-*/
 
 #ifdef __GNUC__
 __attribute__ ((error("Don't use srand(), you should use " 
@@ -3956,7 +3954,6 @@ __attribute__ ((error("Don't use srand(), you should use "
 #ifdef _MSC_VER
 #   pragma warning( disable : 4273 )
 #endif
-/*
 void srand(unsigned int seed) RAND_THROW_STATEMENT
 {
     quitf(_fail, "Don't use srand(), you should use " 
@@ -3964,7 +3961,6 @@ void srand(unsigned int seed) RAND_THROW_STATEMENT
         "by hash code of the command line params. The third parameter "
         "is randomGeneratorVersion (currently the latest is 1) [ignored seed=%d].", seed);
 }
-*/
 
 void startTest(int test)
 {
