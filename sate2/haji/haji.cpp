@@ -1,90 +1,77 @@
 #include <bits/stdc++.h>
-#define MAX_V 210
+#define MAX_V 500
 #define INF ((1e9)+10)
 #define N 101
 using namespace std;
-typedef long long ll;
-typedef pair<ll,ll> P;
-struct edge{ll to, cap,cost,rev;};
 
-int V;                          //頂点数
-vector<edge> G[MAX_V];          //グラフの隣接リスト表現
-ll h[MAX_V];                   //ポテンシャル
-ll dist[MAX_V];                //最短距離
-int prevv[MAX_V], preve[MAX_V]; //直前の頂点と辺
+/*最大流アルゴリズム(Ford_Fulerson法使用)　O(F|E|)*/
 
-//fromからtoへ向かう容量cap、コストcostの辺をグラフに追加する。
-void add_edge(int from, int to, int cap, int cost){
-  G[from].push_back((edge){to, cap, cost, G[to].size()});
-  G[to].push_back((edge){from, 0 ,-cost, G[from].size()-1});
+//辺を表す構造体(行き先、容量、逆辺)
+struct edge{int to, cap, rev;};
+
+vector<edge> G[MAX_V]; //グラフの隣接リスト
+bool used[MAX_V];      //DFSですでに調べたかのフラグ
+
+//fromからtoへ向かう容量capの辺をグラフに追加する
+void add_edge(int from,int to,int cap){
+  G[from].push_back((edge){to,cap,G[to].size()});
+  G[to].push_back((edge){from,0,G[from].size()-1});  
 }
 
-//sからtへの流量fの最小費用流を求める。
-int min_cost_flow(int s, int t, int f){
-  int res = 0;
-  fill(h, h+V, 0); //hを初期化
-  while(f > 0){
-    //ダイクストラ法を用いてhを更新する。
-    priority_queue <P, vector<P>, greater<P> > que;
-    fill(dist,dist+V,INF);
-    dist[s] = 0;
-    que.push(P(0,s));
-    while(!que.empty()){
-      P p = que.top(); que.pop();
-      int v= p.second;
-      if(dist[v] < p.first) continue;
-      for(int i=0; i<G[v].size() ;i++){
-	edge &e = G[v][i];
-	if(e.cap > 0 && dist[e.to] > dist[v] + e.cost + h[v] - h[e.to]){
-	  dist[e.to] = dist[v] + e.cost + h[v] - h[e.to];
-	  prevv[e.to] = v;
-	  preve[e.to] = i;
-	  que.push(P(dist[e.to],e.to));
-	}
+
+//増加パスをDFSで探す
+int dfs(int v,int t,int f){
+  if(v == t)return f;
+  used[v]=true;
+  for(int i=0; i<G[v].size() ;i++){
+    edge &e = G[v][i];
+    if(!used[e.to] && e.cap > 0){
+      int d = dfs(e.to ,t , min(f,e.cap));
+      if(d > 0){
+	e.cap -= d;
+	G[e.to][e.rev].cap += d;
+	return d;
       }
     }
-    if(dist[t]==INF) return 0; //これ以上流せない
-    for(int v=0; v<V ;v++) h[v] += dist[v];
-    
-    //s−t間最短路に沿って目一杯流す。
-    ll d = f;
-    for(int v=t; v!=s ;v=prevv[v]) 
-      d= min(d, G[prevv[v]][preve[v]].cap);
-    
-    f -= d;
-    res += d * h[t];
-    for(int v=t; v!=s; v=prevv[v]){
-      edge &e = G[prevv[v]][preve[v]];
-      e.cap -= d;
-      G[v][e.rev].cap += d;
-    }
   }
-  return 1;
+  return 0;
+}
+
+//sからtへの最大流を求める
+int max_flow(int s,int t){
+  int flow = 0;
+  for(;;){
+    memset(used,0,sizeof(used));
+    int f = dfs(s, t, INF);
+    if(f == 0)return flow;
+    flow += f;
+  }
 }
 
 
 int n,m;
-ll g[N][N];
-int S,T;
-ll check(ll x){
-  V = m+n+2;  
+int g[N][N];
+int calc(int x){
   for(int i=0;i<MAX_V;i++) G[i].clear();
+  
   for(int i=0;i<n;i++)
     for(int j=0;j<m;j++)
-      if(g[i][j]<=x)add_edge(i,j+n,1,g[i][j]);
+      if(g[i][j]<=x)add_edge(i,j+n*2,1),add_edge(n+i,j+n*2,1);
   
-  S = n+m,T = n+m+1;
-  for(int i=0;i<n;i++) add_edge(S,i,(m-1)/n+1,0);
-  for(int i=0;i<m;i++) add_edge(i+n,T,1,0);
-
-  return min_cost_flow(S,T,m);
+  int f1=m/n,f2 = m%n;
+  int S1 = 2*n+m,S2 = S1+1,S = S2+1,T = S+1;
+  add_edge(S,S1,f1*n);
+  add_edge(S,S2,f2);
+  for(int i=0;i<n;i++) add_edge(S1,i,f1),add_edge(S2,i+n,1);
+  for(int i=0;i<m;i++) add_edge(i+n*2,T,1);
+  return max_flow(S,T);
 }
 
 int search(){
   int L=0,M,R=INF;
   while(L<R){
     M=(L+R)/2;
-    if(check(M)) R = M;
+    if(calc(M)>=m) R = M;
     else L = M + 1;
   }
   return L;
