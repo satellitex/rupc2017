@@ -17,6 +17,6 @@ int main(void){
     if(ans < 0){
         ans = 360.0 + ans;
     }
-    cout << setprecision(10) << ans << endl;
+    cout << fixed << setprecision(10) << ans << endl;
 	return 0;
 }
