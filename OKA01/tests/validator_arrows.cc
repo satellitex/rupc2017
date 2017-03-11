@@ -5,11 +5,11 @@ using namespace std;
 constexpr int N_MIN = 1;
 constexpr int N_MAX = 100;
 constexpr int P_MIN = 0;
-constexpr int P_MAX = 1e5;
+constexpr int P_MAX = 1e6;
 constexpr int X_MIN = 0;
-constexpr int X_MAX = 1e5;
+constexpr int X_MAX = 1e6;
 constexpr int Y_MIN = 0;
-constexpr int Y_MAX = 1e5;
+constexpr int Y_MAX = 1e6;
 
 int N, P;
 int X[N_MAX], Y[N_MAX];
