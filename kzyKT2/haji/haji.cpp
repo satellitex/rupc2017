@@ -18,14 +18,14 @@ void add_edge(int from,int to){
 
 void dfs(int v){
   used[v]=true;
-  for(int i=0;i<G[v].size();i++)if(!used[G[v][i]])dfs(G[v][i]);
+  for(int i=0;i<(int)G[v].size();i++)if(!used[G[v][i]])dfs(G[v][i]);
   vs.push_back(v);
 }
 
 void rdfs(int v,int k){
   used[v]=true;
   cmp[v]=k;
-  for(int i=0;i<rG[v].size();i++) if(!used[rG[v][i]])rdfs(rG[v][i],k);
+  for(int i=0;i<(int)rG[v].size();i++) if(!used[rG[v][i]])rdfs(rG[v][i],k);
 }
 
 int scc(){
@@ -38,35 +38,43 @@ int scc(){
   for(int i=vs.size()-1;i>=0;i--)if(!used[vs[i]]) rdfs(vs[i],k++);
   return k;
 }
-int C[N],nC[2][N];
 
+int C[N],nC[2][N];
+vector<int> g[N];
 void mkC(int pos,int f,int col){
   nC[f][col]+=C[pos];
-  
-  for(int i=0;i<G[pos].size();i++){
+  for(int i=0;i<(int)G[pos].size();i++){
     int nx = G[pos][i];
-    if(cmp[nx] != col)continue;
-    mkC(nx,(f+1)%2,col);
+    if(cmp[nx] == col)mkC(nx,!f,col);
   }
-  
-
 }
 
+int calc(int pos,int f){
+  static int mem[N][2],used[N][2]={};
+  if(used[pos][f]++) return mem[pos][f];
+  
+  int res=0;
+  for(int i=0;i<(int)g[pos].size();i++)
+    for(int j=0;j<(int)G[g[pos][i]].size();j++){
+      int nx = cmp[G[g[pos][i]][j]];
+      if(nx==pos)continue;
+      res = max(res, calc(nx,!f));
+    }
+
+  return mem[pos][f] = res + nC[pos][f]*(f==0);
+}
 
 int main(){
   int n,m;
   cin>>n>>m;
   for(int i=0;i<n;i++) cin>>C[i];
-  
-  for(int i=0,a,b;i<m;i++)add_edge(a,b);
+  for(int i=0,a,b;i<m;i++)cin>>a>>b,add_edge(a,b);
   V = n;
   n = scc();
   int used[N]={};
-  for(int i=0;i<n;i++)
-    if(!used[i]++) 
+  for(int i=0;i<n;i++)if(!used[cmp[i]]++) mkC(i,0,cmp[i]);
+  for(int i=0;i<n;i++) g[cmp[i]].push_back(i);
   
-  
-
-
+  cout<< calc(cmp[0],0)<<endl;
   return 0;
 }

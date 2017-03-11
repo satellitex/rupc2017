@@ -11,7 +11,7 @@ const ll MAX_xy = 1e12;
 int main(int argc, char *argv[])
 {
   registerGen(argc, argv, 1);
-  for (int t = 0; t < 20; t++) {
+  for (int t = 0; t < 1000; t++) {
     ofstream of(format("02_random_%02d.in", t+1).c_str());
     int N = rnd.next(1, MAX_N);
     ll A = rnd.next(1LL, MAX_AB);

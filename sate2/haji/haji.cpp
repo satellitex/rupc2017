@@ -80,7 +80,7 @@ int search(){
 int main(){
   cin>>n>>m;
   for(int i=0;i<n;i++)
-    for(int j=0;j<m;j++)scanf("%lld",&g[i][j]);
+    for(int j=0;j<m;j++)scanf("%d",&g[i][j]);
   
   cout<<(m%n!=0)<<endl;
   cout<<search()<<endl;
