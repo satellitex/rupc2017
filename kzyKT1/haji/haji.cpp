@@ -37,12 +37,17 @@ int main(){
     if(x==w-1||y==0) bfs(B,B2,x,y);
   }
   
-  for(int i=1;i<h;i++)A2.insert(P(0,i));
-  for(int i=0;i<w-1;i++)A2.insert(P(i,h-1));
-
-  for(int i=0;i<h-1;i++)B2.insert(P(w-1,i));
-  for(int i=1;i<w;i++)B2.insert(P(i,0));
   
+    for(int i=1;i<h;i++)A2.insert(P(0,i));
+    for(int i=0;i<w-1;i++)A2.insert(P(i,h-1));
+    
+    for(int i=0;i<h-1;i++)B2.insert(P(w-1,i));
+    for(int i=1;i<w;i++)B2.insert(P(i,0));
+    /*
+  for(int i=1;i<h-1;i++)A2.insert(P(0,i)),B2.insert(P(w-1,i));
+  for(int i=1;i<w-1;i++)A2.insert(P(i,h-1)),B2.insert(P(i,0));
+    */
+
   int ans = 2;
   for(Sit it=A2.begin();it!=A2.end();it++)if(B2.count(*it))ans=1;
   for(Sit it=A.begin();it!=A.end();it++)if(B.count(*it))ans=0;
