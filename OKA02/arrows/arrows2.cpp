@@ -9,7 +9,7 @@ set<P> used;
 
 P sum(const P& a, const P& b)
 {
-    return {get<0>(a) + get<0>(b), get<1>(a) + get<1>(b)};
+    return P{get<0>(a) + get<0>(b), get<1>(a) + get<1>(b)};
 }
 
 void add(vector<P>& XY, vector<P>& YX, P v)
