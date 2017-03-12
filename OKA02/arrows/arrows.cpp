@@ -26,7 +26,6 @@ bool find(const vector<P>& XY, ll l, ll r, ll dx, ll dy)
         (yl < m ? lb : ub) = mid;
     }
     return 0;
-
 }
 
 int main()
