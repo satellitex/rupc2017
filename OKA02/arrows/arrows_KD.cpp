@@ -118,7 +118,7 @@ int main()
     
     kd.init();
     int root = kd.make(0, kd.p.size(), 0);
-    bool res = find(kd, root, A, B);
+    bool res = 0;    
     for (P& v2 : p[2]) {
         for (P& v3 : p[3]) {
             for (P& v4 : p[4]) {

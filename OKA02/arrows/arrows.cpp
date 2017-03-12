@@ -5,6 +5,8 @@ using namespace std;
 using ll = long long;
 using P = tuple<ll, ll>;
 
+set<P> used;
+
 P sum(const P& a, const P& b)
 {
     return {get<0>(a) + get<0>(b), get<1>(a) + get<1>(b)};
@@ -12,8 +14,11 @@ P sum(const P& a, const P& b)
 
 void add(vector<P>& XY, vector<P>& YX, P v)
 {
-    XY.emplace_back(v);
-    YX.emplace_back(P{get<1>(v), get<0>(v)});
+    if (!used.count(v)) {
+        used.insert(v);
+        XY.emplace_back(v);
+        YX.emplace_back(P{get<1>(v), get<0>(v)});
+    }
 }
 
 bool find(const vector<P>& v, int lb, int ub, ll l, ll r)
@@ -73,16 +78,20 @@ int main()
     sort(XY.begin(), XY.end());
     sort(YX.begin(), YX.end());
     
-    bool res = find(XY, YX, A, B);
-    for (P& v2 : p[2]) {
-        for (P& v3 : p[3]) {        
-            for (P& v4 : p[4]) {
-                P s = sum(sum(v2, v3), v4);
-                res |= find(XY, YX, A, B, get<0>(s), get<1>(s));            
+    auto solve = [&]() {
+        for (P& v2 : p[2]) {
+            for (P& v3 : p[3]) {        
+                for (P& v4 : p[4]) {
+                    P s = sum(sum(v2, v3), v4);
+                    if (find(XY, YX, A, B, get<0>(s), get<1>(s))) {
+                        return 1;
+                    }
+                }
             }
         }
-    }
+        return 0;
+    };
 
-    cout << (res ? "Yes" : "No") << endl;
+    cout << (solve() ? "Yes" : "No") << endl;
     return 0;
 }
