@@ -48,24 +48,23 @@ int main()
     vector<P> XY;
     for (P& v0 : p[0]) {        
         for (P& v1 : p[1]) {
-            P s = sum(v0, v1);
-            XY.emplace_back(s);
+            XY.emplace_back(sum(v0, v1));
         }
     }
    
     sort(XY.begin(), XY.end()); 
     cout << ([&]() {
-        for (P& v2 : p[2]) {
-            for (P& v3 : p[3]) {        
-                for (P& v4 : p[4]) {
-                    P s = sum(sum(v2, v3), v4);
-                    if (find(XY, A, B, get<0>(s), get<1>(s))) {
-                        return 1;
+            for (P& v2 : p[2]) {
+                for (P& v3 : p[3]) {        
+                    for (P& v4 : p[4]) {
+                        P s = sum(sum(v2, v3), v4);
+                        if (find(XY, A, B, get<0>(s), get<1>(s))) {
+                            return 1;
+                        }
                     }
                 }
             }
-        }
-        return 0;
-    }() ? "Yes" : "No") << endl;
+            return 0;
+    }() ? "Yes" : "No") << endl;   
     return 0;
 }
