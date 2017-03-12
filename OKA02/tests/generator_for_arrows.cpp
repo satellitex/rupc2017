@@ -9,20 +9,21 @@ const ll MAX_xy = 1e12;
 
 int main(int argc, char *argv[])
 {
-  registerGen(argc, argv, 1);
-  ofstream of(format("00_corner04.in").c_str());
-  int N = MAX_N;
-  ll A = 1;
-  ll B = 1e9;
-  of<<N<<" "<<A<<" "<<B<<endl;
-  ll cnt=1;
-  for(int j=1;j<=5;j++){
-    for(int i=0;i<100;i++){
-      ll x = 2;
-      ll y = rnd.next((1e9)+10,1e12);
-      of<<j<<" "<<x<<" "<<y<<endl;
+  for(int t=0;t<2;t++){
+    registerGen(argc, argv, 1);
+    ofstream of(format("00_corner%02d.in",t).c_str());
+    int N = MAX_N;
+    ll A = 1;
+    ll B = 1e9;
+    of<<N<<" "<<A<<" "<<B<<endl;
+    for(int j=1;j<=5;j++){
+      for(int i=0;i<100;i++){
+	ll x =2;
+	ll y = rnd.next(B+1,MAX_xy);
+	of<<j<<" "<<x<<" "<<y<<endl;
+      }
     }
-    cnt*=200;
+
   }
   return 0;
 }
