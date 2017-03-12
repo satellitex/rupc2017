@@ -22,14 +22,11 @@ bool find(const vector<P>& XY, ll l, ll r, ll dx, ll dy)
     ll yl = l - dy, yr = r - dy;
     int lb = lower_bound(XY.begin(), XY.end(), P{xl, yl}) - XY.begin();
     int ub = upper_bound(XY.begin(), XY.end(), P{xr, yr}) - XY.begin();    
-    while (ub - lb > 1) {
-        int mid = (lb + ub) >> 1;
-        ll m = XY[mid].y;
-        
+    for (int i = lb; i < ub; i++) {
+        ll m = XY[i].y;
         if (yl <= m && m <= yr) {
             return 1;
         }
-        (yl < m ? lb : ub) = mid;
     }
     return 0;
 }
