@@ -3,11 +3,17 @@
 using namespace std;
 
 using ll = long long;
-using P = tuple<ll, ll>;
+struct P {
+    ll x, y;
+    P(ll x, ll y) : x{x}, y{y} {}
+    bool operator < (const P& p) const {
+        return x != p.x ? x < p.x : y < p.y;
+    }
+};
 
 P sum(const P& a, const P& b)
 {
-    return {get<0>(a) + get<0>(b), get<1>(a) + get<1>(b)};
+    return {a.x + b.x, a.y + b.y};
 }
 
 bool find(const vector<P>& XY, ll l, ll r, ll dx, ll dy)
@@ -18,7 +24,7 @@ bool find(const vector<P>& XY, ll l, ll r, ll dx, ll dy)
     int ub = upper_bound(XY.begin(), XY.end(), P{xr, yr}) - XY.begin();    
     while (ub - lb > 1) {
         int mid = (lb + ub) >> 1;
-        ll m = get<1>(XY[mid]);
+        ll m = XY[mid].y;
         
         if (yl <= m && m <= yr) {
             return 1;
@@ -53,18 +59,19 @@ int main()
     }
    
     sort(XY.begin(), XY.end()); 
-    cout << ([&]() {
-            for (P& v2 : p[2]) {
-                for (P& v3 : p[3]) {        
-                    for (P& v4 : p[4]) {
-                        P s = sum(sum(v2, v3), v4);
-                        if (find(XY, A, B, get<0>(s), get<1>(s))) {
-                            return 1;
-                        }
+    auto solve = ([&]() {
+        for (P& v2 : p[2]) {
+            for (P& v3 : p[3]) {        
+                for (P& v4 : p[4]) {
+                    P s = sum(sum(v2, v3), v4);
+                    if (find(XY, A, B, s.x, s.y)) {
+                        return 1;
                     }
                 }
             }
-            return 0;
-    }() ? "Yes" : "No") << endl;   
+        }
+        return 0;
+    });
+    cout << (solve() ? "Yes" : "No") << endl;
     return 0;
 }
