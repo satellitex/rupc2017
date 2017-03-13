@@ -1,0 +1,109 @@
+<%@ page pageEncoding="UTF-8"%>
+
+<h1>Problem I: Tree-Light</h1>
+
+<h2>Problem</h2>
+
+<p>
+あなたはツリーライトという木型の照明器具を買ってきた。
+</p>
+
+<p>
+この照明器具には<var>n</var>個の接点があり、<var>0</var>から<var>n-1</var>までの番号がついている。各接点は10段階の明るさを表現できる電球と、電球の状態を切り替えるためのダイアルで構成される。最初、すべての電球は明るさ<var>0</var>の状態である。<br>
+また、接点と接点の間にはケーブル線がある。すべての接点はケーブルによってツリー状に繋がっており、接点<var>0</var>を上にして吊り下げられる。ここで接点<var>i</var>から下方向に0本以上のケーブル線を介して、接点<var>i</var>と繋がる接点の集合を、接点<var>i</var>を根とした部分木と呼ぶ。
+</p>
+
+<p>
+接点<var>i</var>のダイアルをプラス方向に|<var>x</var>|だけ回すと、接点<var>i</var>を根とした部分木に含まれる接点の電球の明るさが|<var>x</var>|だけ明るくなり、マイナス方向に回すと|<var>x</var>|だけ暗くなる。ただし、明るさ<var>9</var>の状態でプラス方向に<var>1</var>だけダイアルを回したときの明るさは明るさ<var>0</var>、明るさ<var>0</var>の状態でマイナス方向に<var>1</var>だけダイアルを回したときの明るさは明るさ<var>9</var>になる。
+</p>
+
+<p>
+あなたはこの照明器具に対し、次のいずれかの行動をとる。
+</p>
+
+<ul>
+    <li>接点<var>r</var>のダイアルを<var>x</var>だけ回す</li>
+    <li>接点<var>r</var>を根とした部分木に含まれる明るさ<var>y</var>の電球の数を数える</li>
+</ul>
+
+<p>
+<var>q</var>回の行動が与えられるので、電球を数える行動が与えられたときにその時点での電球の数を出力せよ。
+</p>
+
+<h2>Input</h2>
+<p>入力は以下の形式で与えられる。</p>
+<pre>
+    <var>n</var> <var>q</var>
+    <var>u<sub>1</sub></var> <var>v<sub>1</sub></var>
+    <var>u<sub>2</sub></var> <var>v<sub>2</sub></var>
+...
+    <var>u<sub>n-1</sub></var> <var>v<sub>n-1</sub></var>
+    <var>t<sub>1</sub></var> <var>r<sub>1</sub></var> <var>s<sub>1</sub></var>
+    <var>t<sub>2</sub></var> <var>r<sub>2</sub></var> <var>s<sub>2</sub></var>
+...
+    <var>t<sub>q</sub></var> <var>r<sub>q</sub></var> <var>s<sub>q</sub></var>
+</pre>
+
+<p>
+    1行目にツリーライトを構成する接点の数<var>n</var>、あなたのとる行動の数<var>q</var>が与えられる。<br>
+    続く<var>n-1</var>行にはケーブル線の情報が与えられる。<var>i</var>番目のケーブル線の情報は、ケーブル線<var>i</var>が接点<var>u<sub>i</sub></var>を上にして、接点<var>u<sub>i</sub></var>と接点<var>v<sub>i</sub></var>を繋ぐことを表す。<br>
+    <var>n+1</var>行目以降の<var>q</var>行にはあなたのとる行動が与えられる。<var>t<sub>i</sub> = 1</var>なら接点<var>r<sub>i</sub></var>のダイアルを回す。このとき<var>x = s<sub>i</sub></var>とする。<var>t<sub>i</sub> = 2</var>なら接点<var>r<sub>i</sub></var>を根とした部分木に含まれる電球の数を数える。このとき<var>y = s<sub>i</sub></var>とする。
+</p>
+
+<h2>Constraints</h2>
+<ul>
+    <li><var>1 &le; n &le; 10<sup>5</sup></var></li>
+    <li><var>1 &le; q &le; 10<sup>5</sup></var></li>
+    <li><var>1 &le; u<sub>i</sub>, v<sub>i</sub>, r<sub>i</sub> &le; n-1 (u<sub>i</sub> != v<sub>i</sub>)</var></li>
+    <li><var>t<sub>i</sub> = 1</var>のとき、<var>-10 &le; s<sub>i</sub> &le; 10</var></li>
+    <li><var>t<sub>i</sub> = 2</var>のとき、<var>0 &le; s<sub>i</sub> &le; 9</var></li>
+</ul>
+
+<h2>Output</h2>
+<p>
+    電球を数える行動が与えられたとき、その答えを出力する。
+</p>
+
+<h2>Sample Input 1</h2>
+<pre>
+7 5
+0 1
+1 2
+1 3
+0 4
+4 5
+4 6
+1 0 5
+1 4 3
+2 0 8
+1 4 -3
+2 0 5
+</pre>
+
+<h2>Sample Output 1</h2>
+<pre>
+3
+7
+</pre>
+
+<h2>Sample Input 2</h2>
+<pre>
+7 5
+0 1
+1 2
+1 3
+0 4
+4 5
+4 6
+1 0 5
+2 0 5
+1 1 -8
+1 4 2
+2 0 7
+</pre>
+
+<h2>Sample Output 2</h2>
+<pre>
+7
+6
+</pre>

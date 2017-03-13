@@ -73,13 +73,13 @@ vector< vector<int> > graph;
 vector<int> be, en;
 int idx;
 
-void dfs(int u, int p)
+void dfs(int u)//, int p)
 {
   be[u] = idx;
   idx++;
   for(int v : graph[u]) {
-    if(v == p) continue;
-    dfs(v, u);
+    //if(v == p) continue;
+    dfs(v);//, u);
   }
   en[u] = idx;
 }
@@ -99,12 +99,12 @@ signed main()
     int u, v;
     cin >> u >> v;
     graph[u].push_back(v);
-    graph[v].push_back(u);
+    //graph[v].push_back(u);
   }
   be.resize(n);
   en.resize(n);
   idx = 0;
-  dfs(0, -1);
+  dfs(0);//, -1);
   seg.init(n);
 
   rep(i, q) {

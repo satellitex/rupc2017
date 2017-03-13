@@ -22,8 +22,9 @@ int main(int argc, char* argv[]) {
     for (int i = 1; i < n; i++) {
       int par = rnd.next(0, i-1);
       a[i-1] = par; b[i-1] = i;
+      of << par << " " << i << endl;
     }
-
+    /*
     vector<int> node_num(n, -1);
     set<int> used; used.insert(-1);
     for (int i = 0; i < n; i++) {
@@ -34,7 +35,6 @@ int main(int argc, char* argv[]) {
       used.insert(v);
       node_num[i] = v;
     }
-
     for (int i = 0; i < n-1; i++) {
       int aa = node_num[a[i]], bb = node_num[b[i]];
       if (aa >= bb) {
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
       }
       of << aa << " " << bb << endl;
     }
-
+*/
     for(int i = 0; i < q; i++) {
       int t = rnd.next(1, 2);
       int v = rnd.next(0, n-1);
