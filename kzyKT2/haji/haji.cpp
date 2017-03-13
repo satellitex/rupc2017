@@ -81,7 +81,6 @@ int main(){
   for(int i=0,a,b;i<m;i++)scanf("%d%d",&a,&b),add_edge(a,b);
 
   V = n; V = scc();
-
   int used[N]={};
   for(int i=0;i<n;i++){
     int col = cmp[i];
@@ -108,8 +107,6 @@ int main(){
       if(col==ncol)continue;
       g[col].insert(PP(ncol,P(from,to)));
     }
-
-  
   
   for(int i=0;i<N;i++) G[i].clear(),rG[i].clear();
   for(int i=0;i<V;i++) 
