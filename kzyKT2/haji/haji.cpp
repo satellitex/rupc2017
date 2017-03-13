@@ -55,65 +55,38 @@ int mkC(int pos,bool f,int col){
   return 0;
 }
 
-
 typedef pair<int,int> P;
 typedef pair<int,P> PP;
 set<PP> g[N];
-unordered_map<int,int>rg[2][N];
 int flg[N];
-int topological(){
+int D[2][2][N];
 
-  queue<PP> Q;  
-  int res=0,D[2][N]={},scol=cmp[0],sidx = S[1][scol].count(0);
-
-  Q.push(PP(scol,P(0,sidx)));
-  D[0][scol] = nC[sidx][scol];
-
-  while(!Q.empty()){
-    PP t = Q.front();Q.pop();
-    int col = t.first;
-    int f = t.second.first;
-    int idx = t.second.second;
-    res = max(res,D[f][col]);
-
-    if(flg[col]){
-      D[!f][col] = max(D[!f][col],D[f][col]);
-      Q.push(PP(col,P(!f,idx)));
-      flg[col]=0;
-    }
-
-    for(auto it=g[col].begin();it!=g[col].end();it++){
-      int ncol = it->first;
-      int from = it->second.first;
-      int to = it->second.second;
-      int nf = (f + (idx==from))%2;
-      int c = nf==0? nC[to][ncol]:nC[!to][ncol];
-      D[nf][ncol]=max(D[nf][ncol],D[f][col]+c);
-      rg[nf][ncol].erase(col);
-      if(rg[nf][ncol].empty())Q.push(PP(ncol,P(nf,to)));
-    }
-  }  
-
-  return res;
+void Max(int &a,int b){a=max(a,b);}
+void calc(int pos,int f,int idx){
+  for(auto it=g[pos].begin();it!=g[pos].end();it++){
+    int npos = it->first;
+    int from = it->second.first;
+    int to = it->second.second;
+    int nf = (f + (idx==from))%2;
+    int c = nf==0? nC[to][npos]:nC[!to][npos];
+    Max(D[nf][to][npos],D[f][idx][pos]+c);
+    if(flg[npos])Max(D[!nf][to][npos],D[f][idx][pos]+c);
+  }
 }
 
 int main(){
-  return 0;
   int n,m;
   cin>>n>>m;
   for(int i=0;i<n;i++)scanf("%d",&C[i]);
   for(int i=0,a,b;i<m;i++)scanf("%d%d",&a,&b),add_edge(a,b);
-  V = n;
-  V = scc();
 
+  V = n; V = scc();
   int used[N]={};
   for(int i=0;i<n;i++){
     int col = cmp[i];
-    if(!used[col]++&&mkC(i,0,col)){
-	flg[col] = 1;
-	nC[0][col] = nC[1][col]=0;
-      }
-    }
+    if(!used[col]++&&mkC(i,0,col))flg[col] = 1,nC[0][col]=nC[1][col]=0;
+  }
+  
   for(int i=0;i<n;i++){ 
     int col = cmp[i];
     if(flg[col]){
@@ -125,7 +98,7 @@ int main(){
   }
 
   for(int i=0;i<n;i++)
-    for(int j=0;j<G[i].size();j++){
+    for(int j=0;j<(int)G[i].size();j++){
       int col = cmp[i];
       int nv = G[i][j];
       int ncol = cmp[nv];
@@ -133,11 +106,30 @@ int main(){
       int to = S[1][ncol].count(nv);
       if(col==ncol)continue;
       g[col].insert(PP(ncol,P(from,to)));
-      rg[0][ncol][col]=1;
-      rg[1][ncol][col]=1;
     }
   
+  for(int i=0;i<N;i++) G[i].clear(),rG[i].clear();
+  for(int i=0;i<V;i++) 
+    for(auto j=g[i].begin();j!=g[i].end();j++)add_edge(i,j->first);
 
-  cout<<topological()<<endl;
+  memset(used,0,sizeof(used));
+  vs.clear();
+  for(int v=0;v<V;v++) if(!used[v]) dfs(v);
+    
+  memset(D,-1,sizeof(D));
+  int scol = cmp[0];
+  int idx = S[1][scol].count(0);
+  D[0][idx][scol] = nC[idx][scol];
+  if(flg[cmp[0]])D[1][idx][scol] = nC[idx][scol];
+
+  int ans =0;
+  for(int i=0;i<V;i++){
+    for(int f=0;f<2;f++)
+      for(int idx=0;idx<2;idx++){
+	if(D[f][idx][vs[i]]!=-1)calc(vs[i],f,idx);
+	Max(ans,D[f][idx][vs[i]]);
+      }
+  }
+  cout<<ans<<endl;
   return 0;
 }

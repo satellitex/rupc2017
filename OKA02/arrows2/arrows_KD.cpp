@@ -3,7 +3,6 @@
 using namespace std;
 
 using ll = long long;
-using P = tuple<ll, ll>;
 
 struct Node {
     int loc;
@@ -15,7 +14,11 @@ struct Node {
 struct Point {
     ll x, y;
     Point() {}
-    Point(ll x, ll y) : x{x}, y{y} {}    
+    Point(ll x, ll y) : x{x}, y{y} {}
+
+    bool operator < (const Point& p) const {
+        return x != p.x ? x < p.x : y < p.y;
+    }
 };
 
 struct KDTree2D {
@@ -41,9 +44,9 @@ struct KDTree2D {
         return curr;
     }
 
-    void add(P v)
+    void add(Point v)
     {
-        p.emplace_back(get<0>(v), get<1>(v));
+        p.emplace_back(v.x, v.y);
     }    
 
     bool find(int k, ll sx, ll sy, ll tx, ll ty, int depth)
@@ -77,9 +80,9 @@ struct KDTree2D {
     }
 };
 
-P sum(const P& a, const P& b)
+Point sum(const Point& a, const Point& b)
 {
-    return {get<0>(a) + get<0>(b), get<1>(a) + get<1>(b)};
+    return Point{a.x + b.x, a.y + b.y};
 }
 
 bool find(KDTree2D& kd, int root, ll l, ll r, ll dx = 0, ll dy = 0)
@@ -93,7 +96,7 @@ int main()
 {
     ll N, A, B;
     cin >> N >> A >> B;
-    vector<vector<P>> p{5};
+    vector<vector<Point>> p{5};
     for (int i = 0; i < N; i++) {
         ll t, x, y;
         cin >> t >> x >> y;
@@ -102,16 +105,14 @@ int main()
     
     for (int i = 0; i < 5; i++) {
         p[i].emplace_back(0, 0);
-        sort(p[i].begin(), p[i].end());
-        p[i].erase(unique(p[i].begin(), p[i].end()), p[i].end());
-    }
+    }    
     
     sort(p.begin(), p.end(),
-         [](const vector<P>& a, const vector<P>& b) { return a.size() > b.size(); });
+         [](const vector<Point>& a, const vector<Point>& b) { return a.size() > b.size(); });
     
     KDTree2D kd;
-    for (P& v0 : p[0]) {
-        for (P& v1 : p[1]) {            
+    for (Point& v0 : p[0]) {
+        for (Point& v1 : p[1]) {            
             kd.add(sum(v0, v1));           
         }
     }
@@ -119,14 +120,14 @@ int main()
     kd.init();
     int root = kd.make(0, kd.p.size(), 0);
     bool res = 0;    
-    for (P& v2 : p[2]) {
-        for (P& v3 : p[3]) {
-            for (P& v4 : p[4]) {
-                P s = sum(sum(v2, v3), v4);
-                res |= find(kd, root, A, B, get<0>(s), get<1>(s)); 
+    for (Point& v2 : p[2]) {
+        for (Point& v3 : p[3]) {
+            for (Point& v4 : p[4]) {
+                Point s = sum(sum(v2, v3), v4);
+                res |= find(kd, root, A, B, s.x, s.y); 
             }            
         }    
-    }
+    }    
     cout << (res ? "Yes" : "No") << endl;
     return 0;
 }
