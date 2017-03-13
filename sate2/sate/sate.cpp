@@ -8,9 +8,10 @@ struct edge{int to,cap,rev;};
 vector<edge> G[MAX_V];
 bool used[MAX_V];
   
-void add_edge(int from, int to, int cap){
+edge& add_edge(int from, int to, int cap){
   G[from].push_back((edge){to, cap, (int)G[to].size()});
   G[to].push_back((edge){from, 0, (int)G[from].size()-1});
+  return G[from].back();
 }
   
 int dfs(int v, int t, int f){
@@ -44,15 +45,15 @@ int max_flow(int s,int t){
 int N,M;
 int D[111][111];
 int l,r;
-int s,t,S,T,V;
+int s,t,S,V;
 void make_graph(int h){
   for(int i=0;i<V;i++) G[i].clear();
 
   for(int i=0;i<N;i++) {
-    add_edge( s, i, r-l );
-    add_edge( s, T, l );
-    add_edge( S, i, l );
-  
+    if( r-l )
+      add_edge( s, i, r-l );
+      add_edge(S, i, l);
+
     for(int j=0;j<M;j++)
       if( D[i][j] <= h ) 
         add_edge( i, N+j, 1 );      
@@ -72,16 +73,16 @@ void view(){
 
 bool isok(int h){
   make_graph( h );
-  int res = 0;
-  max_flow( S, T );
-  max_flow( s, T );
-  max_flow( S, t );
-  max_flow( s, t );
-  for( edge e : G[t] ){
-    if( e.to == T ) continue;
-    res += e.cap;
-  }
-  return res == M;
+  // 下限分めいいっぱい流せた場合の流量
+  int low_p = l * N;
+
+  // 実際に下限分めいいっぱい流す
+  // 下限分流せなかった場合 ng
+  if( low_p != max_flow(S,t) ) return false;
+
+  // 上限分までめい一杯流す
+  // その結果、M個の店を覆えたら true
+  return low_p + max_flow(s,t) == M;
 }
 
 int main(){
@@ -90,7 +91,7 @@ int main(){
     for(int j=0;j<M;j++)
       cin >> D[i][j];
   
-  s = N+M, t = s+1, S = t+1, T = S+1, V = T+1;
+  s = N+M, t = s+1, S = t+1, V = S+1;
   l = M/N;
   if( l*N == M ) r = l;
   else r = l+1;
