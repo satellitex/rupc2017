@@ -1,0 +1,83 @@
+<%@ page pageEncoding="UTF-8"%>
+<script language="JavaScript" type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+
+</script>
+<h1>Problem D: Let's go to school</h1>
+
+<h2>Problem</h2>
+<p>
+がっちょ君は期末試験が近づくとやる気がなくなってしまい、しばしば学校を休むようになる。<br>
+期末試験まで後<var>N</var>日である。<br>
+がっちょ君の<var>i</var>日目のやる気は<var>X<sub>i</sub></var>であり、<var>i</var>日目に学校に行くために必要なやる気は<var>Y<sub>i</sub></var>である。<br>
+がっちょ君は <var>X<sub>i</sub></var> &ge; <var>Y<sub>i</sub></var> となる日のみ学校に行く。<br>
+
+がっちょ君を心配したハジ君は、がっちょ君を励ますことで可能な限り学校に行かせようと考えた。<br>
+ハジ君は最初、励まし力<var>P</var>を持っている。<br>
+
+ハジ君は<var>i</var>日目に励まし力<var>t</var>(<var>t</var>は0以上任意の実数)を消費してがっちょ君を励ますと、
+がっちょ君の<var>i</var>日目のやる気は<var>t</var>増加して、ハジ君の励まし力は<var>t</var>減少する。<br>
+また、<var>i<var>+1日目のがっちょ君のやる気<var>X<sub>i+1</sub></var>はmax(0, <var>X<sub>i+1</sub></var> - <var>t</var>) に変化する。<br>
+ハジ君は自分の持っている励まし力を超えて励ますことはできない。<br>
+ハジ君が最適な励まし方をしたときのがっちょ君が学校に行く最大の日数を求めよ。<br>
+
+</p>
+
+<h2>Input</h2>
+<p>入力は以下の形式で与えられる。</p>
+<pre>
+<var>N</var> <var>P</var>
+<var>X<sub>1</sub></var> <var>Y<sub>1</sub></var>
+<var>X<sub>2</sub></var> <var>Y<sub>2</sub></var>
+...
+<var>X<sub>N</sub></var> <var>Y<sub>N</sub></var>
+</pre>
+
+<p>
+  入力はすべて整数で与えられる。<br>
+  1行目に期末試験までの日数<var>N</var>とハジ君が最初に持っている励まし力<var>P</var>が空白区切りで与えられる。<br>
+  2行目から2+<var>N</var>行目はがっちょ君の<var>i<var>(i=1,2,...,<var>N</var>)日目のやる気<var>X<sub>i</sub></var>と学校に行くために必要なやる気<var>Y<sub>i</sub></var>が空白区切りで与えられる。<br>
+
+</p>
+
+<h2>Constraints</h2>
+<p>入力は以下の条件を満たす。</p>
+<ul>
+  <li>1 &le; <var>N</var> &le; 100</li>
+  <li>0 &le; <var>P</var> &le; 10<sup>6</sup></li>
+  <li>0 &le; <var>X<sub>i</sub></var> &le; 10<sup>6</sup></li>
+  <li>0 &le; <var>Y<sub>i</sub></var> &le; 10<sup>6</sup></li>
+</ul>
+
+<h2>Output</h2>
+<p>
+  がっちょ君が学校に行くことができる、最大の日数を1行に出力せよ。
+</p>
+
+
+<h2>Sample Input 1</h2>
+<pre>
+3 10
+1 6
+5 10
+0 5
+</pre>
+
+<h2>Sample Output 1</h2>
+<pre>
+2
+</pre>
+
+<h2>Sample Input 2</h2>
+<pre>
+5 5
+1 1
+1 2
+1 2
+1 3
+1 3
+</pre>
+
+<h2>Sample Output 2</h2>
+<pre>
+4
+</pre>
