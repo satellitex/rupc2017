@@ -2,21 +2,15 @@
 
 using namespace std;
 
-#define int long long
+//#define int long long
 #define all(v) begin(v), end(v)
 #define rep(i, n) for(int i = 0; i < (int)(n); i++)
 #define reps(i, s, n) for(int i = (int)(s); i < (int)(n); i++)
-#define min(...) min({__VA_ARGS__})
-#define max(...) max({__VA_ARGS__})
 
 template<class T1, class T2> void chmin(T1 &a, T2 b){if(a>b)a=b;}
 template<class T1, class T2> void chmax(T1 &a, T2 b){if(a<b)a=b;}
 
-using pint = pair<int, int>;
-using tint = tuple<int, int, int>;
-using vint = vector<int>;
-
-const int inf = 1LL << 55;
+const int inf = 1<<25;//1LL << 55;
 const int mod = 1e9 + 7;
 
 struct UnionFind {
@@ -91,7 +85,7 @@ vector<int> sati[2];
 bool used[2][MAX_N];
 vector<int> graph2[2][MAX_N];
 int maxi[2][MAX_N];
-
+/*
 void dfs(int u, int p, int f) {
   if(divi[u] == -1) divi[u] = f;
   used[f][u] = true;
@@ -100,12 +94,27 @@ void dfs(int u, int p, int f) {
     if(!used[!f][v]) dfs(v, u, !f);
   }
 }
+*/
+void bfs() {
+  queue< tuple<int, int, int> > que;
+  que.emplace(0, -1, 0);
+  while(que.size()) {
+    int u, p, f; tie(u, p, f) = que.front(); que.pop();
+    if(divi[u] == -1) divi[u] = f;
+    used[f][u] = true;
+    for(int v : scc.graph[u]) {
+      if(p != -1 && scc.cmp[p] == scc.cmp[v]) uf.unite(v, p);
+      if(!used[!f][v]) que.emplace(v, u, !f);
+    }
+  }
+}
 
 void calc() {
   uf = UnionFind(n);
   memset(used, false, sizeof(used));
   memset(divi, -1, sizeof(divi));
-  dfs(0, -1, 0);
+  //dfs(0, -1, 0);
+  bfs();
 
   rep(i, 2) sati[i].resize(scc.sz, 0);
   rep(u, n) {
