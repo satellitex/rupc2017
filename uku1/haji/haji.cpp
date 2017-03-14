@@ -3,8 +3,6 @@
 #define MAX_N N
 #define rank Asdfiasofsad
 using namespace std;
-typedef long long ll;
-const ll INF = 1LL<<55;
 
 class UF{
 public:
@@ -48,6 +46,7 @@ bool check(double x){
     csum+=C[i];
     tsum+=t[i];
   }
+
   sort(edge.begin(),edge.end());
   UF U(n);
   double r=0;
