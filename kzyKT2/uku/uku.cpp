@@ -87,6 +87,7 @@ vector<int> graph2[2][MAX_N];
 int maxi[2][MAX_N];
 /*
 void dfs(int u, int p, int f) {
+  if(used[f][u]) return;
   if(divi[u] == -1) divi[u] = f;
   used[f][u] = true;
   for(int v : scc.graph[u]) {
@@ -100,6 +101,7 @@ void bfs() {
   que.emplace(0, -1, 0);
   while(que.size()) {
     int u, p, f; tie(u, p, f) = que.front(); que.pop();
+    if(used[f][u]) continue;
     if(divi[u] == -1) divi[u] = f;
     used[f][u] = true;
     for(int v : scc.graph[u]) {
