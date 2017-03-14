@@ -24,7 +24,7 @@ struct UnionFind {
   UnionFind(){}
   UnionFind(int sz):data(sz, -1){}
   int find(int x) { return data[x] < 0 ? x : data[x] = find(data[x]); }
-  int size(int x) { return -data[find(x)]; }
+  int size(int x) { return data[find(x)]; }
   bool same(int x, int y) { return find(x) == find(y); }
   bool unite(int x, int y) {
     x = find(x), y = find(y);
@@ -88,16 +88,17 @@ SCC scc;
 UnionFind uf;
 int divi[MAX_N]; // SCC内で1個飛ばしで分けた時のやつ。偶サイクルなら0/1、奇サイクルなら0(1も同じ)
 vector<int> sati[2];
-bool used[2][MAX_N];
+bool used[MAX_N];
 vector<int> graph2[2][MAX_N];
 int maxi[2][MAX_N];
 
 void dfs(int u, int p, int f) {
-  if(divi[u] == -1) divi[u] = f;
-  used[f][u] = true;
+  divi[u] = f;
+  used[u] = true;
   for(int v : scc.graph[u]) {
-    if(p != -1 && scc.cmp[p] == scc.cmp[v]) uf.unite(v, p);
-    if(!used[!f][v]) dfs(v, u, !f);
+    if(scc.cmp[u] != scc.cmp[v]) continue;
+    if(p != -1) uf.unite(v, p);
+    if(!used[v]) dfs(v, u, !f);
   }
 }
 
@@ -105,26 +106,26 @@ void calc() {
   uf = UnionFind(n);
   memset(used, false, sizeof(used));
   memset(divi, -1, sizeof(divi));
-  dfs(0, -1, 0);
+  rep(u, n) if(!used[u]) dfs(u, -1, 0);
 
   rep(i, 2) sati[i].resize(scc.sz, 0);
   rep(u, n) {
-    if(scc.cnn[scc.cmp[u]].size() > 1 && scc.cnn[scc.cmp[u]].size() == uf.size(u)) {
+    if(scc.cnn[scc.cmp[u]].size() > 1 && scc.cnn[scc.cmp[u]].size() % 2) {
       sati[0][scc.cmp[u]] += c[u];
       sati[1][scc.cmp[u]] += c[u];
     }
-    else if(divi[uf.find(u)] != -1) sati[divi[uf.find(u)]][scc.cmp[u]] += c[u];
+    else sati[divi[uf.find(u)]][scc.cmp[u]] += c[u];
   }
 
   scc.sort_edge();
   rep(u, n) {
     for(int v : scc.graph[u]) {
       if(scc.cmp[u] == scc.cmp[v]) continue;
-      if(scc.cnn[scc.cmp[u]].size() > 1 && scc.cnn[scc.cmp[u]].size() == uf.size(u)) {
+      if(scc.cnn[scc.cmp[u]].size() > 1 && scc.cnn[scc.cmp[u]].size() % 2) {
 	graph2[0][scc.cmp[u]].push_back(v);
 	graph2[1][scc.cmp[u]].push_back(v);
       }
-      else if(divi[uf.find(u)] != -1) graph2[divi[uf.find(u)]][scc.cmp[u]].push_back(v);
+      else graph2[divi[uf.find(u)]][scc.cmp[u]].push_back(v);
     }
   }
 }
@@ -132,17 +133,21 @@ void calc() {
 int solve() {
   memset(maxi, -1, sizeof(maxi));
   maxi[0][scc.cmp[0]] = sati[divi[uf.find(0)]^0][scc.cmp[0]];
-  priority_queue< tuple<int, int, int> > que;
-  que.emplace(maxi[0][scc.cmp[0]], 0, 0);
+  queue< pair<int, int> > que;
+  que.emplace(0, 0);
   while(que.size()) {
-    int x, u, f; tie(x, u, f) = que.top(); que.pop();
-    if(x < maxi[f][scc.cmp[u]]) continue;
+    int u, f; tie(u, f) = que.front(); que.pop();
+    //cout << u << " " << maxi[f][scc.cmp[u]] << endl;
     rep(i, 2) {
       for(int v : graph2[i][scc.cmp[u]]) {
 	int nf = !(divi[uf.find(u)]^f^i);
-	if(maxi[nf][scc.cmp[v]] < maxi[f][scc.cmp[u]] + sati[divi[uf.find(v)]^nf][scc.cmp[v]]) {
-	  maxi[nf][scc.cmp[v]] = maxi[f][scc.cmp[u]] + sati[divi[uf.find(v)]^nf][scc.cmp[v]];
-	  que.emplace(maxi[nf][scc.cmp[v]], v, nf);
+	if(maxi[nf][scc.cmp[v]] == -1) {
+	  if(scc.cnn[scc.cmp[v]].size() > 1 && scc.cnn[scc.cmp[v]].size() % 2) {
+	    maxi[nf][scc.cmp[v]] = maxi[f][scc.cmp[u]] + sati[0][scc.cmp[v]];
+	  } else {
+	    maxi[nf][scc.cmp[v]] = maxi[f][scc.cmp[u]] + sati[divi[uf.find(v)]^nf][scc.cmp[v]];
+	  }
+	  que.emplace(v, nf);
 	}
       }
     }
