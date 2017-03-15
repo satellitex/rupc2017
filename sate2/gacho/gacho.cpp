@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 #define INF (1e9)
-#define MAX_V 300
+#define MAX_V 500
 using namespace std;
 struct edge{int to, cap, rev, X;};
 vector<edge> G[MAX_V];
