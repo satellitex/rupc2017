@@ -92,11 +92,15 @@ int main(){
     }
     if(flg)continue;
     f[v]=3;
-    memset(visited,false,sizeof(visited));
-    int a=dfs(v);
-    memset(visited,false,sizeof(visited));
-    int b=dfs(v);
-    int c=a+b;
+    
+    int c=0;
+    while(1){
+      memset(visited,false,sizeof(visited));
+      int a=dfs(v);
+      if(a==0)break;
+      c++;
+    }
+    
     if( N - (maxflow+c)>= K ){
       ans[v]=true;
       maxflow+=c;
