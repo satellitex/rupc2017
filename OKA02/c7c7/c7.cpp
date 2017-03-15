@@ -64,7 +64,7 @@ main(){
   rep(i,5)rep(j,q[tt[i].s].size())
     a[i].push_back(q[tt[i].s][j]);
  
-  rep(i,a[4].size()){/
+  rep(i,a[4].size()){
     P[c++]=Point(c,a[4][i].f,a[4][i].s);
     rep(j,a[2].size()){//cout<<2;
       if(c1)P[c++]=Point(c,a[2][j].f,a[2][j].s);
