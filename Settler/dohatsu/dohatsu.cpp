@@ -76,8 +76,11 @@ int main(){
     memset(visited,false,sizeof(visited));
     if( dfs(i) )maxflow++;
   }
-  cout<<maxflow<<endl;
-
+  
+  if( N-maxflow < K ){
+    cout<<-1<<endl;
+    return 0;
+  }
     
   bool ans[MAX]={};
   for(int v=0;v<N;v++){
@@ -105,8 +108,12 @@ int main(){
       }
     }
   }
+  
   for(int i=0;i<N;i++){
-    if(ans[i])cout<<i+1<<endl;
+    if(ans[i]&&K>0){
+      cout<<i+1<<endl;
+      K--;
+    }
   }
   return 0;
 }
