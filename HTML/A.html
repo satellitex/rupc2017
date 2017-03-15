@@ -1,0 +1,92 @@
+<%@ page pageEncoding="UTF-8"%>
+
+<script language="JavaScript" type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+</script>
+
+<h1>Problem A: A mean of angles</h1>
+
+<h2>Problem</h2>
+<p>
+２つの角度<var>&theta;<sub>1</sub></var>,<var>&theta;<sub>2</sub></var> が与えられるので、それらのちょうど間の角度を求めよ。ただしちょうど間の角度とは以下を満たす角度のことである。
+</p>
+<p>
+<ul>
+	<li><var>&theta;<sub>1</sub></var> + <var>t</var> = <var>&theta;<sub>2</sub></var> - <var>t</var> を満たす<var>tのうち絶対値が最も小さいものを<var>t’<var>としたとき、<var>&theta;<sub>1</sub></var> + <var>t’</var></li>
+</ul>
+</p>
+
+<h2>Constraints</h2>
+<p>入力は以下の条件を満たす。</p>
+<ul>
+    <li>角度は度数法(degree)で表される</li>
+    <li>0 &le; <var>&theta;<sub>1</sub></var>, <var>&theta;<sub>2</sub></var> &lt; 360</li>
+    <li><var>&theta;<sub>1</sub></var>, <var>&theta;<sub>2</sub></var>は整数</li>
+    <li>|<var>&theta;<sub>1</sub></var> - <var>&theta;<sub>2</sub></var>| &ne; 180</li>
+    <li>解答が[-0.0001,0.0001]度になるような入力は与えられない</li>
+</ul>
+
+<h2>Input</h2>
+<p>入力は以下の形式で与えられる。</p>
+<pre>
+<var><var>&theta;<sub>1</sub></var></var>
+<var><var>&theta;<sub>2</sub></var></var>
+</pre>
+
+
+<h2>Output</h2>
+<p>
+<var>&theta;<sub>1</sub></var>,<var>&theta;<sub>2</sub></var>のちょうど間の角度を度数法で[0,360)の範囲で一行に出力せよ。ただし0.0001以上の誤差を含んではならない。
+
+</p>
+
+<h2>Sample Input 1</h2>
+<pre>
+10
+20
+</pre>
+
+<h2>Sample Output 1</h2>
+<pre>
+15.0
+</pre>
+
+<h2>Sample Input 2</h2>
+<pre>
+20
+350
+</pre>
+
+<h2>Sample Output 2</h2>
+<pre>
+5.0
+</pre>
+
+<h2>Sample Input 3</h2>
+<pre>
+4
+5 0
+5 1 1 1
+2 1 2 1
+4 1 1 1
+3 1 3 1
+</pre>
+
+<h2>Sample Output 3</h2>
+<pre>
+2
+</pre>
+
+<h2>Sample Input 4</h2>
+<pre>
+4
+0 0
+1 10 1 10
+2 5 2 5
+3 25 5 6
+1 15 2 20
+</pre>
+
+<h2>Sample Output 4</h2>
+<pre>
+0
+</pre>
