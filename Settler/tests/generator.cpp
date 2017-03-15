@@ -12,6 +12,8 @@ string i2s(int x){
 std::mt19937 mt( (int)time(0) );
 
 std::uniform_int_distribution<> randP( 3 , 100 );
+std::uniform_int_distribution<> randN( 10 , 20 );
+
 typedef pair<int,int> P;
 
 #define MAX 6005
@@ -67,23 +69,33 @@ void solve(int casenum){
   ofstream fout(filename);
 
   vector<P> vec;
-  int v=randP(mt);
-  for(int i=1;i<=v;i++)
-    for(int j=1;j<=v;j++)
+  
+  int v=randN(mt);
+  for(int i=1;i<=7;i++)
+    for(int j=1;j<=7;j++)
       if(i%2 == (j/2)%2 )
         vec.push_back(P(i,j));
   
   shuffle( vec.begin(), vec.end() , mt );
+  vec.erase( vec.begin() + v , vec.end() );
+  assert( (int)vec.size() == v );
   
-  fout<<vec.size()<<' '<< calc(vec) <<endl;
+  int nk=calc(vec);
+  int u=randP(mt);
+  if(u%2==0){
+    nk=max(1,nk-u%5);
+  }
   
+  fout<<vec.size()<<' '<< nk <<endl;
+
+
   for(int i=0;i<(int)vec.size();i++){
     fout<<vec[i].first<<' '<<vec[i].second<<endl;
   }
 }
 
 int main(){
-  for(int i=0;i<10;i++){
+  for(int i=0;i<20;i++){
     solve(i);
   }
   return 0;
