@@ -3,9 +3,9 @@
 using namespace std;
 
 const int MIN_N = 1;
-const int MAX_N = 100;
+const int MAX_N = 108;
 const int MIN_M = 1;
-const int MAX_M = 100;
+const int MAX_M = 108;
 const int MIN_H = 1;
 const int MAX_H = 1000000000;
 

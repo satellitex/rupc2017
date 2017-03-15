@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #define MAX_V 500
 #define INF ((1e9)+10)
-#define N 101
+#define N 110
 using namespace std;
 
 /*最大流アルゴリズム(Ford_Fulerson法使用)　O(F|E|)*/
