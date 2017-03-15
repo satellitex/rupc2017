@@ -17,7 +17,7 @@ public:
   Point(int id,int x,int y): id(id),x(x),y(y){}
   bool operator < (const Point &p){return id<p.id;}
 };
-static const int MAX =10000000;
+static const int MAX =1000000;
 static const int NIL = -1;
 int n,c=0;
 Point P[MAX];
@@ -61,17 +61,17 @@ main(){
     q[t-1].push_back(make_pair(x,y));
   }
   sort(tt,tt+5);
-  rep(i,5){rep(j,q[tt[i].s].size()){
+  rep(i,5)rep(j,q[tt[i].s].size())
     a[i].push_back(q[tt[i].s][j]);
-  }/*cout<<tt[i].s;*/}
  
-  rep(i,a[4].size()){//cout<<1;
+  rep(i,a[4].size()){/
     P[c++]=Point(c,a[4][i].f,a[4][i].s);
     rep(j,a[2].size()){//cout<<2;
       if(c1)P[c++]=Point(c,a[2][j].f,a[2][j].s);
-      P[c++]=Point(c,a[4][i].f+a[2][j].f,a[4][i].s+a[2][j].s);;
+      P[c++]=Point(c,a[4][i].f+a[2][j].f,a[4][i].s+a[2][j].s);
     }c1=0;
   }
+  
   int root=makeKDTree(0,c,0),c7=1,c8=1;
   vector<Point>ans;
   rep(i,c)if(P[i].x>=mi&&P[i].x<=ma&&P[i].y<=ma&&P[i].y>=mi)goto L;
@@ -83,13 +83,12 @@ main(){
       if(c7)find(root,sx,tx,sy,ty,0,ans);
       find(root,mi-a[1][j].f,ma-a[1][j].f,mi-a[1][j].s,ma-a[1][j].s,0,ans);
       rep(k,a[0].size()){
-	int x1=a[3][i].f+a[0][k].f,y1=a[3][i].s+a[0][k].s;
-	int x2=a[1][j].f+a[0][k].f,y2=a[1][j].s+a[0][k].s;
-	int x3=a[3][i].f+a[1][j].f+a[0][k].f,y3=a[3][i].s+a[1][j].s+a[0][k].s;
+	int x1=a[0][k].f+a[1][j].f,y1=a[0][k].s+a[1][j].s;
+	int x2=a[0][k].f+a[3][i].f,y2=a[0][k].s+a[3][i].s;
 	if(c8)find(root,mi-a[0][k].f,ma-a[0][k].f,mi-a[0][k].s,ma-a[0][k].s,0,ans);
 	find(root,mi-x1,ma-x1,mi-y1,ma-y1,0,ans);
 	find(root,mi-x2,ma-x2,mi-y2,ma-y2,0,ans);
-	find(root,mi-x3,ma-x3,mi-y3,ma-y3,0,ans);
+	find(root,mi-x+a[0][k].f,ma-x+a[0][k].f,mi-y+a[0][k].s,ma-y+a[0][k].s,0,ans);
       }c8=0;
     }c7=0;
     if(ans.size())goto L;
