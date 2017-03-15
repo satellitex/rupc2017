@@ -23,7 +23,7 @@ bool all_used(vector<int>& used){
     return true;
 }
 
-int dfs(int pos, vector< vector<A> > &v, int t, int D, int c, vector<int> &used){
+int dfs(int pos, vector< vector<A> > &v, int t, double D, int c, vector<int> &used){
 
     used[pos] = true;
     int res = D_INF;
@@ -40,21 +40,22 @@ int dfs(int pos, vector< vector<A> > &v, int t, int D, int c, vector<int> &used)
                 next_t = v[i][j].t;
             }
         }
+        if(abs((double)t + next_t / (double)c - D) < 0.00001) continue;
         res = min(res, dfs(i, v, t+next_t, D, c, used));
     }
     return res;
 }
 
-bool solve(vector< vector<A> > &v, int D, int c){
+bool solve(vector< vector<A> > &v, double D, int c){
     int ans=D_INF;
-    vector<int> used(n, false);
     for(int i = 0; i < n; i++){
+        vector<int> used(n, false);
         ans = min(ans, dfs(i, v, 0, D, c, used));
     }
     return (double)ans/(double)c <= D;
 }
 
-bool check(vector< vector< A > > &v, int D){
+bool check(vector< vector< A > > &v, double D){
     int l = 0, r = C_INF;
     while(l + 1 < r){
         int mid = (l+r) / 2;
@@ -86,5 +87,5 @@ int main(void){
             r = mid;
         }
     }
-    cout << l << endl;
+    printf("%.10f\n", l);
 }
