@@ -1,129 +1,112 @@
 #include<bits/stdc++.h>
 using namespace std;
-typedef pair<int,int> P;
 #define MAX 6005
-int V;
+int N,K;
 vector<int> G[MAX];
-int used[MAX],match[MAX];
-int A[MAX];
+set<int> g[MAX];
+int f[MAX],bs[MAX];
+bool visited[MAX];
 
-int flgS[MAX],flgT[MAX];
 
-void add_edge(int from,int to){
-  G[from].push_back(to);
-  G[to].push_back(from);
-}
+int px[MAX],py[MAX];
 
-void init(int v,int depth){
-  if(A[v]!=-1){
-    assert(A[v]==depth%2);
-    
-    return;
-  }
-  A[v]=depth%2;
-  for(int i=0;i<(int)G[v].size();i++){
-    init(G[v][i],depth+1);
-  }
-}
 
 bool dfs(int v){
-  used[v]=true;
+  visited[v]=true;
   for(int i=0;i<(int)G[v].size();i++){
-    int u=G[v][i],w=match[u];
-    if(w==-1 || ( !used[w]&&dfs(w) ) ){
-      match[v]=u;
-      match[u]=v;
+    int u=G[v][i];
+
+    if(f[u]>(int)g[u].size()){
+      g[v].insert(u);
+      g[u].insert(v);
       return true;
+    }
+    
+    for(int j=0;j<(int)G[u].size();j++){
+      int w=G[u][j];
+      if(g[u].count(w)==0)continue;
+      
+      if(!visited[w]&&dfs(w)){
+        g[v].insert(u);
+        g[u].insert(v);
+
+        g[u].erase(w);
+        g[w].erase(u);
+        return true;
+      }
     }
   }
   return false;
 }
 
-int bipartite_matching(){
-  memset(match,-1,sizeof(match));
-  int res=0;
-  for(int i=0;i<V;i++){
-    if(match[i]!=-1)continue;
-    memset(used,0,sizeof(used));
-    if(dfs(i))res++;
-  }
-  return res;
-}
-
-void dfsS(int v){
-  if(flgS[v])return;
-  flgS[v]=true;
+void rec(int v,int depth=0){
+  if(bs[v]!=-1)return;
+  bs[v]=depth%2;
   for(int i=0;i<(int)G[v].size();i++){
-    int to=G[v][i];
-    if(A[v]==1 && to!=match[v])continue;
-    dfsS(to);
-  }
-}
-
-void dfsT(int v){
-  if(flgT[v])return;
-  flgT[v]=true;
-  for(int i=0;i<(int)G[v].size();i++){
-    int to=G[v][i];
-    if(A[v]==0 && to!=match[v])continue;
-    dfsT(to);
+    rec(G[v][i],depth+1);
   }
 }
 
 int main(){
-  int N,K;
   cin>>N>>K;
-
-  map< P ,int> T;
   for(int i=0;i<N;i++){
-    int x,y;
-    cin>>x>>y;
-
-    assert( T.count( P(x,y) ) == 0 );
-    assert( x%2 == (y/2)%2 );
-    
-    for(int dx=-1;dx<=1;dx++){
-      for(int dy=-1;dy<=1;dy++){
-        int nx=x+dx;
-        int ny=y+dy;
-        if( T.count( P(nx,ny) ) == 0 )continue;
-        add_edge(i, T[P(nx,ny)] );
+    cin>>px[i]>>py[i];
+    for(int j=0;j<i;j++){
+      int X=px[i]-px[j];
+      int Y=py[i]-py[j];
+      if(X*X+Y*Y<4){
+        G[i].push_back(j);
+        G[j].push_back(i);
       }
     }
-    T[ P(x,y) ]=i;
   }
-
-  V=N;
+  for(int i=0;i<N;i++){
+    sort(G[i].begin(),G[i].end());
+  }
   
-  memset(A,-1,sizeof(A));
-  for(int i=0;i<V;i++)
-    if(A[i]==-1)init(i,0);
-
-  int ans=V-bipartite_matching();
-  if(ans<K){
-    cout<<-1<<endl;
-    return 0;
+  memset(bs,-1,sizeof(bs));
+  for(int i=0;i<N;i++){
+    rec(i);
   }
-
-  for(int v=0;v<V;v++){
-    if(match[v]!=-1)continue;
-    if(A[v]==0)dfsS(v);
-    else dfsT(v);
+  
+  fill(f,f+MAX,1);
+  int maxflow=0;
+  for(int i=0;i<N;i++){
+    if(f[i]==(int)g[i].size())continue;
+    memset(visited,false,sizeof(visited));
+    if( dfs(i) )maxflow++;
   }
+  cout<<maxflow<<endl;
 
-  int cc=0;
-  for(int v=0;v<V;v++){
-    if(A[v]==0){
-      if(flgT[v])continue;
-      dfsS(v);
-    }else{
-      if(flgS[v])continue;
-      dfsT(v);
+    
+  bool ans[MAX]={};
+  for(int v=0;v<N;v++){
+    bool flg=false;
+    for(int i=0;i<(int)G[v].size();i++){
+      if( ans[G[v][i]] ){
+        flg=true;
+      }
     }
-    cout<<v+1<<endl;
-    cc++;
-    if(cc==K)break;
+    if(flg)continue;
+    f[v]=3;
+    memset(visited,false,sizeof(visited));
+    int a=dfs(v);
+    memset(visited,false,sizeof(visited));
+    int b=dfs(v);
+    int c=a+b;
+    if( N - maxflow - c >= K ){
+      ans[v]=true;
+    }else{
+      f[v]=1;
+      while(g[v].size()>1){
+        int u=*g[v].begin();
+        g[u].erase(v);
+        g[v].erase(u);
+      }
+    }
+  }
+  for(int i=0;i<N;i++){
+    if(ans[i])cout<<i+1<<endl;
   }
   return 0;
 }
-
