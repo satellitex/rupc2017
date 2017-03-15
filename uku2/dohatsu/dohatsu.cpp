@@ -8,7 +8,7 @@ struct data{
 
 data A,B;
 
-#define SZ (1<<3)
+#define SZ (1<<17)
 
 struct segtree{
   data t[SZ*2];
