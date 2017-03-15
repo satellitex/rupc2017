@@ -4,9 +4,9 @@ using namespace std;
 
 int main() {
   registerValidation();
-  int n=inf.readInt(1, 100, "n");
+  int n=inf.readInt(1, 108, "n");
   inf.readSpace();
-  int m=inf.readInt(1, 100, "m");
+  int m=inf.readInt(1, 108, "m");
   inf.readEoln();
   for(int i=0; i<n; i++) {
     for(int j=0; j<m; j++) {
