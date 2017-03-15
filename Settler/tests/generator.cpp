@@ -12,7 +12,7 @@ string i2s(int x){
 std::mt19937 mt( (int)time(0) );
 
 std::uniform_int_distribution<> randP( 3 , 100 );
-std::uniform_int_distribution<> randN( 15 , 20 );
+std::uniform_int_distribution<> randN( 10 , 20 );
 
 typedef pair<int,int> P;
 
@@ -95,7 +95,7 @@ void solve(int casenum){
 }
 
 int main(){
-  for(int i=0;i<10;i++){
+  for(int i=0;i<20;i++){
     solve(i);
   }
   return 0;
