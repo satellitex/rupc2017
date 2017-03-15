@@ -74,8 +74,8 @@ struct Dinic {
   }
 };
 
-#define MAX_N 100
-#define MAX_M 100
+#define MAX_N 108
+#define MAX_M 108
 
 int n, m;
 int h[MAX_N][MAX_M];

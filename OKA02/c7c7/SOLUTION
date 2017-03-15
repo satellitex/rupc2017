@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # -*- coding: utf-8; mode: python -*-
 
 ## Solution definition.
@@ -7,3 +8,6 @@
 cxx_solution(src='c7c7.cpp')
 #java_solution(src='Main.java', encoding='UTF-8', mainclass='Main')
 #script_solution(src='main.py')
+=======
+cxx_solution(src='c7.cpp')
+>>>>>>> 511379f6138d7ec3206b4ee72668cee66de4d81d

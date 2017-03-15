@@ -1,0 +1,100 @@
+<%@ page pageEncoding="UTF-8"%>
+
+<script language="JavaScript" type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+</script>
+
+<h1>Problem J: Demon's plan</h1>
+
+<h2>Back Ground</h2>
+<p>
+    デーモンズプランでは慾を司る108体の悪魔が日夜プログラミングコンテストでしのぎを削っています。主催であるパトローンは、全ての慾が集う場所”リクス＝マグナ”に悪魔たちを招待しようとしています。パトローンはまだ招待を送っていない悪魔に招待を送りたいのですが、悪魔は世界各地におり、自分で行くのは面倒くさいので自身の使い魔達にやらせることにしました。パトローンは気が利くので使い魔同士がより平等に働くようにどの使い魔がどの悪魔を担当するかを割り振ろうとしています。
+</p>
+
+<h2>Problem</h2>
+<p>
+    <var>N</var>体の使い魔と<var>M</var>体の悪魔がいます。使い魔<sub><var>i</var></sub> と 悪魔<sub><var>j</var></sub> の距離は <var>H<sub><var>i</var></sub><sub><var>j</var></sub></var>です。
+</p>
+<p>
+    各悪魔に必ず1人の使い魔を向かわせたいです。どの使い魔がどの悪魔を訪問するかは以下の条件に従ってに割り振ることにします。
+</p>
+<p>
+    <ol>
+        <li>使い魔1体あたりの訪問する悪魔の数の差の最大を最小化する。</li>
+        <li>1を満たした上で訪問する悪魔と担当する使い魔の距離の最大を最小化する。</li>
+    </ol>
+</p>
+
+<p>
+    1行目に使い魔1体あたりの訪問する悪魔の数の差の最大を2行目に悪魔と担当する使い魔の距離の最大を出力してください。
+</p>
+
+
+<h2>制約</h2>
+<ul>
+    <li>
+        1 &le; <var>N</var> &le; 108
+    </li>
+    <li>
+        1 &le; <var>M</var> &le; 108
+    </li>
+    <li>
+        1 &le; <var>H<sub><var>i</var><var>j</var></sub> &le; 10<sup>9</sup> ( 0 &le; <var>i</var> < <var>N</var>, 0 &le; <var>j</var> < <var>M</var> ) ( 使い魔<var>i</var>から悪魔<var>j</var>までの距離 )
+    </li>
+</ul>
+
+<h2>Input</h2>
+<pre>
+<var>N</var> <var>M</var>
+<var>H<sub>00</sub></var> <var>H<sub>01</sub></var> … <var>H<sub>0<var>M</var></sub></var>
+<var>H<sub>10</sub></var> <var>H<sub>11</sub></var> … <var>H<sub>1<var>N</var></sub></var>
+.
+.
+<var>H<sub><var>N</var>0</sub></var> <var>H<sub><var>N</var>1</sub></var> … <var>H<sub><var>N</var><var>M</var></sub></var>
+</pre>
+
+
+<h2>Sample Input 1</h2>
+<pre>
+3 3
+1 2 3
+2 1 2
+3 2 1
+</pre>
+
+<h2>Sample Output 1</h2>
+<pre>
+0
+1
+</pre>
+
+<pre>
+    使い魔<sub>0</sub> - 悪魔<sub>0</sub>
+    使い魔<sub>1</sub> - 悪魔<sub>1</sub>
+    使い魔<sub>2</sub> - 悪魔<sub>2</sub>
+    と割り振ることで訪問する悪魔の数の差が0になり、担当使い魔と悪魔の距離の最大が1になり最適な組み合わせになる。
+</pre>
+
+
+
+
+<h2>Sample Input 2</h2>
+<pre>
+3 5
+1 2 3 4 5
+5 4 3 2 1
+4 3 2 1 5
+</pre>
+
+<h2>Sample Output2</h2>
+<pre>
+1
+2
+</pre>
+<pre>
+    使い魔<sub>0</sub> - 悪魔<sub>0</sub>
+    使い魔<sub>0</sub> - 悪魔<sub>1</sub>
+    使い魔<sub>1</sub> - 悪魔<sub>4</sub>
+    使い魔<sub>2</sub> - 悪魔<sub>3</sub>
+    使い魔<sub>2</sub> - 悪魔<sub>2</sub>
+    と割り振ることで訪問する悪魔の差が1になり、担当使い魔と悪魔の距離の最大が2になり最適な組み合わせになる。
+</pre>
