@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 #define f first
 #define s second
+#define int long long
 #define rep(i,n) for(int i=0;i<n;i++)
 using namespace std;
 class Node{
@@ -48,7 +49,7 @@ void find(int v,int sx,int tx,int sy,int ty,int d,vector<Point> &ans){
     if(T[v].r!=NIL)if(y<=ty)find(T[v].r,sx,tx,sy,ty,d+1,ans);
   }
 }
-int main(){
+main(){
   int n,ma,mi,c1=1,c2=1;
   pair<int,int>tt[5];
   vector<pair<int,int> > q[5],a[5];
