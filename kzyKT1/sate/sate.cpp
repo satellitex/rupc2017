@@ -27,6 +27,12 @@ bool checkS(int x,int y){
 bool checkT(int x,int y){
     return x == n - 1 || y == 0;
 }
+bool isin(int x,int y){
+    if( 0 > x || n <= x || 0 > y || m <= y ) return false;
+    if( x == 0 && y == 0 ) return false;
+    if( x == n-1 && y == m-1 ) return false;
+    return true;
+}
 
 int main() {
     cin.tie(0);
@@ -45,7 +51,7 @@ int main() {
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = -1; dy <= 1; dy++) {
                 int nx = x + dx, ny = y + dy;
-                if( 0 > nx || n <= nx || 0 > ny || m <= ny ) continue;
+                if( !isin( nx, ny ) ) continue;
                 if (fie.count(P(nx, ny)))
                     U.merge(i, fie[P(nx, ny)]);
                 else
@@ -54,6 +60,11 @@ int main() {
         }
         fie[P(x, y)] = i;
     }
+    ps.emplace_back( P(0,1) );
+    ps.emplace_back( P(1,0) );
+    ps.emplace_back( P(n-1,m-2) );
+    ps.emplace_back( P(n-2,m-1) );
+
     if (U.same(S, T)) {
         cout << 0 << endl;
     } else if (fie.count(P(0, 1)) || fie.count(P(1, 0)) ||
@@ -69,6 +80,7 @@ int main() {
             for(int dx=-1;dx<=1;dx++){
                 for(int dy=-1;dy<=1;dy++){
                     P np = P( p.first + dx, p.second + dy );
+                    if( !isin( np.first, np.second ) ) continue;
                     if( fie.count(np) ) {
                         if( U.same( fie[np], S ) ) st |= 1;
                         if( U.same( fie[np], T ) ) st |= 2;
