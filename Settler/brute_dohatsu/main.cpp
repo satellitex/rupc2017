@@ -30,6 +30,8 @@ bool dfs(int p,int r){
 
 int main(){
   cin>>N>>K;
+  if(N>25)return 0;
+  
   for(int i=0;i<N;i++){
     cin>>x[i]>>y[i];
     for(int j=0;j<i;j++){
