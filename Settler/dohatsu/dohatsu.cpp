@@ -81,8 +81,8 @@ int main(){
     cout<<-1<<endl;
     return 0;
   }
-    
-  bool ans[MAX]={};
+
+    bool ans[MAX]={};
   for(int v=0;v<N;v++){
     bool flg=false;
     for(int i=0;i<(int)G[v].size();i++){
@@ -97,8 +97,9 @@ int main(){
     memset(visited,false,sizeof(visited));
     int b=dfs(v);
     int c=a+b;
-    if( N - maxflow - c >= K ){
+    if( N - (maxflow+c)>= K ){
       ans[v]=true;
+      maxflow+=c;
     }else{
       f[v]=1;
       while(g[v].size()>1){
