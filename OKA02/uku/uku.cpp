@@ -18,7 +18,7 @@ using vint = vector<int>;
 
 const int inf = 1LL << 55;
 const int mod = 1e9 + 7;
-
+/*
 struct kDTree {
   struct Node {
     int location;
@@ -108,10 +108,42 @@ struct kDTree {
     return res;
   }
 };
+*/
+struct SegmentTree {
+  vector< set<int> > data;
+  int sz;
+  SegmentTree(){}
+  SegmentTree(int n) {
+    sz = 1; while(sz < n) sz *= 2;
+    data.resize(2*sz-1);
+  }
+  void update(int k, int x) {
+    k += sz-1;
+    data[k].insert(x);
+    while(k > 0) {
+      k = (k-1)/2;
+      data[k].insert(x);
+    }
+  }
+  int query(int a, int b, int x, int k, int l, int r) {
+    if(r <= a || b <= l) return inf;
+    if(a <= l && r <= b) {
+      auto it = data[k].lower_bound(x);
+      if(it == data[k].end()) return inf;
+      else return *it;
+    }
+    return min(query(a, b, x, 2*k+1, l, (l+r)/2),
+	       query(a, b, x, 2*k+2, (l+r)/2, r));
+  }
+  int query(int a, int b, int x) {
+    return query(a, b, x, 0, 0, sz);
+  }
+};
 
 int N, A, B;
 vector<pint> XY[5];
-kDTree tree;
+//kDTree tree;
+SegmentTree seg;
 
 signed main()
 {
@@ -128,21 +160,39 @@ signed main()
     XY[t-1].emplace_back(x, y);
   }
 
+  sort(XY, XY + 5, [&](vector<pint> v, vector<pint> w)->bool{
+      return v.size() > w.size();
+    });
+
   int N0 = XY[0].size();
   int N1 = XY[1].size();
   int N2 = XY[2].size();
   int N3 = XY[3].size();
   int N4 = XY[4].size();
 
-  tree = kDTree(N0*N1);
+  vector<int> X01;
+  //tree = kDTree(N0*N1);
   rep(i, N0) {
     int x0, y0; tie(x0, y0) = XY[0][i];
     rep(j, N1) {
       int x1, y1; tie(x1, y1) = XY[1][j];
-      tree.setPoint(x0+x1, y0+y1);
+      //tree.setPoint(x0+x1, y0+y1);
+      X01.push_back(x0+x1);
     }
   }
-  tree.build();
+  //tree.build();
+  sort(all(X01));
+  X01.erase(unique(all(X01)), X01.end());
+
+  seg = SegmentTree(N0*N1);
+  rep(i, N0) {
+    int x0, y0; tie(x0, y0) = XY[0][i];
+    rep(j, N1) {
+      int x1, y1; tie(x1, y1) = XY[1][j];
+      int pos = lower_bound(all(X01), x0+x1) - X01.begin();
+      seg.update(pos, y0+y1);
+    }
+  }
 
   rep(i, N2) {
     int x2, y2; tie(x2, y2) = XY[2][i];
@@ -151,8 +201,17 @@ signed main()
       rep(k, N4) {
 	int x4, y4; tie(x4, y4) = XY[4][k];
 	int X = x2 + x3 + x4, Y = y2 + y3 + y4;
+	/*
 	auto ans = tree.find(A-X, B-X, A-Y, B-Y);
 	if(ans.size()) {
+	  cout << "Yes" << endl;
+	  return 0;
+	}
+	*/
+	int l = lower_bound(all(X01), A-X) - X01.begin();
+	if(X01[l] + X > B) continue;
+	int r = upper_bound(all(X01), B-X) - X01.begin();
+	if(Y + seg.query(l, r, A-Y) <= B) {
 	  cout << "Yes" << endl;
 	  return 0;
 	}
