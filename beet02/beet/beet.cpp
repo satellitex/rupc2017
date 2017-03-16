@@ -2,7 +2,7 @@
 using namespace std;
 #define int long long
 typedef pair<int,int> P;
-#define MAX 1111
+#define MAX 2222
 int mystoi(string s){
   if(s=="+") return 1;
   if(s=="-") return -1;
