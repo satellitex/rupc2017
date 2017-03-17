@@ -104,7 +104,7 @@ UnionFind uf;
 vector<int> sati[2];
 bool used[2][MAX_N];
 vector<int> graph2[2][MAX_N];
-int maxi[2][2][MAX_N];
+int dp[2][2][MAX_N];
 /*
 void dfs(int u, int p, int f) {
   if(used[f][u]) return;
@@ -161,17 +161,17 @@ void calc() {
 }
 
 int solve() {
-  memset(maxi, -1, sizeof(maxi));
-  maxi[0][0][scc.cmp[0]] = sati[scc.color[0]^0][scc.cmp[0]];
+  memset(dp, -1, sizeof(dp));
+  dp[0][0][scc.cmp[0]] = sati[scc.color[0]^0][scc.cmp[0]];
   rep(c, scc.sz) {
     rep(i, 2) { //とる色
       rep(j, 2) { //今の偶奇
-	if(maxi[i][j][c] == -1) continue;
+	if(dp[i][j][c] == -1) continue;
 	rep(k, 2) { //出る場所
 	  for(int v : graph2[k][c]) {
 	    int nf = !(i^j^k);
-	    if(maxi[scc.color[v]][nf][scc.cmp[v]] < maxi[i][j][c] + sati[scc.color[v]^nf][scc.cmp[v]]) {
-	      maxi[scc.color[v]][nf][scc.cmp[v]] = maxi[i][j][c] + sati[scc.color[v]^nf][scc.cmp[v]];
+	    if(dp[scc.color[v]][nf][scc.cmp[v]] < dp[i][j][c] + sati[scc.color[v]^nf][scc.cmp[v]]) {
+	      dp[scc.color[v]][nf][scc.cmp[v]] = dp[i][j][c] + sati[scc.color[v]^nf][scc.cmp[v]];
 	    }
 	  }
 	}
@@ -179,7 +179,7 @@ int solve() {
     }
   }
   int res = 0;
-  rep(i, 2) rep(j, 2) rep(k, n) chmax(res, maxi[i][j][k]);
+  rep(i, 2) rep(j, 2) rep(k, n) chmax(res, dp[i][j][k]);
   return res;
 }
 
