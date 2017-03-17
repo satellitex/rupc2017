@@ -147,7 +147,6 @@ int solve() {
   que.emplace(maxi[0][scc.cmp[0]], 0, 0);
   while(que.size()) {
     int x, u, f; tie(x, u, f) = que.top(); que.pop();
-    cout << f << " " << u << " " << x << endl;
     if(x < maxi[f][scc.cmp[u]]) continue;
     rep(i, 2) {
       for(int v : graph2[i][scc.cmp[u]]) {
