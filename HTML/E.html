@@ -1,0 +1,73 @@
+<%@ page pageEncoding="UTF-8"%>
+
+<script language="JavaScript" type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+</script>
+
+<h1>Problem E: Tangled Cables</h1>
+
+<h2>Problem</h2>
+<p>とある会社のネットワーク上には<var>n</var>台のコンピュータと、それらをつなぐ<var>m</var>本の通信ケーブルがある。コンピュータは<var>0</var>から<var>n-1</var>までの識別子で区別され、通信ケーブルもまた<var>0</var>から<var>m-1</var>までの識別子をもつ。</p>
+
+<p>現在この会社にある任意の異なる2台のコンピュータは、いくつかの通信ケーブルを介して相互に通信することができるが、通信経路がただ一つに定まるとは限らない。</p>
+
+<p>社長であるあなたは最近ある社員から、通信ケーブルが多すぎて絡まってしまうという苦情を受けた。そこで、あなたは任意の通信について、通信経路がただ一つになるようにいくつかの通信ケーブルを取り除くことにした。</p>
+
+<p>通信ケーブル<var>i</var>はコンピュータ<var>a<sub>i</sub></var>と<var>b<sub>i</sub></var>を双方向につなぎ、その長さは<var>c<sub>i</sub></var>である。また、あなたが通信ケーブル<var>i</var>を取り除く際にかかる労力は<var>d<sub>i</sub></var>である。通信ケーブルは長いほど絡まりやすいので、できるだけ長いものを取り除きたい。しかし、あなたは疲れるのが嫌なので、作業を終えるまでにかかる総労力をできるだけ小さくしたい。</p>
+
+<p>作業を始める前に、あなたは取り除いた通信ケーブルの長さの和に対する、作業を終えるまでにかかる労力の和の比を「おっくう感」とし、最小のおっくう感を見積もることにした。</p>
+
+<h2>Input</h2>
+<p>入力は以下の形式で与えられる。</p>
+<pre>
+
+</pre>
+<p>
+    1行目に整数<var>n</var>が与えられる。2行目に整数<var>x</var>, <var>y</var>が空白区切りで与えられる。3行目から<var>n</var>+2行目に整数<var>a<sub>i</sub></var>, <var>b<sub>i</sub></var>, <var>c<sub>i</sub></var>, <var>d<sub>i</sub></var>が空白区切りで与えられる。
+</p>
+
+<h2>Constraints</h2>
+<p>入力は以下の条件を満たす。</p>
+<ul>
+    <li><var>2 &le; n &le; 10<sup>4</sup></var></li>
+    <li><var>n-1 &le; m &le; min(<table border="0" cellspacing="0" cellpadding="0"><tr><td><u>n×(n-1)</u></td></tr><tr><td>2</td></tr></table>, 10<sup>4</sup>)</var></li>
+    <li><var>0 &le; a<sub>i</sub>, b<sub>i</sub> &le; n-1 (a<sub>i</sub> ≠ b<sub>i</sub>)</var></li>
+    <li><var>1 &le; c<sub>i</sub> &le; 10<sup>6</sup></var></li>
+    <li><var>0 &le; d<sub>i</sub> &le; 10<sup>6</sup></var></li>
+</ul>
+
+<h2>Output</h2>
+<p>おっくう感の最小値を小数で1行に出力する。ただし、一つも取り除けない場合のおっくう感は0であり、10<sup>-5</sup>以上の誤差を含んではならない。</p>
+
+<h2>Sample Input 1</h2>
+<pre>
+4 5
+0 2 22 13
+0 3 15 25
+1 2 3 3
+1 3 28 5
+2 3 5 22
+</pre>
+
+<h2>Sample Output 1</h2>
+<pre>
+0.36000
+</pre>
+
+<h3>解説</h3>
+<p>通信ケーブル<var>0</var>と通信ケーブル<var>3</var>を取り除くと、おっくう感は<var><table border="0" cellspacing="0" cellpadding="0"><tr><td><u>13+5</u></td></tr><tr><td>22+28</td></tr></table>=0.36</var>となり、これがおっくう感の最小値となる。</p>
+
+<h2>Sample Input 2</h2>
+<pre>
+5 6
+0 1 22 33
+0 2 43 11
+0 3 92 10
+1 3 50 12
+2 3 88 2
+3 4 58 89
+</pre>
+
+<h2>Sample Output 2</h2>
+<pre>
+0.06667
+</pre>

@@ -56,14 +56,15 @@ int main(){
     if('0'<=s[i]&&s[i]<='9'&&(s[i+1]=='+'||s[i+1]=='-'))t+="x^0";
   }
   s=t;
-  int num=0,p=0;
+  int num=0,p=0,f=0;
   for(int i=0;i<s.size();i++){
     if(s[i]=='-')p=1;
-    if('0'<=s[i]&&s[i]<='9')num=num*10+s[i]-'0';
+    if('0'<=s[i]&&s[i]<='9')num=num*10+s[i]-'0',f=1;
     if(s[i]=='x'){
+      if(!f&&!num)num=1;
       if(p)num*=-1;
       n=max(n,s[i+2]-'0');
-      x[s[i+2]-'0']=num,num=0,p=0,i+=2;
+      x[s[i+2]-'0']=num,num=0,p=0,f=0,i+=2;
     }
   }
   int temp=x[0];
@@ -75,7 +76,7 @@ int main(){
       if(i*i!=temp){
 	v.push_back(temp/i);
 	v.push_back(-temp/i);
-      }      
+      }
     }
   sort(v.begin(),v.end());
   dfs(0,-1);

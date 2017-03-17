@@ -34,9 +34,6 @@ int scc(){
 
 int n,m,a,b;
 
-void dfs2(){
-  
-}
 
 int main(){
   cin>>n>>m;
@@ -45,7 +42,7 @@ int main(){
     cin>>a>>b;
     add_edge(a,b);
   }
-  scc();
-  dfs2();
+  int r=scc();
+  
   return 0;
 }

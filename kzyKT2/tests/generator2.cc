@@ -5,11 +5,11 @@ typedef pair<int,int> P;
 
 int main(int argc, char* argv[]) {
   registerGen(argc, argv);
-  for(int t=1; t<11; t++) {
-    ofstream ofs(format("02_large_%02d.in",t).c_str());
+  for(int t=2; t<15; t++) {
+    ofstream ofs(format("03_large_%02d.in",t).c_str());
     vector<P> v;
     int n;
-    if(t==1||t==4) {
+    if(t==11||t==4) {
       n=100000;
       if(t==4) v.push_back(P(2,0));
       for(int i=0; i<n-1; i++) v.push_back(P(i,i+1));
@@ -44,6 +44,16 @@ int main(int argc, char* argv[]) {
         v.push_back(P(i,i+1));
         if(i%4==3) v.push_back(P(i,i-3));
         if(i%8==2) v.push_back(P(i,i+2));
+      }
+    } else if(t==10) {
+      n=2000;
+      for(int i=0; i<n; i+=2) {
+        if(i) {
+          v.push_back(P(i-2,i));
+          v.push_back(P(i-1,i));
+        }
+        v.push_back(P(i,i+1));
+        v.push_back(P(i+1,i));
       }
     } else {
       n=10000;
