@@ -6,7 +6,7 @@
 <h1>Problem E: Tangled Cables</h1>
 
 <h2>Problem</h2>
-<p>とある会社のネットワーク上には<var>n</var>台のコンピュータと、それらをつなぐ<var>m</var>本の通信ケーブルがある。コンピュータは<var>0</var>から<var>n-1</var>までの識別子で区別され、通信ケーブルもまた<var>0</var>から<var>m-1</var>までの識別子をもつ。</p>
+<p>とある会社のネットワーク上には<var>n</var>台のコンピュータと、それらをつなぐ<var>m</var>本の通信ケーブルがある。コンピュータは<var>0</var>から<var>n&minus;1</var>までの識別子で区別され、通信ケーブルもまた<var>0</var>から<var>m&minus;1</var>までの識別子をもつ。</p>
 
 <p>現在この会社にある任意の異なる2台のコンピュータは、いくつかの通信ケーブルを介して相互に通信することができるが、通信経路がただ一つに定まるとは限らない。</p>
 
@@ -19,24 +19,27 @@
 <h2>Input</h2>
 <p>入力は以下の形式で与えられる。</p>
 <pre>
-
+<var>n</var>  <var>m</var>
+<var>a<sub>1</sub></var> <var>b<sub>1</sub></var> <var>c<sub>1</sub></var> <var>d<sub>1</sub></var>
+<var>a<sub>2</sub></var> <var>b<sub>2</sub></var> <var>c<sub>2</sub></var> <var>d<sub>2</sub></var>
+...
+<var>a<sub>n</sub></var> <var>b<sub>n</sub></var> <var>c<sub>n</sub></var> <var>d<sub>n</sub></var>
 </pre>
-<p>
-    1行目に整数<var>n</var>が与えられる。2行目に整数<var>x</var>, <var>y</var>が空白区切りで与えられる。3行目から<var>n</var>+2行目に整数<var>a<sub>i</sub></var>, <var>b<sub>i</sub></var>, <var>c<sub>i</sub></var>, <var>d<sub>i</sub></var>が空白区切りで与えられる。
-</p>
+<p>1行目にはコンピュータの数<var>n</var>と通信ケーブルの数<var>m</var>が空白区切りで与えられる。<br>
+2行目以降の<var>m</var>行には、通信ケーブルの情報が空白区切りで与えられる。<var>i</var>番目の通信ケーブルの情報は、通信ケーブル<var>i</var>の情報を表す。</p>
 
 <h2>Constraints</h2>
 <p>入力は以下の条件を満たす。</p>
 <ul>
     <li><var>2 &le; n &le; 10<sup>4</sup></var></li>
-    <li><var>n-1 &le; m &le; min(<table border="0" cellspacing="0" cellpadding="0"><tr><td><u>n×(n-1)</u></td></tr><tr><td>2</td></tr></table>, 10<sup>4</sup>)</var></li>
-    <li><var>0 &le; a<sub>i</sub>, b<sub>i</sub> &le; n-1 (a<sub>i</sub> ≠ b<sub>i</sub>)</var></li>
+    <li><var>n&minus;1 &le; m &le; min(<table border="0" cellspacing="0" cellpadding="0"><tr><td><u>n×(n&minus;1)</u></td></tr><tr><td>2</td></tr></table>, 10<sup>4</sup>)</var></li>
+    <li><var>0 &le; a<sub>i</sub>, b<sub>i</sub> &le; n&minus;1 (a<sub>i</sub> ≠ b<sub>i</sub>)</var></li>
     <li><var>1 &le; c<sub>i</sub> &le; 10<sup>6</sup></var></li>
     <li><var>0 &le; d<sub>i</sub> &le; 10<sup>6</sup></var></li>
 </ul>
 
 <h2>Output</h2>
-<p>おっくう感の最小値を小数で1行に出力する。ただし、一つも取り除けない場合のおっくう感は0であり、10<sup>-5</sup>以上の誤差を含んではならない。</p>
+<p>おっくう感の最小値を小数で1行に出力する。ただし、一つも取り除けない場合のおっくう感は0であり、10<sup>&minus;5</sup>以上の誤差を含んではならない。</p>
 
 <h2>Sample Input 1</h2>
 <pre>
@@ -53,8 +56,7 @@
 0.36000
 </pre>
 
-<h3>解説</h3>
-<p>通信ケーブル<var>0</var>と通信ケーブル<var>3</var>を取り除くと、おっくう感は<var><table border="0" cellspacing="0" cellpadding="0"><tr><td><u>13+5</u></td></tr><tr><td>22+28</td></tr></table>=0.36</var>となり、これがおっくう感の最小値となる。</p>
+<p>通信ケーブル<var>0</var>と通信ケーブル<var>3</var>を取り除くと、おっくう感は<var><table border="0" cellspacing="0" cellpadding="0"><tr><td><u>13&plus;5</u></td></tr><tr><td>22&plus;28</td></tr></table>=0.36</var>となり、これがおっくう感の最小値となる。</p>
 
 <h2>Sample Input 2</h2>
 <pre>
