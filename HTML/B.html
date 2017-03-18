@@ -1,0 +1,79 @@
+<%@ page pageEncoding="UTF-8"%>
+
+<script language="JavaScript" type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+</script>
+
+<h1>Problem B: GPAじゃんけん</h1>
+
+<h2>Problem</h2>
+<p>
+GPAとは「Galaxy Point of Aizu」の略で、0から4までの実数値を取ります。<br>
+GPAじゃんけんは「じゃんけん、ぽん（ほい）」の合図で互いにグー、チョキ、パーどれか好きな手を出して、GPAが高い人が勝ちで、低い人が負けです。（同じ場合は引き分け）
+</p>
+
+<p>
+<var>N</var> 人のGPAのデータが与えられるので、総当たり戦をした時のそれぞれの勝ち点を出力してください。<br>
+ただし、勝ち点は勝ちの時3、引き分けの時1、負けの時0とします。
+</p>
+
+<h2>Constraints</h2>
+<p>入力は以下の条件を満たす。</p>
+<ul>
+    <li>2 &le; <var>N</var> &le; 10^5</li>
+    <li><var>N</var> は整数</li>
+    <li>0.000 &le; <var>a<sub><var>i</var></sub></var> &le; 4.000 ( 1 &le; <var>i</var> &le; <var>N</var> )</li>
+    <li><var>a<sub><var>i</var></sub></var> は整数 ( 1 &le; <var>i</var> &le; <var>N</var> )</li>
+    <li>各GPAは小数点以下3桁まで与えられる。</li>
+</ul>
+
+<h2>Input</h2>
+<p>入力は以下の形式で与えられる。</p>
+<pre>
+<var>N</var>
+<var>a<var><sub>1</sub></var></var>
+<var>a<var><sub>2</sub></var></var>
+...
+<var>a<var><sub>N</sub></var></var>
+</pre>
+
+一行目にGPAじゃんけんをする人数 <var>N</var> が与えられる。<br>
+続く <var>N</var> 行に <var>i</var> 番目の人のGPAのデータが一行に与えられる。
+( 1 &le; <var>i</var> &le; <var>N</var> )<br>
+
+
+<h2>Output</h2>
+<p>
+  <var>i</var> 行目に <var>i</var> 番目の人の勝ち点を一行に出力せよ。
+  ( 1 &le; <var>i</var> &le; <var>N</var> )<br>
+  出力の最後には改行を入れること。
+</p>
+
+<h2>Sample Input 1</h2>
+<pre>
+3
+1.000
+3.000
+3.000
+</pre>
+
+<h2>Sample Output 1</h2>
+<pre>
+0
+4
+4
+</pre>
+
+<h2>Sample Input 2</h2>
+<pre>
+3
+1.000
+2.000
+3.000
+</pre>
+
+<h2>Sample Output 2</h2>
+<pre>
+0
+3
+6
+</pre>

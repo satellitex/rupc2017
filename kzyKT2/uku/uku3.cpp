@@ -32,14 +32,13 @@ struct UnionFind {
 
 struct SCC {
   vector< vector<int> > graph, rgraph, cnn; // 強連結成分の集合
-  vector<int> order, cmp, color;
-  vector<bool> used, isbi;
+  vector<int> order, cmp;
+  vector<bool> used;
   int sz; // 強連結成分を潰した後の頂点数
   SCC(){}
-  SCC(int V):graph(V), rgraph(V), cmp(V, -1), color(V, -1), used(V, false){}
+  SCC(int V):graph(V), rgraph(V), cmp(V, -1), used(V, false){}
   void add_edge(int from, int to) {
     graph[from].push_back(to);
-
   }
   void dfs(int u) {
     if(used[u]) return;
@@ -72,26 +71,6 @@ struct SCC {
 	});
     }
   }
-  bool dfs2(int u, int c) {
-    color[u] = c;
-    for(int v : graph[u]) {
-      if(cmp[u] != cmp[v]) continue;
-      if(color[v] == c) return false;
-      if(color[v] == -1 && !dfs2(v, !c)) return false;
-    }
-    return true;
-  }
-  void coloring() {
-    isbi.resize(sz, false);
-    rep(i, sz) {
-      for(int u : cnn[i]) {
-	if(color[u] == -1) {
-	  isbi[i] = dfs2(u, 0);
-	  break;
-	}
-      }
-    }
-  }
 };
 
 #define MAX_N 100010
@@ -101,13 +80,15 @@ int c[MAX_N];
 SCC scc;
 
 UnionFind uf;
+int divi[MAX_N]; // SCC内で1個飛ばしで分けた時のやつ。偶サイクルなら0/1、奇サイクルなら0(1も同じ)
 vector<int> sati[2];
 bool used[2][MAX_N];
 vector<int> graph2[2][MAX_N];
-int dp[2][2][MAX_N];
+int maxi[2][MAX_N];
 /*
 void dfs(int u, int p, int f) {
   if(used[f][u]) return;
+  if(divi[u] == -1) divi[u] = f;
   used[f][u] = true;
   for(int v : scc.graph[u]) {
     if(p != -1 && scc.cmp[p] == scc.cmp[v]) uf.unite(v, p);
@@ -115,13 +96,13 @@ void dfs(int u, int p, int f) {
   }
 }
 */
-
 void bfs() {
   queue< tuple<int, int, int> > que;
   que.emplace(0, -1, 0);
   while(que.size()) {
     int u, p, f; tie(u, p, f) = que.front(); que.pop();
     if(used[f][u]) continue;
+    if(divi[u] == -1) divi[u] = f;
     used[f][u] = true;
     for(int v : scc.graph[u]) {
       if(p != -1 && scc.cmp[p] == scc.cmp[v]) uf.unite(v, p);
@@ -133,53 +114,52 @@ void bfs() {
 void calc() {
   uf = UnionFind(n);
   memset(used, false, sizeof(used));
+  memset(divi, -1, sizeof(divi));
   //dfs(0, -1, 0);
   bfs();
-  scc.coloring();
 
   rep(i, 2) sati[i].resize(scc.sz, 0);
   rep(u, n) {
-    if(scc.isbi[scc.cmp[u]]) sati[scc.color[u]][scc.cmp[u]] += c[u];
-    else {
-      scc.color[u] = 0;
+    if(scc.cnn[scc.cmp[u]].size() > 1 && scc.cnn[scc.cmp[u]].size() == uf.size(u)) {
       sati[0][scc.cmp[u]] += c[u];
       sati[1][scc.cmp[u]] += c[u];
     }
+    else if(divi[uf.find(u)] != -1) sati[divi[uf.find(u)]][scc.cmp[u]] += c[u];
   }
 
   scc.sort_edge();
   rep(u, n) {
     for(int v : scc.graph[u]) {
       if(scc.cmp[u] == scc.cmp[v]) continue;
-      if(scc.isbi[scc.cmp[u]]) graph2[scc.color[u]][scc.cmp[u]].push_back(v);
-      else {
+      if(scc.cnn[scc.cmp[u]].size() > 1 && scc.cnn[scc.cmp[u]].size() == uf.size(u)) {
 	graph2[0][scc.cmp[u]].push_back(v);
 	graph2[1][scc.cmp[u]].push_back(v);
       }
+      else if(divi[uf.find(u)] != -1) graph2[divi[uf.find(u)]][scc.cmp[u]].push_back(v);
     }
   }
 }
 
 int solve() {
-  memset(dp, -1, sizeof(dp));
-  dp[0][0][scc.cmp[0]] = sati[scc.color[0]^0][scc.cmp[0]];
-  rep(c, scc.sz) {
-    rep(i, 2) { //とる色
-      rep(j, 2) { //今の偶奇
-	if(dp[i][j][c] == -1) continue;
-	rep(k, 2) { //出る場所
-	  for(int v : graph2[k][c]) {
-	    int nf = !(i^j^k);
-	    if(dp[scc.color[v]][nf][scc.cmp[v]] < dp[i][j][c] + sati[scc.color[v]^nf][scc.cmp[v]]) {
-	      dp[scc.color[v]][nf][scc.cmp[v]] = dp[i][j][c] + sati[scc.color[v]^nf][scc.cmp[v]];
-	    }
-	  }
+  memset(maxi, -1, sizeof(maxi));
+  maxi[0][scc.cmp[0]] = sati[divi[uf.find(0)]^0][scc.cmp[0]];
+  priority_queue< tuple<int, int, int> > que;
+  que.emplace(maxi[0][scc.cmp[0]], 0, 0);
+  while(que.size()) {
+    int x, u, f; tie(x, u, f) = que.top(); que.pop();
+    if(x < maxi[f][scc.cmp[u]]) continue;
+    rep(i, 2) {
+      for(int v : graph2[i][scc.cmp[u]]) {
+	int nf = !(divi[uf.find(u)]^f^i);
+	if(maxi[nf][scc.cmp[v]] < maxi[f][scc.cmp[u]] + sati[divi[uf.find(v)]^nf][scc.cmp[v]]) {
+	  maxi[nf][scc.cmp[v]] = maxi[f][scc.cmp[u]] + sati[divi[uf.find(v)]^nf][scc.cmp[v]];
+	  que.emplace(maxi[nf][scc.cmp[v]], v, nf);
 	}
       }
     }
   }
   int res = 0;
-  rep(i, 2) rep(j, 2) rep(k, n) chmax(res, dp[i][j][k]);
+  rep(i, 2) rep(j, n) chmax(res, maxi[i][j]);
   return res;
 }
 
