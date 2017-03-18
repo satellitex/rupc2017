@@ -40,7 +40,6 @@ struct SegmentTree {
     rep(i, 10) data[k][lazy[k][i]] += tmp[i];
     if(r - l > 1) {
       rep(i, 10) {
-	if(lazy[k][i] == i) continue;
 	lazy[2*k+1][i] = lazy[k][i];
 	lazy[2*k+2][i] = lazy[k][i];
       }
@@ -110,6 +109,13 @@ signed main()
 
   seg = SegmentTree(n);
   rep(i, q) {
+    rep(j, 2*seg.sz-1) {
+      rep(k, 10) cout << seg.data[j][k] << " ";
+      cout << endl;
+      rep(k, 10) cout << seg.lazy[j][k] << " ";
+      cout << endl;
+    }
+    cout << endl;
     int t, r, x, y;
     cin >> t >> r >> x >> y;
     if(t == 1) cout << seg.query(li[r], ri[r], x, y) << endl;
