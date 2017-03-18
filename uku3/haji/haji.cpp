@@ -39,7 +39,6 @@ public:
     for(int i=0;i<10;i++)
       if(i!=b[i])
 	for(int j=0;j<10;j++)if(tmp[j]==i)td[j]=b[i];
-    //for(int i=0;i<10;i++)if(i!=b[i])marge(td,i,b[i]);
   }
   
   int add(int a,int b,int x,int y,int q=1,int k=0,int l=0,int r=-1){
