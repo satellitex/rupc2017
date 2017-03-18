@@ -30,6 +30,9 @@ struct Tree{
     void add_cable(int u, int v){
         nodes[u].add_cld(&nodes[v]);
     }
+    /* Bug
+     *  This is wrong up r because this copies all of cld[x]
+     */
     void change(int r, int x, int y){
         for(set<Cont_P>::iterator it = nodes[r].cld_light[x].begin(); it != nodes[r].cld_light[x].end(); it++){
             Contact cld = **it;
