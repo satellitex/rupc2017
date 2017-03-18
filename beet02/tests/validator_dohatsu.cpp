@@ -45,20 +45,21 @@ bool check2(string s){
 
 int calc(string s){
   if( s.find('x') == string::npos ){
-    if( s2ll(s) > 2000 )return -1;    
+    if( s2ll(s) < 1 || 2000 < s2ll(s) )return -1;
     return 0;
   }
   
   if( s.find('^') == string::npos ){
     if(s.size()==1)return 1;
     string k=s.substr(0, s.size()-1);
-    if( s2ll(k) > 2000 )return -1;
+    if( s2ll(k)<=1 || 2000<s2ll(k))return -1;
     return 1;
   }
   
   string A=s.substr(0, s.find('x') );
   if(A.size()>1&&A[0]=='0')return -1;
-    
+  if(A=="1")return -1;
+  
   string B=s.substr( s.find('^')+1 );
   
   ll numB=s2ll(B);
@@ -76,6 +77,7 @@ bool check1(string s){
       if(!check2(tmp))return false;
       int num=calc(tmp);
       if(num==-1 || last<=num)return false;
+      if(last==100&&num!=1)return false;
       last=num;
       tmp="";
     }else{
