@@ -24,7 +24,7 @@ const int mod = 1e9 + 7;
 
 struct SegmentTree {
   vector< array<int, 10> > data, lazy;
-  array<int, 10> ini{0,1,2,3,4,5,6,7,8,9};
+  array<int, 10> ini{{0,1,2,3,4,5,6,7,8,9}};
   int sz;
   SegmentTree(){}
   SegmentTree(int n) {

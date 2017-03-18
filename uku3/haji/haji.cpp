@@ -30,11 +30,16 @@ public:
     for(int i=0;i<10;i++)tmp[t[i]]+=dat[i];
     for(int i=0;i<10;i++)dat[i]=tmp[i];
   }
-
+  
   void pr(int dat[]){for(int i=0;i<10;i++)cout<<dat[i]<<" ";cout<<endl;} 
   void marge(int td[],int x,int y){for(int i=0;i<10;i++)if(td[i]==x)td[i]=y;}
   void marge(int td[],int b[]){
-    for(int i=0,used[10]={};i<10;i++)if(i!=b[i]&&!used[b[i]]++)marge(td,i,b[i]);
+    int tmp[10]={};
+    for(int i=0;i<10;i++) tmp[i] = td[i];
+    for(int i=0;i<10;i++)
+      if(i!=b[i])
+	for(int j=0;j<10;j++)if(tmp[j]==i)td[j]=b[i];
+    //for(int i=0;i<10;i++)if(i!=b[i])marge(td,i,b[i]);
   }
   
   int add(int a,int b,int x,int y,int q=1,int k=0,int l=0,int r=-1){
@@ -42,7 +47,7 @@ public:
     if(r<=a||b<=l)return 0; //区間の外
     if(a<=l&&r<=b){ //区間に完全に含まれる。
       if(q&&x!=y){
-	if(dat[k][x])marge(td[k],x,y);
+	marge(td[k],x,y);
 	dat[k][y] += dat[k][x],dat[k][x] = 0;
       }
       return Sum(dat[k],x,y);
