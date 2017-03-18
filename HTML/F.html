@@ -4,19 +4,19 @@
 <h2>Problem</h2>
 
 <p>
-�别���T�J�[�j���͍������V�G�̔L�ɏP���Ă����B<br>
-��������Ă����ɂ͂����Ȃ��̂ŁA�閧������w�������B<br>
-���̔閧����͋���Ȋ�𐶐����邱�Ƃ��ł���B<br>
-����Ȋ�ňړ��o�H���ǂ��ŁA�L��������ɋ߂Â��Ȃ��悤�ɂ��邱�Ƃɂ����B<br>
+大悪魔サカーニャは今日も天敵の猫に襲われていた。<br>
+いつもやられている訳にはいかないので、秘密兵器を購入した。<br>
+この秘密兵器は巨大な岩を生成することができる。<br>
+巨大な岩で移動経路を塞いで、猫がこちらに近づけないようにすることにした。<br>
 </p>
 <p>
-���T�J�[�j���B�̓}�X(0,0),(<var>n</var>&minus;1,0),(<var>n</var>&minus;1,<var>m</var>&minus;1),(0,<var>m</var>&minus;1)�ň͂܂ꂽ�����`�̕�ԓ��ɂ��āA�͈͊O�ɏo�邱�Ƃ͂ł��Ȃ��B<br>
-�}�X(0,0)�ɔL�����āA�}�X(<var>n</var>&minus;1,<var>m</var>&minus;1)�ɃT�J�[�j��������B<br>
-�L�͏㉺���E�̃}�X�Ɉړ��ł���B<br>
-�������̃}�X�͌����󂢂Ă�����A��Q�����������肵�Ă��āA�N�����邱�Ƃ��ł��Ȃ��B<br>
-1��𐶐����邱�Ƃ�1�}�X�N���ł��Ȃ����邱�Ƃ��ł���B<br>
-�������A�}�X(0,0)�ƃ}�X(<var>n</var>&minus;1,<var>m</var>&minus;1)�Ɋ�𐶐����邱�Ƃ͂ł��Ȃ��B<br>
-�}�X(0,0)����}�X(<var>n</var>&minus;1,<var>m</var>&minus;1)�܂ł̈ړ��o�H���ǂ����߂ɕK�v�Ȑ��������̐��̍ŏ��l�����߂�B<br>
+今サカーニャ達はマス(0,0),(<var>n</var>&minus;1,0),(<var>n</var>&minus;1,<var>m</var>&minus;1),(0,<var>m</var>&minus;1)で囲まれた長方形の閉区間内にいて、範囲外に出ることはできない。<br>
+マス(0,0)に猫がいて、マス(<var>n</var>&minus;1,<var>m</var>&minus;1)にサカーニャがいる。<br>
+猫は上下左右のマスに移動できる。<br>
+いくつかのマスは穴が空いていたり、障害物があったりしていて、侵入することができない。<br>
+1つ岩を生成することで1マス侵入できなくすることができる。<br>
+ただし、マス(0,0)とマス(<var>n</var>&minus;1,<var>m</var>&minus;1)に岩を生成することはできない。<br>
+マス(0,0)からマス(<var>n</var>&minus;1,<var>m</var>&minus;1)までの移動経路を塞ぐために必要な生成する岩の数の最小値を求めよ。<br>
 </p>
 
 <h2>Input</h2>
@@ -29,16 +29,16 @@
 </pre>
 
 <p>
-���͂͑S�Đ����ŗ^������B<br>
-1�s�ڂ�<var>n</var>��<var>m</var>�ƐN���ł��Ȃ��}�X�̐�<var>k</var>���󔒋�؂�ŗ^������B<br>
-2�s�ڂ���<var>k</var>�s�ɐN���ł��Ȃ��}�X�̍��W���^������B
+入力は全て整数で与えられる。<br>
+1行目に<var>n</var>と<var>m</var>と侵入できないマスの数<var>k</var>が空白区切りで与えられる。<br>
+2行目から<var>k</var>行に侵入できないマスの座標が与えられる。
 </p>
 
 <h2>Constraints</h2>
-���͈͂ȉ��̏����𖞂����B
+入力は以下の条件を満たす。
 <ul>
   <li>2 &le; <var>n</var>,<var>m</var> &le; 10<sup>5</sup></li>
-  <li>0 &le; <var>k</var> &le; min(<var>n</var>�~<var>m</var>&minus;2,10<sup>5</sup>)</li>
+  <li>0 &le; <var>k</var> &le; min(<var>n</var>×<var>m</var>&minus;2,10<sup>5</sup>)</li>
   <li>0 &le; <var>x<sub>i</sub></var> &le; <var>n</var> &minus; 1</li>
   <li>0 &le; <var>y<sub>i</sub></var> &le; <var>m</var> &minus; 1</li>
   <li>(<var>x<sub>i</sub></var>,<var>y<sub>i</sub></var>) &ne; (<var>x<sub>j</sub></var>,<var>y<sub>j</sub></var>) (<var>i</var> &ne; <var>j</var>)</li>
@@ -47,7 +47,7 @@
 
 <h2>Output</h2>
 <p>
-�}�X(0,0)����}�X(<var>n</var>&minus;1,<var>m</var>&minus;1)�܂ł̈ړ��o�H���ǂ����߂ɕK�v�Ȑ��������̐��̍ŏ��l��1�s�ɏo�͂���B<br>
+マス(0,0)からマス(<var>n</var>&minus;1,<var>m</var>&minus;1)までの移動経路を塞ぐために必要な生成する岩の数の最小値を1行に出力せよ。<br>
 </p>
 
 <h2>Sample Input 1</h2>
