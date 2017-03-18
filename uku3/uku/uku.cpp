@@ -24,33 +24,41 @@ const int mod = 1e9 + 7;
 
 struct SegmentTree {
   vector< array<int, 10> > data, lazy;
+  array<int, 10> ini{0,1,2,3,4,5,6,7,8,9};
   int sz;
   SegmentTree(){}
   SegmentTree(int n) {
     sz = 1; while(sz < n) sz <<= 1;
-    data.resize(2*sz-1, array<int, 10>{0,0,0,0,0,0,0,0,0,0});
-    lazy.resize(2*sz-1, array<int, 10>{0,1,2,3,4,5,6,7,8,9});
+    data.resize(2*sz-1, array<int, 10>{0});
+    lazy.resize(2*sz-1, ini);
     rep(i, n) data[i+sz-1][0] = 1;
     for(int k = sz-2; k >= 0; k--)
       data[k][0] = data[2*k+1][0] + data[2*k+2][0];
+  }
+  void marge(int k, array<int, 10> &tmp, int x, int y) {
+    rep(i, 10) if(lazy[k][i] == x) tmp[i] = y;
   }
   void push(int k, int l, int r) {
     int tmp[10];
     rep(i, 10) tmp[i] = data[k][i], data[k][i] = 0;
     rep(i, 10) data[k][lazy[k][i]] += tmp[i];
     if(r - l > 1) {
+      array<int, 10> tmp1 = lazy[2*k+1], tmp2 = lazy[2*k+2];
       rep(i, 10) {
-	lazy[2*k+1][i] = lazy[k][i];
-	lazy[2*k+2][i] = lazy[k][i];
+	if(i == lazy[k][i]) continue;
+	marge(2*k+1, tmp1, i, lazy[k][i]);
+	marge(2*k+2, tmp2, i, lazy[k][i]);
       }
+      lazy[2*k+1] = tmp1;
+      lazy[2*k+2] = tmp2;
     }
-    rep(i, 10) lazy[k][i] = i;
+    lazy[k] = ini;
   }
   void update(int a, int b, int x, int y, int k, int l, int r) {
     push(k, l, r);
     if(r <= a || b <= l) return;
     if(a <= l && r <= b) {
-      rep(i, 10) if(lazy[k][i] == x) lazy[k][i] = y;
+      marge(k, lazy[k], x, y);
       push(k, l, r);
       return;
     }
