@@ -100,8 +100,9 @@ signed main()
     roads.emplace_back(a, b, w, t);
   }
 
-  if(m == n-1) cout << 0 << endl;
-  else cout << Dinkelbach() << endl;
+  //if(m == n-1) cout << 0 << endl;
+  //else cout << Dinkelbach() << endl;
+  printf("%.5f\n", (m==n-1 ? 0 : Dinkelbach()));
 
   return 0;
 }

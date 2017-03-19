@@ -43,7 +43,8 @@ struct SegmentTree {
     rep(i, 10) tmp[i] = data[k][i], data[k][i] = 0;
     rep(i, 10) data[k][lazy[k][i]] += tmp[i];
     if(r - l > 1) {
-      array<int, 10> tmp1 = lazy[2*k+1], tmp2 = lazy[2*k+2];
+      array<int, 10> tmp1 = lazy[2*k+1];
+      array<int, 10> tmp2 = lazy[2*k+2];
       rep(i, 10) {
 	if(i == lazy[k][i]) continue;
 	marge(2*k+1, tmp1, i, lazy[k][i]);
