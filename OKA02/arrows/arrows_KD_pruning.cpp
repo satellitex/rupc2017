@@ -58,7 +58,7 @@ struct KDTree2D {
             return 1;
         }
 
-        if (!(sx <= x && x <= tx && sy <= y && y <= ty) && depth >= 4) {
+        if (!(sx <= x && x <= tx && sy <= y && y <= ty) && depth >= 10) {
             return 0;
         }
         
