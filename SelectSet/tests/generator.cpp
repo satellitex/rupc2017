@@ -15,7 +15,7 @@ std::uniform_int_distribution<> randN( 1 , 10 );
 std::uniform_int_distribution<> randA( 1 , (1<<22)-1 );
 std::uniform_int_distribution<> randB( 1 , (1<<5)-1 );
 
-void solve(int casenum,int flg,int bitflg){
+void solve(int casenum,int flg){
   string filename="03_random_"+i2s(casenum)+".in";
   ofstream fout(filename);
   
