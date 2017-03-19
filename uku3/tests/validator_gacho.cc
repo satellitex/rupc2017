@@ -48,7 +48,6 @@ void check(){
   for(int i=0;i<n-1;i++){
     ensuref(u[i]!=v[i],"self loop");
     G[u[i]].push_back(v[i]);
-    G[v[i]].push_back(u[i]);
     ensuref(!S.count(pair<int,int>(min(u[i],v[i]),max(u[i],v[i]))),"multi edge");
     S.insert(pair<int,int>(min(u[i],v[i]),max(u[i],v[i])));
   }
