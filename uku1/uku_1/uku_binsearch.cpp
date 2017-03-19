@@ -82,8 +82,8 @@ double BinarySearch()
     else lb = mb;
   }
 
-  for(int i = 0; i < m; i++)
-    if(!used[i]) cout << i << endl;
+  //for(int i = 0; i < m; i++)
+  //if(!used[i]) cout << i << endl;
 
   return ub;
 }
@@ -104,6 +104,7 @@ signed main()
 
   if(m == n-1) cout << 0 << endl;
   cout << BinarySearch() << endl;
+  //printf("%.5f\n", BinarySearch());
 
   return 0;
 }
