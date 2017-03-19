@@ -5,6 +5,7 @@
 cxx_generator(src='generator.cc')
 cxx_generator(src='gen_small.cc')
 cxx_generator(src='gen_large.cc')
+cxx_generator(src='gen_hand.cc')
 cxx_generator(src='gen_max.cc')
 #cxx_generator(src='gen_binary.cc')
 #cxx_generator(src='gen_4ary.cc')
