@@ -3,7 +3,7 @@ using namespace std;
 typedef long long ll;
 
 ll s2ll(string s){
-  assert(s.size()<10);
+  assert(0<s.size() && s.size()<10);
   stringstream ss;
   ss<<s;
   ll res;
@@ -59,7 +59,6 @@ int calc(string s){
   string A=s.substr(0, s.find('x') );
   if(A.size()>1&&A[0]=='0')return -1;
   if(A.size()>0 && ( s2ll(A)<=1 || 2000<s2ll(A) ) )return -1;
-  
   string B=s.substr( s.find('^')+1 );
   
   ll numB=s2ll(B);
