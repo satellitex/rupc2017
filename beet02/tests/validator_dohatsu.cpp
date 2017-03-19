@@ -58,7 +58,7 @@ int calc(string s){
   
   string A=s.substr(0, s.find('x') );
   if(A.size()>1&&A[0]=='0')return -1;
-  if(A.size()>0 && s2ll(A)<=1 || 2000<s2ll(A) )return -1;
+  if(A.size()>0 && ( s2ll(A)<=1 || 2000<s2ll(A) ) )return -1;
   
   string B=s.substr( s.find('^')+1 );
   
