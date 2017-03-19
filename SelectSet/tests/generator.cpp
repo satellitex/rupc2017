@@ -13,8 +13,9 @@ std::mt19937 mt( (int)time(0) );
 
 std::uniform_int_distribution<> randN( 1 , 10 );
 std::uniform_int_distribution<> randA( 1 , (1<<22)-1 );
+std::uniform_int_distribution<> randB( 1 , (1<<5)-1 );
 
-void solve(int casenum,int flg){
+void solve(int casenum,int flg,int bitflg){
   string filename="03_random_"+i2s(casenum)+".in";
   ofstream fout(filename);
   
@@ -25,6 +26,13 @@ void solve(int casenum,int flg){
   fout<<N<<endl;
   for(int i=0;i<N;i++){
     int bit=randA(mt);
+    
+    if(i%3==0){
+      bit=randB(mt);
+    }else if(i%3==1){
+      if(i%2==0)bit=randB(mt);
+    }
+    
     int K=__builtin_popcount(bit);
     fout<<K;
     for(int j=0;j<22;j++){
@@ -39,13 +47,12 @@ void solve(int casenum,int flg){
 
 int main(){
   for(int i=0;i<10;i++){
-    solve(i,2);
+    solve(i,3);
   }
   
   for(int i=10;i<20;i++){
     solve(i,100);
   }
 
-  
   return 0;
 }
