@@ -12,7 +12,7 @@ public :
   int n;
   vector<int> dat[2*MAX_N-1];
   vector<P> td[2*MAX_N-1];
-  
+
   RUQ(){
     n=MAX_N;
     memset(td,0,sizeof(td));
