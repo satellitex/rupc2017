@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
     }
     for(int i = 0; i < q; i++) {
       int t = rnd.next(1, 2);
-      int r = rnd.next(0, n-1);
+      int r = rnd.next(0, 100);
       int x = rnd.next(0, 9);
       int y = rnd.next(0, 9);
       if(t == 1 && x > y) swap(x, y);
