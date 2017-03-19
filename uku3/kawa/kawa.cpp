@@ -4,6 +4,8 @@ typedef pair<int,int> P;
 const int MAX_N = 1<<17;
 
 vector<int> po(10);
+int ch[100000],mn[100000],cc;
+vector<int> e[100000];
 
 class RUQ{
 public :
@@ -54,9 +56,6 @@ public :
   vector<int> find(int a,int b){return update(a,b,0,0,false);};
 };
 
-int ch[100000],mn[100000],cc;
-vector<int> e[100000];
-
 int dfs(int p){
   int res=1e9;
   for(int i=0;i<e[p].size();i++)
@@ -65,7 +64,6 @@ int dfs(int p){
   ch[p]=cc++;
   return mn[p]=res;
 }
-
 
 RUQ T;
 
