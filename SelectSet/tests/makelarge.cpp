@@ -11,20 +11,25 @@ string i2s(int x){
 
 std::mt19937 mt( (int)time(0) );
 
-std::uniform_int_distribution<> randN( 1 , 10 );
-std::uniform_int_distribution<> randA( 1 , (1<<22)-1 );
 
-void solve(int casenum,int flg){
-  string filename="03_random_"+i2s(casenum)+".in";
+std::uniform_int_distribution<> randA( 1 , (1<<22)-1 );
+std::uniform_int_distribution<> randB( 1 , (1<<19)-1 );
+std::uniform_int_distribution<> randC( 1 , (1<<16)-1 );
+
+void solve(int casenum){
+  string filename="05_randomlarge_"+i2s(casenum)+".in";
   ofstream fout(filename);
   
-  int N=randN(mt);
-  
-  N*=flg;
+  int N=20000 - randA(mt)%100;
   
   fout<<N<<endl;
   for(int i=0;i<N;i++){
-    int bit=randA(mt);
+    
+    int bit;
+    if(casenum%3==0)bit=randA(mt);
+    else if(casenum%3==1)bit=randB(mt);
+    else bit=randC(mt);
+    
     int K=__builtin_popcount(bit);
     fout<<K;
     for(int j=0;j<22;j++){
@@ -38,14 +43,8 @@ void solve(int casenum,int flg){
 }
 
 int main(){
-  for(int i=0;i<10;i++){
-    solve(i,2);
+  for(int i=0;i<15;i++){
+    solve(i);
   }
-  
-  for(int i=10;i<20;i++){
-    solve(i,100);
-  }
-
-  
   return 0;
 }
