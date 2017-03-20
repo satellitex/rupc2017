@@ -46,7 +46,16 @@ struct SegmentTree {
     rep(i, 10) data[k][i] = data[2*k+1][i] + data[2*k+2][i];
   }
   void update(int a, int b, int x, int y) {
-    update(a, b, x, y, 0, 0, sz);
+    //update(a, b, x, y, 0, 0, sz);
+    if(x == y) return;
+    for(int i = a; i < b; i++) {
+      data[i+sz-1][y] += data[i+sz-1][x];
+      data[i+sz-1][x] = 0;
+    }
+    for(int k = sz-2; k >= 0; k--) {
+      data[k][x] = data[2*k+1][x] + data[2*k+2][x];
+      data[k][y] = data[2*k+1][y] + data[2*k+2][y];
+    }
   }
   int query(int a, int b, int x, int y, int k, int l, int r) {
     if(r <= a || b <= l) return 0;

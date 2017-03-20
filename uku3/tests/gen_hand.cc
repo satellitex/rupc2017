@@ -6,7 +6,7 @@ using namespace std;
 int main(int argc, char* argv[]) {
   registerGen(argc, argv, 1);
 
-  for(int t = 0; t < 2; t++) {
+  for(int t = 0; t < 4; t++) {
     ofstream of(format("10_hand_%02d.in", t+1).c_str());
     int n = 100000;
     int q = 100000;
@@ -25,17 +25,47 @@ int main(int argc, char* argv[]) {
 	que.push(make_pair(to++, cur));
 	que.push(make_pair(to++, cur));
       }
-    } else {
+    } else if(t == 1 || t == 2) {
       for(int v = 1; v < n; v++) {
 	of << v-1 << " " << v << endl;
       }
-    }
-    while(q > 0) {
-      for(int i = 0; i < 10 && q > 0; i++, q--) {
-	of << 2 << " " << 0 << " " << i << " " << (i+1)%10 << endl;
+    } else if(t == 3) {
+      for(int v = 1; v < n/2; v++) {
+	of << 0 << " " << v << endl;
       }
-      if(q > 0) {
-	of << 1 << " " << 0 << " " << 0 << " " << 9 << endl; q--;
+      for(int v = n/2; v < n; v++) {
+	of << v-n/2+1 << " " << v << endl;
+      }
+    }
+    if(t == 2) {
+      for(int i = 0; i < q-10; i++) {
+	int x = rnd.next(0, 9);
+	int y = rnd.next(0, 9);
+	of << 2 << " " << 0 << " " << x << " " << y << endl;
+      }
+      for(int i = 0; i < 10; i++) {
+	of << 1 << " " << n-1 << " " << i << " " << i << endl;
+      }
+    } else if(t == 3) {
+      for(int i = 0; i < q/2; i++) {
+	int x = rnd.next(0, 9);
+	int y = rnd.next(0, 9);
+	of << 2 << " " << 0 << " " << x << " " << y << endl;
+      }
+      for(int i = 0; i < q/2; i++) {
+	int x = rnd.next(0, 9);
+	int y = rnd.next(0, 9);
+	if(x > y) swap(x, y);
+	of << 1 << " " << i+1 << " " << x << " " << y << endl;
+      }
+    } else {
+      while(q > 0) {
+	for(int i = 0; i < 10 && q > 0; i++, q--) {
+	  of << 2 << " " << 0 << " " << i << " " << (i+1)%10 << endl;
+	}
+	if(q > 0) {
+	  of << 1 << " " << 0 << " " << 0 << " " << 9 << endl; q--;
+	}
       }
     }
 
