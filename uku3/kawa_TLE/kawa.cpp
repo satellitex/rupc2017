@@ -11,12 +11,12 @@ class RUQ{
 public :
   int n;
   vector<int> dat[2*MAX_N-1];
-  int td[2*MAX_N-1][10];
+  vector<P> td[2*MAX_N-1];
   
   RUQ(){
     n=MAX_N;
     for(int i=0,dd=1,cc=1;i<2*n-1;i++,cc++){
-      for(int j=0;j<=9;j++)td[i][j]=j,dat[i].push_back(0);
+      for(int j=0;j<=9;j++)dat[i].push_back(0);
       dat[i][0]=n/dd;
       if(cc==dd)cc=0,dd*=2;
     }
@@ -29,23 +29,21 @@ public :
     }
     if(a<=l&&r<=b){
       if(flg){
-      	dat[k][y]+=dat[k][x],dat[k][x]=0;
-	for(int i=0;i<=9;i++)if(td[k][i]==x)td[k][i]=y;
+	dat[k][y]+=dat[k][x],dat[k][x]=0;
+	td[k].push_back((P){x,y});
       }
       return dat[k];
     }
-    int tmp[2][10]={},tp[2][10];
-    for(int i=0;i<=9;i++)tp[0][i]=td[k*2+1][i],tp[1][i]=td[k*2+2][i];
-    for(int i=0;i<=9;i++){
-      tmp[0][td[k][i]]+=dat[k*2+1][i];
-      tmp[1][td[k][i]]+=dat[k*2+2][i];
-      for(int j=0;j<=9;j++){
-	if(tp[0][j]==i)td[k*2+1][j]=td[k][i];
-	if(tp[1][j]==i)td[k*2+2][j]=td[k][i];
+    if(td[k].size()){
+      for(int i=0;i<td[k].size();i++){
+	int s=td[k][i].first,t=td[k][i].second;
+	dat[k*2+1][t]+=dat[k*2+1][s],dat[k*2+1][s]=0;
+	dat[k*2+2][t]+=dat[k*2+2][s],dat[k*2+2][s]=0;
+	td[k*2+1].push_back(P(s,t));
+	td[k*2+2].push_back(P(s,t));
       }
-      td[k][i]=i;
+      td[k].clear();
     }
-    for(int i=0;i<=9;i++)dat[k*2+1][i]=tmp[0][i],dat[k*2+2][i]=tmp[1][i];
     vector<int> vl=update(a,b,x,y,flg,k*2+1,l,(l+r)/2);
     vector<int> vr=update(a,b,x,y,flg,k*2+2,(l+r)/2,r);
     for(int i=0;i<=9;i++)vl[i]+=vr[i];
