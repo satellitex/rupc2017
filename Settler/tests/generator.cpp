@@ -83,11 +83,41 @@ void solve(int casenum){
   int nk=calc(vec);
   int u=randP(mt);
   if(u%2==0){
-    nk=max(1,nk-u%5);
+    nk=max(2,nk-u%5);
   }
   
   fout<<vec.size()<<' '<< nk <<endl;
 
+  for(int i=0;i<(int)vec.size();i++){
+    fout<<vec[i].first<<' '<<vec[i].second<<endl;
+  }
+}
+
+void solve2(int casenum){
+  string filename="03_random_"+i2s(casenum)+".in";
+  ofstream fout(filename);
+
+  vector<P> vec;
+  
+  int v=randN(mt)*10;
+  
+  for(int i=1;i<=20;i++)
+    for(int j=1;j<=20;j++)
+      if(i%2 == (j/2)%2 )
+        vec.push_back(P(i,j));
+  
+  shuffle( vec.begin(), vec.end() , mt );
+  vec.erase( vec.begin() + v , vec.end() );
+  assert( (int)vec.size() == v );
+  
+  int nk=calc(vec);
+  int u=randP(mt);
+  
+  if(u%2==0){
+    nk=max(1,nk-u%10);
+  }
+  
+  fout<<vec.size()<<' '<< nk <<endl;
 
   for(int i=0;i<(int)vec.size();i++){
     fout<<vec[i].first<<' '<<vec[i].second<<endl;
@@ -97,6 +127,10 @@ void solve(int casenum){
 int main(){
   for(int i=0;i<20;i++){
     solve(i);
+  }
+  
+  for(int i=20;i<40;i++){
+    solve2(i);
   }
   return 0;
 }
