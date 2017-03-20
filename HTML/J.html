@@ -20,12 +20,10 @@
 <p>
     各悪魔に必ず1人の使い魔を向かわせたいです。どの使い魔がどの悪魔を訪問するかは以下の条件に従って割り振ることにした。
 </p>
-<p>
-    <ol>
-        <li>使い魔1体あたりの訪問する悪魔の数の差の最大を最小化する。</li>
-        <li>1を満たした上で訪問する悪魔と担当する使い魔の距離の最大を最小化する。</li>
-    </ol>
-</p>
+<ol>
+    <li>使い魔1体あたりの訪問する悪魔の数の差の最大を最小化する。</li>
+    <li>1を満たした上で訪問する悪魔と担当する使い魔の距離の最大を最小化する。</li>
+</ol>
 
 <p>
     1行目に使い魔1体あたりの訪問する悪魔の数の差の最大を2行目に悪魔と担当する使い魔の距離の最大を出力せよ。
@@ -38,7 +36,7 @@
 <pre>
 <var>N</var> <var>M</var>
 <var>H<sub>00</sub></var> <var>H<sub>01</sub></var> … <var>H<sub>0M-1</sub></var>
-<var>H<sub>10</sub></var> <var>H<sub>11</sub></var> … <var>H<sub>1N-1</sub></var>
+<var>H<sub>10</sub></var> <var>H<sub>11</sub></var> … <var>H<sub>1M-1</sub></var>
 .
 .
 <var>H<sub>N-10</sub></var> <var>H<sub>N-11</sub></var> … <var>H<sub>N-1M-1</sub></var>
@@ -49,7 +47,7 @@
 </p>
 
 
-<h2>制約</h2>
+<h2>Constraints</h2>
 <ul>
     <li>
         1 &le; <var>N</var> &le; 108
@@ -58,7 +56,7 @@
         1 &le; <var>M</var> &le; 108
     </li>
     <li>
-        1 &le; <var>H<sub>ij</sub> &le; 10<sup>9</sup> ( 0 &le; <var>i</var> &lt; <var>N</var>, 0 &le; <var>j</var> &lt; <var>M</var> ) ( 使い魔<var>i</var>から悪魔<var>j</var>までの距離 )
+        1 &le; <var>H<sub>ij</sub></var> &le; 10<sup>9</sup> ( 0 &le; <var>i</var> &lt; <var>N</var>, 0 &le; <var>j</var> &lt; <var>M</var> ) ( 使い魔<var>i</var>から悪魔<var>j</var>までの距離 )
     </li>
 </ul>
 
@@ -95,7 +93,7 @@
 4 3 2 1 5
 </pre>
 
-<h2>Sample Output2</h2>
+<h2>Sample Output 2</h2>
 <pre>
 1
 2

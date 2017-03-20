@@ -26,7 +26,7 @@ void simulate(int N, std::vector<std::list<int>>& pl)
     std::set<int> vacant_seats; /* 空席の集合 */
     
     for (int i = 0; i < N; i++) {
-        if (pl[i].size() > 0) {
+        if (!pl[i].empty()) {
             next.insert(i);
         }
         vacant_seats.insert(i);
@@ -45,7 +45,7 @@ void simulate(int N, std::vector<std::list<int>>& pl)
             it = vacant_seats.begin();
         }
                 
-        if (pl[n].size() > 0) {
+        if (!pl[n].empty()) {
             pl[*it].splice(pl[*it].end(), pl[n]);
             next.insert(*it);
         }
