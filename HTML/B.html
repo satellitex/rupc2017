@@ -12,39 +12,39 @@ GPAじゃんけんは「じゃんけん、ぽん（ほい）」の合図で互�
 </p>
 
 <p>
-<var>N</var> 人のGPAのデータが与えられるので、総当たり戦をした時のそれぞれの勝ち点を出力してください。<br>
+N 人のGPAのデータが与えられるので、総当たり戦をした時のそれぞれの勝ち点を出力してください。<br>
 ただし、勝ち点は勝ちの時3、引き分けの時1、負けの時0とします。
 </p>
 
 <h2>Constraints</h2>
 <p>入力は以下の条件を満たす。</p>
 <ul>
-    <li>2 &le; <var>N</var> &le; 10<sup>5</sup></li>
-    <li><var>N</var> は整数</li>
-    <li>0.000 &le; <var>a<sub><var>i</var></sub></var> &le; 4.000 ( 1 &le; <var>i</var> &le; <var>N</var> )</li>
-    <li><var>a<sub><var>i</var></sub></var> 実数 ( 1 &le; <var>i</var> &le; <var>N</var> )</li>
+    <li>2 &le; N &le; 10<sup>5</sup></li>
+    <li>N は整数</li>
+    <li>0.000 &le; a<sub>i</sub> &le; 4.000 ( 1 &le; i &le; N )</li>
+    <li>a<sub>i</sub> 実数 ( 1 &le; i &le; N )</li>
     <li>各GPAは小数点以下3桁まで与えられる</li>
 </ul>
 
 <h2>Input</h2>
 <p>入力は以下の形式で与えられる。</p>
 <pre>
-<var>N</var>
-<var>a<var><sub>1</sub></var></var>
-<var>a<var><sub>2</sub></var></var>
+N
+a<sub>1</sub>
+a<sub>2</sub>
 ...
-<var>a<var><sub>N</sub></var></var>
+a<sub>N</sub>
 </pre>
 
-一行目にGPAじゃんけんをする人数 <var>N</var> が与えられる。<br>
-続く <var>N</var> 行に <var>i</var> 番目の人のGPAのデータが一行に与えられる。
-( 1 &le; <var>i</var> &le; <var>N</var> )<br>
+一行目にGPAじゃんけんをする人数 N が与えられる。<br>
+続く N 行に i 番目の人のGPAのデータが一行に与えられる。
+( 1 &le; i &le; N )<br>
 
 
 <h2>Output</h2>
 <p>
-  <var>i</var> 行目に <var>i</var> 番目の人の勝ち点を一行に出力せよ。
-  ( 1 &le; <var>i</var> &le; <var>N</var> )<br>
+  i 行目に i 番目の人の勝ち点を一行に出力せよ。
+  ( 1 &le; i  &le; N )<br>
   出力の最後には改行を入れること。
 </p>
 
