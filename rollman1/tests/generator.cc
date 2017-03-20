@@ -1,7 +1,7 @@
 #include "testlib.h"
 
 const int NUMBER_OF_THETA = 2;
-const int NUM_OF_TESTCASES = 10;
+const int NUM_OF_TESTCASES = 30;
 const int MAXTHETA = 359;
 const int MINTHETA = 0;
 
