@@ -103,7 +103,7 @@ signed main()
   }
 
   if(m == n-1) cout << 0 << endl;
-  cout << BinarySearch() << endl;
+  else cout << BinarySearch() << endl;
   //printf("%.5f\n", BinarySearch());
 
   return 0;

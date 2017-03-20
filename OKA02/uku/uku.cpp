@@ -18,7 +18,7 @@ using vint = vector<int>;
 
 const int inf = 1LL << 55;
 const int mod = 1e9 + 7;
-/*
+/**/
 struct kDTree {
   struct Node {
     int location;
@@ -108,7 +108,7 @@ struct kDTree {
     return res;
   }
 };
-*/
+/*
 struct SegmentTree {
   vector< set<int> > data;
   int sz;
@@ -139,11 +139,11 @@ struct SegmentTree {
     return query(a, b, x, 0, 0, sz);
   }
 };
-
+*/
 int N, A, B;
 vector<pint> XY[5];
-//kDTree tree;
-SegmentTree seg;
+kDTree tree;
+//SegmentTree seg;
 
 signed main()
 {
@@ -159,11 +159,11 @@ signed main()
     cin >> t >> x >> y;
     XY[t-1].emplace_back(x, y);
   }
-
+  /*
   sort(XY, XY + 5, [&](vector<pint> v, vector<pint> w)->bool{
       return v.size() > w.size();
     });
-
+  */
   int N0 = XY[0].size();
   int N1 = XY[1].size();
   int N2 = XY[2].size();
@@ -171,20 +171,21 @@ signed main()
   int N4 = XY[4].size();
 
   vector<int> X01;
-  //tree = kDTree(N0*N1);
+  tree = kDTree(N0*N1);
   rep(i, N0) {
     int x0, y0; tie(x0, y0) = XY[0][i];
     rep(j, N1) {
       int x1, y1; tie(x1, y1) = XY[1][j];
-      //tree.setPoint(x0+x1, y0+y1);
+      tree.setPoint(x0+x1, y0+y1);
       X01.push_back(x0+x1);
     }
   }
-  //tree.build();
-  sort(all(X01));
-  X01.erase(unique(all(X01)), X01.end());
+  tree.build();
+  //sort(all(X01));
+  //X01.erase(unique(all(X01)), X01.end());
 
-  seg = SegmentTree(N0*N1);
+  //seg = SegmentTree(N0*N1);
+  /*
   rep(i, N0) {
     int x0, y0; tie(x0, y0) = XY[0][i];
     rep(j, N1) {
@@ -193,7 +194,7 @@ signed main()
       seg.update(pos, y0+y1);
     }
   }
-
+  */
   rep(i, N2) {
     int x2, y2; tie(x2, y2) = XY[2][i];
     rep(j, N3) {
@@ -201,13 +202,12 @@ signed main()
       rep(k, N4) {
 	int x4, y4; tie(x4, y4) = XY[4][k];
 	int X = x2 + x3 + x4, Y = y2 + y3 + y4;
-	/*
 	auto ans = tree.find(A-X, B-X, A-Y, B-Y);
 	if(ans.size()) {
 	  cout << "Yes" << endl;
 	  return 0;
 	}
-	*/
+	/*
 	int l = lower_bound(all(X01), A-X) - X01.begin();
 	if(X01[l] + X > B) continue;
 	int r = upper_bound(all(X01), B-X) - X01.begin();
@@ -215,6 +215,7 @@ signed main()
 	  cout << "Yes" << endl;
 	  return 0;
 	}
+	*/
       }
     }
   }
