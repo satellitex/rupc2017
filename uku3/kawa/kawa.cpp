@@ -11,13 +11,7 @@ class RUQ{
 public :
   int n;
   vector<int> dat[2*MAX_N-1];
-<<<<<<< HEAD
   int td[2*MAX_N-1][10];
-  
-=======
-  vector<P> td[2*MAX_N-1];
-
->>>>>>> 8b60543536620f0191fb2e1e3a4a42608427616b
   RUQ(){
     n=MAX_N;
     for(int i=0,dd=1,cc=1;i<2*n-1;i++,cc++){
