@@ -3,7 +3,7 @@
 <script language="JavaScript" type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
 </script>
 
-<h1>Problem J: Demon's plan</h1>
+<h1>Problem J: Demon's Plan</h1>
 
 <h2>Back Ground</h2>
 <p>
@@ -12,7 +12,7 @@
 
 <h2>Problem</h2>
 <p>
-    <var>N</var>体の使い魔と<var>M</var>体の悪魔がいます。使い魔<sub><var>i</var></sub> と 悪魔<sub><var>j</var></sub> の距離は <var>H<sub><var>i</var></sub><sub><var>j</var></sub></var>です。
+    <var>N</var>体の使い魔と<var>M</var>体の悪魔がいます。使い魔<sub><var>i</var></sub> と 悪魔<sub><var>j</var></sub> の距離は <var>H<sub>ij</sub></var>です。
 </p>
 <p>
     各悪魔に必ず1人の使い魔を向かわせたいです。どの使い魔がどの悪魔を訪問するかは以下の条件に従って割り振ることにします。
@@ -38,19 +38,26 @@
         1 &le; <var>M</var> &le; 108
     </li>
     <li>
-        1 &le; <var>H<sub><var>i</var><var>j</var></sub> &le; 10<sup>9</sup> ( 0 &le; <var>i</var> < <var>N</var>, 0 &le; <var>j</var> < <var>M</var> ) ( 使い魔<var>i</var>から悪魔<var>j</var>までの距離 )
+        1 &le; <var>H<sub>ij</sub> &le; 10<sup>9</sup> ( 0 &le; <var>i</var> &lt; <var>N</var>, 0 &le; <var>j</var> &lt; <var>M</var> ) ( 使い魔<var>i</var>から悪魔<var>j</var>までの距離 )
     </li>
 </ul>
 
 <h2>Input</h2>
+<p>
+    入力は以下の形式で与えられる。
+</p>
 <pre>
 <var>N</var> <var>M</var>
-<var>H<sub>00</sub></var> <var>H<sub>01</sub></var> … <var>H<sub>0<var>M</var>-1</sub></var>
-<var>H<sub>10</sub></var> <var>H<sub>11</sub></var> … <var>H<sub>1<var>N</var>-1</sub></var>
+<var>H<sub>00</sub></var> <var>H<sub>01</sub></var> … <var>H<sub>0M-1</sub></var>
+<var>H<sub>10</sub></var> <var>H<sub>11</sub></var> … <var>H<sub>1N-1</sub></var>
 .
 .
-<var>H<sub><var>N</var>-10</sub></var> <var>H<sub><var>N</var>-11</sub></var> … <var>H<sub><var>N</var>-1<var>M</var>-1</sub></var>
+<var>H<sub>N-10</sub></var> <var>H<sub>N-11</sub></var> … <var>H<sub>N-1M-1</sub></var>
 </pre>
+<p>
+    1行目に使い魔の数<var>N</var>と悪魔の数<var>M</var>が空白区切りで与えられる。
+    続く<var>N</var>行に
+</p>
 
 
 <h2>Sample Input 1</h2>
@@ -67,12 +74,12 @@
 1
 </pre>
 
-<pre>
-    使い魔<sub>0</sub> - 悪魔<sub>0</sub>
-    使い魔<sub>1</sub> - 悪魔<sub>1</sub>
-    使い魔<sub>2</sub> - 悪魔<sub>2</sub>
+<p>
+    使い魔<sub>0</sub> - 悪魔<sub>0</sub>     <br />
+    使い魔<sub>1</sub> - 悪魔<sub>1</sub>     <br />
+    使い魔<sub>2</sub> - 悪魔<sub>2</sub>     <br />
     と割り振ることで訪問する悪魔の数の差が0になり、担当使い魔と悪魔の距離の最大が1になり最適な組み合わせになる。
-</pre>
+</p>
 
 
 
@@ -90,11 +97,11 @@
 1
 2
 </pre>
-<pre>
-    使い魔<sub>0</sub> - 悪魔<sub>0</sub>
-    使い魔<sub>0</sub> - 悪魔<sub>1</sub>
-    使い魔<sub>1</sub> - 悪魔<sub>4</sub>
-    使い魔<sub>2</sub> - 悪魔<sub>3</sub>
-    使い魔<sub>2</sub> - 悪魔<sub>2</sub>
+<p>
+    使い魔<sub>0</sub> - 悪魔<sub>0</sub>   <br />
+    使い魔<sub>0</sub> - 悪魔<sub>1</sub>   <br />
+    使い魔<sub>1</sub> - 悪魔<sub>4</sub>   <br />
+    使い魔<sub>2</sub> - 悪魔<sub>3</sub>   <br />
+    使い魔<sub>2</sub> - 悪魔<sub>2</sub>   <br />
     と割り振ることで訪問する悪魔の差が1になり、担当使い魔と悪魔の距離の最大が2になり最適な組み合わせになる。
-</pre>
+</p>
