@@ -1,9 +1,37 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define MAX 6005
+
+struct Data{
+  int a,b,c;
+  Data(){    a=b=c=-1;  }
+  void insert(int x){
+    if(a==x||b==x||c==x)return;
+    c=b;
+    b=a;
+    a=x;
+  }
+  bool count(int x){
+    return (a==x||b==x||c==x);
+  }
+  int size(){
+    return (a>=0)+(b>=0)+(c>=0);
+  }
+  void erase(int x){
+    if(a==x){
+      a=b;b=c;c=-1;
+    }else if(b==x){
+      b=c;c=-1;
+    }else if(c==x){
+      c=-1;
+    }
+  }
+};
+
 int N,K;
 vector<int> G[MAX];
-set<int> g[MAX];
+Data g[MAX];
+
 int f[MAX],bs[MAX];
 bool visited[MAX];
 
@@ -15,6 +43,7 @@ bool dfs(int v){
   visited[v]=true;
   for(int i=0;i<(int)G[v].size();i++){
     int u=G[v][i];
+    
 
     if(f[u]>(int)g[u].size()){
       g[v].insert(u);
@@ -107,7 +136,7 @@ int main(){
     }else{
       f[v]=1;
       while(g[v].size()>1){
-        int u=*g[v].begin();
+        int u=g[v].a;
         g[u].erase(v);
         g[v].erase(u);
       }
