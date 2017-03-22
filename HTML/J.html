@@ -8,24 +8,24 @@
 <h2>Back Ground</h2>
 <p>
     デーモンズプランでは慾を司る108体の悪魔が日夜プログラミングコンテストでしのぎを削っている。主催であるパトローンは、全ての慾が集う場所”リクス＝マグナ”に悪魔たちを招待しようとしている。
-    パトローンはまだ招待を送っていない悪魔に招待を送りたいのですが、悪魔は世界各地におり、自分で行くのは面倒くさいので自身の使い魔達にやらせることにした。
+    パトローンはまだ招待を送っていない悪魔に招待を送りたいが、悪魔は世界各地におり、自分で行くのは面倒くさいので自身の使い魔達にやらせることにした。
     パトローンは気が利くので使い魔同士がより平等に働くようにどの使い魔がどの悪魔を担当するかを割り振ろうとしている。
 </p>
 
 <h2>Problem</h2>
 <p>
     <var>N</var>体の使い魔と<var>M</var>体の悪魔がいる。
-    使い魔<sub><var>i</var></sub> と 悪魔<sub><var>j</var></sub> の距離は <var>H<sub>ij</sub></var>である。
+    使い魔<sub><var>i</var></sub> と 悪魔<sub><var>j</var></sub> の距離は <var>H<sub>i j</sub></var>である。
 </p>
 <p>
-    各悪魔に必ず1人の使い魔を向かわせたいです。どの使い魔がどの悪魔を訪問するかは以下の条件に従って割り振ることにした。
+    各悪魔に必ず1人の使い魔を向かわせたい。どの使い魔がどの悪魔を訪問するかは以下の条件に従って割り振ることにした。
 </p>
 <ol>
     <li>使い魔1体あたりの訪問する悪魔の数の差の最大を最小化する。</li>
     <li>1を満たした上で訪問する悪魔と担当する使い魔の距離の最大を最小化する。</li>
 </ol>
 <p>
-    1行目に使い魔1体あたりの訪問する悪魔の数の差の最大を2行目に悪魔と担当する使い魔の距離の最大を出力せよ。
+    1行目に使い魔1体あたりの訪問する悪魔の数の差の最大を、2行目に悪魔と担当する使い魔の距離の最大を出力せよ。
 </p>
 
 <h2>Input</h2>
@@ -34,11 +34,11 @@
 </p>
 <pre>
 <var>N</var> <var>M</var>
-<var>H<sub>00</sub></var> <var>H<sub>01</sub></var> … <var>H<sub>0M-1</sub></var>
-<var>H<sub>10</sub></var> <var>H<sub>11</sub></var> … <var>H<sub>1M-1</sub></var>
+<var>H<sub>0 0</sub></var> <var>H<sub>0 1</sub></var> … <var>H<sub>0 M-1</sub></var>
+<var>H<sub>1 0</sub></var> <var>H<sub>1 1</sub></var> … <var>H<sub>1 M-1</sub></var>
 .
 .
-<var>H<sub>N-10</sub></var> <var>H<sub>N-11</sub></var> … <var>H<sub>N-1M-1</sub></var>
+<var>H<sub>N-1 0</sub></var> <var>H<sub>N-1 1</sub></var> … <var>H<sub>N-1 M-1</sub></var>
 </pre>
 <p>
     1行目に使い魔の数<var>N</var>と悪魔の数<var>M</var>が整数で空白区切りで与えられる。
@@ -55,7 +55,7 @@
         1 &le; <var>M</var> &le; 108
     </li>
     <li>
-        1 &le; <var>H<sub>ij</sub></var> &le; 10<sup>9</sup> ( 0 &le; <var>i</var> &lt; <var>N</var>, 0 &le; <var>j</var> &lt; <var>M</var> ) ( 使い魔<var>i</var>から悪魔<var>j</var>までの距離 )
+        1 &le; <var>H<sub>i j</sub></var> &le; 10<sup>9</sup> ( 0 &le; <var>i</var> &lt; <var>N</var>, 0 &le; <var>j</var> &lt; <var>M</var> ) ( 使い魔<var>i</var>から悪魔<var>j</var>までの距離 )
     </li>
 </ul>
 
