@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int N=23,Z=(1<<N)-1;
+const int N=22,Z=(1<<N)-1;
 int f[1<<N],d[1<<N],n,ans;
 set<int> s[1<<N];
 void zeta(){
@@ -28,7 +28,7 @@ int main() {
   }
   zeta();
   for(int i=0; i<(1<<N)-1; i++) {
-    if(f[i]==i&&s[i].size()>=3) ans=max(ans,__builtin_popcount(f[i])*__builtin_popcount(d[i]));
+    if(s[i].size()>=3) ans=max(ans,__builtin_popcount(f[i])*__builtin_popcount(d[i]));
   }
   cout << ans << endl;
   return 0;
