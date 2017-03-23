@@ -50,6 +50,7 @@ struct FordFulkerson {
     return 0;
   }
   int max_flow(int s, int t, int ff = inf) {
+    if(s == t) return 0;
     int flow = 0;
     while(ff) {
       fill(all(used), false);
@@ -108,19 +109,22 @@ signed main()
   rep(i, N) {
     if(ans.size() == K) break;
     auto& e = y[i]%2 ? graph.graph[i][eid[i]] : graph.graph[s][eid[i]];
+    int cap = e.cap;
     e.cap = inf;
     int f = graph.max_flow(s, t);
     if(mx_st - f >= K) {
       ans.push_back(i);
+      mx_st -= f;
     } else {
-      graph.max_flow(t, s, f);
-      e.cap = 1;
+      if(y[i]%2 == 0) graph.max_flow(t, i, f);
+      else graph.max_flow(i, s, f);
+      e.cap = cap;
     }
   }
 
-  assert(ans.size() == K);
+  //assert(ans.size() == K);
 
-  rep(i, K) cout << ans[i] << endl;
+  rep(i, K) cout << ans[i]+1 << endl;
 
   return 0;
 }
