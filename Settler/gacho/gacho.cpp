@@ -49,7 +49,6 @@ void rev(int s,int t,int f){
   while(f){
     memset(used,0,sizeof(used));
     f-=dfs(s,t,f);
-    
   }
 }
 
@@ -88,10 +87,9 @@ int main(){
 	  if(G[i][j].to==t)G[i][j].cap+=INF;
       }
       int r=max_flow(s,t);
-      if(!r)ans.push_back(i+1);
+      if(n-(F+r)>=k)ans.push_back(i+1),F+=r;
       else{
 	if(!(y[i]%2)){
-	  memset(used,0,sizeof(used));
 	  rev(t,i,r);
 	  for(int j=0;j<G[s].size();j++)
 	    if(G[s][j].to==i){
@@ -99,19 +97,17 @@ int main(){
 	      G[G[s][j].to][G[s][j].rev].cap-=r;
 	    }
 	}else{
-	  memset(used,0,sizeof(used));
 	  rev(i,s,r);
-	  for(int j=0;j<G[i].size();j++){
+	  for(int j=0;j<G[i].size();j++)
 	    if(G[i][j].to==t){
 	      G[i][j].cap-=INF-r;
 	      G[G[i][j].to][G[i][j].rev].cap-=r;
 	    }
-	  }
 	}
       }
     }
     for(int i=0;i<k;i++){
-      //cout<<(char)(ans[i]+'A'-1)<<endl;
+      // cout<<(char)(ans[i]+'A'-1)<<endl;
       cout<<ans[i]<<endl;
     }
   }
