@@ -110,8 +110,10 @@ int main(){
 	}
       }
     }
-    for(int i=0;i<k;i++)
-      cout<<(char)(ans[i]+'A'-1)<<endl;
+    for(int i=0;i<k;i++){
+      //cout<<(char)(ans[i]+'A'-1)<<endl;
+      cout<<ans[i]<<endl;
+    }
   }
   return 0;
 }
