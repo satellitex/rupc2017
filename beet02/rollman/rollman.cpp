@@ -1,18 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int NO_COEFFICIENT = 123456;
+typedef long long ll;
+
+const ll NO_COEFFICIENT = 123456;
 
 
 int main(void){
 	string S;
 	cin >> S;
-	int idx = 0;
-	int term = 0;
-	vector<int> coefficients(6, 0);
+	ll idx = 0;
+	ll term = 0;
+	vector<ll> coefficients(6, 0);
 	while(idx < S.length()){
-		int coefficient = NO_COEFFICIENT;
-		int sign = 1;
+		ll coefficient = NO_COEFFICIENT;
+		ll sign = 1;
 		if(S.at(idx) == '+' || S.at(idx) == '-'){
 			if(S.at(idx) == '+') sign = 1;
 			else sign = -1;
@@ -27,8 +29,9 @@ int main(void){
 			}
 			idx++;
 		}
-		coefficient *= sign;
-		int degree = -1;
+        if(coefficient != NO_COEFFICIENT)
+            coefficient *= sign;
+		ll degree = -1;
 		if(idx < S.length() && S.at(idx) == 'x'){
 			idx++;
 			if(S.at(idx) == '^'){
@@ -45,28 +48,28 @@ int main(void){
 		if(coefficient != NO_COEFFICIENT){
 			coefficients.at(degree) = coefficient;
 		}else{
-			coefficients.at(degree) = 1;
+			coefficients.at(degree) = sign*1;
 		}
 	}
 
-/*
-	for(int i = 5; i >= 0; i--){
+    /*
+	for(ll i = 5; i >= 0; i--){
 		cout << coefficients[i] << "x^" << i << endl;
 	}
-*/
+    */
 
-	vector<int> ans;
-	for(int c = -2000; c <= 2000; c++){
-		int product = 0;
-		for(int i = 0; i < coefficients.size(); i++){
+	vector<ll> ans;
+	for(ll c = -2000; c <= 2000; c++){
+		ll product = 0;
+		for(ll i = 0; i < coefficients.size(); i++){
 			product += coefficients.at(i) * pow(c, i);
 		}
 		if(product == 0){
 			ans.push_back(c);
 		}
 	}
-	sort(ans.begin(), ans.end(), greater<int>());
-	for(int i = 0;  i< ans.size(); i++){
+	sort(ans.begin(), ans.end(), greater<ll>());
+	for(ll i = 0;  i< ans.size(); i++){
 		cout <<"(x";
 		if(ans.at(i) < 0){
 			cout << '+';
