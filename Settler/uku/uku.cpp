@@ -34,12 +34,13 @@ struct FordFulkerson {
     graph[to].emplace_back(from, 0, graph[from].size()-1);
     return make_pair(graph[from].size()-1, graph[to].size()-1);
   }
-  int dfs(int v, int t, int f) {
+  int dfs(int v, int t, int f, int k = inf) {
     if(v == t) return f;
+    if(k == 0) return 0;
     used[v] = true;
     for(edge& e : graph[v]) {
       if(!used[e.to] && e.cap > 0) {
-	int d = dfs(e.to, t, min(f, e.cap));
+	int d = dfs(e.to, t, min(f, e.cap), k-1);
 	if(d > 0) {
 	  e.cap -= d;
 	  graph[e.to][e.rev].cap += d;
@@ -49,12 +50,12 @@ struct FordFulkerson {
     }
     return 0;
   }
-  int max_flow(int s, int t, int ff = inf) {
+  int max_flow(int s, int t, int ff = inf, int k = inf) {
     if(s == t) return 0;
     int flow = 0;
     while(ff) {
       fill(all(used), false);
-      int f = dfs(s, t, inf);
+      int f = dfs(s, t, inf, k);
       if(f == 0) return flow;
       flow += f;
       ff -= f;
@@ -90,7 +91,7 @@ signed main()
   vector<int> eid(N);
   rep(i, N) {
     if(y[i]%2 == 0) eid[i] = graph.add_edge(s, i, 1).first;
-    else eid[i] = graph.add_edge(i, t, 1).second;
+    else eid[i] = graph.add_edge(i, t, 1).first;
     reps(j, i+1, N) {
       if(y[i]%2 != y[j]%2 && dist(i, j) < 4) {
 	if(y[i]%2 == 0) graph.add_edge(i, j, inf);
@@ -110,15 +111,18 @@ signed main()
     if(ans.size() == K) break;
     auto& e = y[i]%2 ? graph.graph[i][eid[i]] : graph.graph[s][eid[i]];
     int cap = e.cap;
+    int rcap = graph.graph[e.to][e.rev].cap;
     e.cap = inf;
     int f = graph.max_flow(s, t);
     if(mx_st - f >= K) {
       ans.push_back(i);
       mx_st -= f;
     } else {
-      if(y[i]%2 == 0) graph.max_flow(t, i, f);
-      else graph.max_flow(i, s, f);
       e.cap = cap;
+      graph.graph[e.to][e.rev].cap = rcap;
+      if(y[i]%2 == 0) graph.max_flow(t, i, f, 2);
+      else graph.max_flow(i, s, f, 2);
+      //graph.max_flow(s, t);
     }
   }
 
